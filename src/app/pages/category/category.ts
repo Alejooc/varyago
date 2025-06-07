@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-category',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './category.html',
   styleUrl: './category.scss'
 })

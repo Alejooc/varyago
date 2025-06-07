@@ -91,7 +91,7 @@
 
                     <div class="header-right">
                         <div class="header-dropdown-link">
-                            <div class="dropdown compare-dropdown">
+                            <!--<div class="dropdown compare-dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
                                     <i class="icon-random"></i>
                                     <span class="compare-txt">Compare</span>
@@ -113,14 +113,15 @@
                                         <a href="#" class="action-link">Clear All</a>
                                         <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
                                     </div>
-                                </div><!-- End .dropdown-menu -->
-                            </div><!-- End .compare-dropdown -->
+                                </div>
+                            </div>
+                            -->
 
-                            <a href="wishlist.html" class="wishlist-link">
+                            <!--<a href="wishlist.html" class="wishlist-link">
                                 <i class="icon-heart-o"></i>
                                 <span class="wishlist-count">3</span>
                                 <span class="wishlist-txt">Wishlist</span>
-                            </a>
+                            </a>-->
 
                             <div class="dropdown cart-dropdown">
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -179,8 +180,9 @@
                                     </div><!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-primary">View Cart</a>
-                                        <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                        
+                                        <a [routerLink]="['/cart']" class="btn btn-primary">Ver Carrito</a>
+                                        <a [routerLink]="['/checkout']" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdown-menu -->
                             </div><!-- End .cart-dropdown -->

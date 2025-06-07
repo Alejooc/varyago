@@ -46,8 +46,10 @@ export class ProductService {
   /**
    * Obtener un solo producto por ID
    */
-  getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/${id}`);
+  getProductById(id: string): Observable<Product> {
+    const params = new HttpParams().set('slug', id);
+    return this.http.get<Product>(this.baseUrl+'/detail', { params: params});
+
   }
 
   /**

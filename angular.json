@@ -31,6 +31,9 @@
             ],
             "styles": [
               "src/styles.scss"
+            ],"scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/owl.carousel.min.js"
             ]
           },
           "configurations": {
@@ -89,6 +92,10 @@
             ],
             "styles": [
               "src/styles.scss"
+            ],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/owl.carousel.min.js"
             ]
           }
         }

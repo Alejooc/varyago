@@ -8,7 +8,7 @@ export interface Product {
   name: string;
   price: number;
   image: string;
-  category_id: number;
+  category_id: string;
   color?: string;
   size?: string;
   [key: string]: any;
@@ -26,7 +26,7 @@ export class ProductService {
    * Obtener productos por categoría con filtros y paginación
    */
   getProductsByCategory(
-    categoryId: number,
+    categoryId: string,
     filters: any = {},
     page: number = 1
   ): Observable<Product[]> {

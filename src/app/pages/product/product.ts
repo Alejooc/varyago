@@ -37,9 +37,7 @@ export class Product implements OnInit {
   }
 
   addToCart() {
-    if (this.selectedVariation) {
-      console.log('🛒 Agregado al carrito:', this.selectedVariation);
-    }
+    console.log('🛒 Agregado al carrito:', this.selectedVariation);
   }
 
 }

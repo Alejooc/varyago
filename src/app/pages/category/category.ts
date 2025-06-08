@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './category.scss'
 })
 export class Category {
-  categoryId!: number;
+  categoryId!: string;
   products: any[] = [];
   filters: any = {};
   page: number = 1;
@@ -23,7 +23,7 @@ export class Category {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.categoryId = +params['id'];
+      this.categoryId = params['id'];
       this.resetAndLoad();
     });
   }

@@ -1,25 +1,35 @@
 import { Component } from '@angular/core';
 import { CartService, CartItem } from '../../services/cart';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './cart.html',
   styleUrl: './cart.scss'
 })
 export class Cart {
-  items: CartItem[] = [];
+  cart: CartItem[] = [];
 
-  constructor(private cartService: CartService) {
-    this.items = cartService.getItems();
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.cart = this.cartService.getCart();
   }
 
-  eliminar(id: number): void {
-    this.cartService.removeItem(id);
-    this.items = this.cartService.getItems();
+  updateQuantity(item: CartItem, qty: number) {
+    if (qty < 1) return;
+    this.cartService.updateQuantity(item.id, item.variationId, qty);
+    this.cart = this.cartService.getCart();
   }
 
-  total(): number {
-    return this.cartService.getTotal();
+  removeItem(item: CartItem) {
+    this.cartService.removeItem(item.id, item.variationId);
+    this.cart = this.cartService.getCart();
+  }
+
+  getTotal(): number {
+    return this.cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
   }
 }

@@ -2,39 +2,79 @@ import { Injectable } from '@angular/core';
 
 export interface CartItem {
   id: number;
-  nombre: string;
-  precio: number;
-  cantidad: number;
+  name: string;
+  price: number;
+  quantity: number;
+  variationId?: number;
+  image?: string;
+  variationSku?: string;
+  measure?: string;
+  color?: string;
+  [key: string]: any;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cart: CartItem[] = [];
+  private readonly STORAGE_KEY = 'cart_items';
 
-  getItems(): CartItem[] {
-    return this.cart;
+  constructor() {}
+
+  getCart(): CartItem[] {
+    const data = localStorage.getItem(this.STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
   }
 
-  addItem(item: CartItem): void {
-    const existing = this.cart.find(i => i.id === item.id);
-    if (existing) {
-      existing.cantidad += item.cantidad;
+  saveCart(cart: CartItem[]): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
+  }
+
+  addToCart(product: CartItem): void {
+    const cart = this.getCart();
+    const index = cart.findIndex(
+      item =>
+        item.id === product.id &&
+        item.variationId === product.variationId
+    );
+
+    if (index !== -1) {
+      cart[index].quantity += product.quantity;
     } else {
-      this.cart.push(item);
+      cart.push({ ...product });
+    }
+
+    this.saveCart(cart);
+  }
+
+  updateQuantity(id: number, variationId: number | undefined, qty: number): void {
+    const cart = this.getCart();
+    const index = cart.findIndex(
+      item => item.id === id && item.variationId === variationId
+    );
+
+    if (index !== -1) {
+      cart[index].quantity = qty;
+      this.saveCart(cart);
     }
   }
 
-  removeItem(id: number): void {
-    this.cart = this.cart.filter(item => item.id !== id);
+  removeItem(id: number, variationId: number | undefined): void {
+    const cart = this.getCart().filter(
+      item => !(item.id === id && item.variationId === variationId)
+    );
+    this.saveCart(cart);
   }
 
   clearCart(): void {
-    this.cart = [];
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 
-  getTotal(): number {
-    return this.cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  getTotalItems(): number {
+    return this.getCart().reduce((total, item) => total + item.quantity, 0);
+  }
+
+  getTotalPrice(): number {
+    return this.getCart().reduce((sum, item) => sum + item.quantity * item.price, 0);
   }
 }

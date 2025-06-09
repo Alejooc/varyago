@@ -19,7 +19,7 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" [src]="product.images[0].url" data-zoom-image="assets/images/products/single/centered/1-big.jpg" alt="product image">
+                                    <img id="product-zoom" [src]="this.product.images?.[0]?.url" data-zoom-image="assets/images/products/single/centered/1-big.jpg" alt="product image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -48,37 +48,44 @@
                                 <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                             </div><!-- End .rating-container -->
 
-                            <div class="product-price">
-                                $76.00
+                            <div class="product-price" *ngIf="selectedVariation">
+                                {{ selectedVariation.price | currency }}
                             </div><!-- End .product-price -->
 
                             <div class="product-content">
                                 <p>{{product.desc}}</p>
                             </div><!-- End .product-content -->
+                            
 
-                            <div class="details-filter-row details-row-size">
-                                <label>Color:</label>
-
-                                <div class="product-nav product-nav-dots">
-                                    <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
-                                    <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .details-filter-row -->
-
-                            <div class="details-filter-row details-row-size">
-                                <label for="size">Size:</label>
-                                <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="#" selected="selected">One Size</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
+                            <form [formGroup]="productForm">
+                                <!-- COLOR -->
+                                <div *ngIf="hasColor" class="details-filter-row details-row-size">
+                                    <label>Color:</label>
+                                    <div class="product-nav product-nav-dots">
+                                      <a
+                                        *ngFor="let c of colors"
+                                        href="#"
+                                        [class.active]="productForm.value.color === c"
+                                        (click)="selectColor(c); $event.preventDefault()"
+                                        [ngStyle]="{ 'background-color': c }"
+                                      >
+                                        <span class="sr-only">{{ c }}</span>
+                                      </a>
+                                    </div>
+                                </div>
+                              
+                                <!-- MEDIDA -->
+                                <div class="details-filter-row details-row-size">
+                                  <label>Talla:</label>
+                                  <div class="select-custom">
+                                    <select id="size" class="form-control" formControlName="measure">
+                                      <option value="" disabled>Selecciona una medida</option>
+                                      <option *ngFor="let m of measures" [value]="m">{{ m }}</option>
                                     </select>
-                                </div><!-- End .select-custom -->
-
-                                <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                            </div><!-- End .details-filter-row -->
+                                  </div>
+                                </div>
+                              </form>
+                            
 
                             <div class="product-details-action">
                                 <div class="details-action-col">
@@ -86,7 +93,7 @@
                                         <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                     </div><!-- End .product-details-quantity -->
 
-                                    <a (click)="addToCart()" class="btn-product btn-cart"><span>Agregar al carrito</span></a>
+                                    <button (click)="addToCart()"  [disabled]="!selectedVariation" class="btn-product btn-cart"><span>Agregar al carrito</span></button>
                                 </div><!-- End .details-action-col -->
 
                                 <!--<div class="details-action-wrapper">
@@ -103,13 +110,7 @@
                                     <a href="#">Yellow</a>
                                 </div><!-- End .product-cat -->
 
-                                <div class="social-icons social-icons-sm">
-                                    <span class="social-label">Share:</span>
-                                    <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                    <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                                </div>
+                                
                             </div><!-- End .product-details-footer -->
                         </div><!-- End .product-details -->
                     </div><!-- End .col-md-6 -->

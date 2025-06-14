@@ -13,6 +13,7 @@ export const routes: Routes = [
     { path: 'cart', component: Cart },
     { path: 'category/:id', component: Category }, // ✅ Ruta dinámica
     { path: 'product/:id', component: Product }, // ✅ Ruta dinámica
-    { path: 'checkout', component: Checkout, canActivate: [authGuard] }
+    { path: 'checkout', component: Checkout}
+    //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
 
 ];

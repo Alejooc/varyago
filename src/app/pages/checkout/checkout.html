@@ -1,9 +1,4 @@
 <main class="main">
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Checkout<span>Shop</span></h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
@@ -17,86 +12,82 @@
     <div class="page-content">
         <div class="checkout">
             <div class="container">
-                <div class="checkout-discount">
+                <!--<div class="checkout-discount">
                     <form action="#">
                         <input type="text" class="form-control" required id="checkout-discount-input">
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
-                </div><!-- End .checkout-discount -->
+                </div>--><!-- End .checkout-discount -->
                 <form action="#">
                     <div class="row">
                         <div class="col-lg-9">
-                            <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+                            <h2 class="checkout-title">Informacion de pago</h2><!-- End .checkout-title -->
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>First Name *</label>
+                                        <label>Nombre *</label>
                                         <input type="text" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
-                                        <label>Last Name *</label>
+                                        <label>Apellidos *</label>
+                                        <input type="text" class="form-control" required>
+                                    </div><!-- End .col-sm-6 -->
+                                    <div class="col-sm-6">
+                                        <label>Tipo de Documento *</label>
+                                        <select name="doctype" id="doctype" class="form-control" required>
+                                            <option value="cc">CC</option>
+                                            <option value="cc">NIT</option>
+                                        </select>
+                                    </div><!-- End .col-sm-6 -->
+                                    <div class="col-sm-6">
+                                        <label>Documento de Identidad *</label>
                                         <input type="text" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
-
-                                <label>Company Name (Optional)</label>
-                                <input type="text" class="form-control">
-
-                                <label>Country *</label>
-                                <input type="text" class="form-control" required>
-
-                                <label>Street address *</label>
-                                <input type="text" class="form-control" placeholder="House number and Street name" required>
-                                <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
-
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>Town / City *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-
-                                    <div class="col-sm-6">
-                                        <label>State / County *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Postcode / ZIP *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-
-                                    <div class="col-sm-6">
-                                        <label>Phone *</label>
+                                        <label>Telefono *</label>
                                         <input type="tel" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
+                                    <div class="col-sm-6">
+                                        <label>Correo electronico *</label>
+                                        <input type="email" class="form-control" required>
+                                    </div>
                                 </div><!-- End .row -->
 
-                                <label>Email address *</label>
-                                <input type="email" class="form-control" required>
+                                <label>Direccion *</label>
+                                <input type="text" class="form-control" placeholder="Calle 1#2-3 barrio pepito" required>
+                                <input type="text" class="form-control" placeholder="Apartamento, Casa, Unidad etc ..." required>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Ciudad *</label>
+                                        <input type="text" class="form-control" required>
+                                    </div><!-- End .col-sm-6 -->
+
+                                    <div class="col-sm-6">
+                                        <label>Departamento*</label>
+                                        <input type="text" class="form-control" required>
+                                    </div><!-- End .col-sm-6 -->
+                                </div><!-- End .row -->
+
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                    <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
+                                    <label class="custom-control-label" for="checkout-create-acc">Crear una cuenta?</label>
                                 </div><!-- End .custom-checkbox -->
 
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                    <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-                                </div><!-- End .custom-checkbox -->
-
-                                <label>Order notes (optional)</label>
-                                <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                <label>Notas (opcional)</label>
+                                <textarea class="form-control" cols="30" rows="4" placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary">
-                                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                                <h3 class="summary-title">Tu compra</h3><!-- End .summary-title -->
 
                                 <table class="table table-summary">
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
+                                            <th>Producto</th>
                                             <th>Total</th>
                                         </tr>
                                     </thead>
@@ -116,7 +107,7 @@
                                             <td>$160.00</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr>
-                                            <td>Shipping:</td>
+                                            <td>Envio:</td>
                                             <td>Free shipping</td>
                                         </tr>
                                         <tr class="summary-total">
@@ -203,8 +194,8 @@
                                 </div><!-- End .accordion -->
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    <span class="btn-text">Place Order</span>
-                                    <span class="btn-hover-text">Proceed to Checkout</span>
+                                    <span class="btn-text">Pagar</span>
+                                    <span class="btn-hover-text">Finalizar Compra</span>
                                 </button>
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->

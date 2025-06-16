@@ -1073,7 +1073,13 @@ a:focus {
 .header-10 .menu-vertical .menu-title {
     color: #126458
 }
+.header-10 .header-bottom {
+    background-color: #015959;
+}
 
+.header.header-10.header-intro-clearance .header-bottom .menu>li>a:hover, .header.header-10.header-intro-clearance .header-bottom .menu>li>a:focus {
+    color: #ffffff!important;
+}
 .header-12 .dropdown.category-dropdown .dropdown-toggle {
     background-color: #126458
 }

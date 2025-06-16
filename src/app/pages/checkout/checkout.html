@@ -18,67 +18,78 @@
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
                 </div>--><!-- End .checkout-discount -->
-                <form action="#">
+                <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
                     <div class="row">
                         <div class="col-lg-9">
                             <h2 class="checkout-title">Informacion de pago</h2><!-- End .checkout-title -->
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Nombre *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Nombre *</label>
+                                    <input type="text" class="form-control" formControlName="firstName" required>
+                                </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label>Apellidos *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                    <div class="col-sm-6">
-                                        <label>Tipo de Documento *</label>
-                                        <select name="doctype" id="doctype" class="form-control" required>
-                                            <option value="cc">CC</option>
-                                            <option value="cc">NIT</option>
-                                        </select>
-                                    </div><!-- End .col-sm-6 -->
-                                    <div class="col-sm-6">
-                                        <label>Documento de Identidad *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Telefono *</label>
-                                        <input type="tel" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                    <div class="col-sm-6">
-                                        <label>Correo electronico *</label>
-                                        <input type="email" class="form-control" required>
-                                    </div>
-                                </div><!-- End .row -->
+                                <div class="col-sm-6">
+                                    <label>Apellidos *</label>
+                                    <input type="text" class="form-control" formControlName="lastName" required>
+                                </div><!-- End .col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <label>Tipo de Documento *</label>
+                                    <select name="doctype" id="doctype" formControlName="doctype" class="form-control"
+                                        required>
+                                        <option value="cc">CC</option>
+                                        <option value="cc">NIT</option>
+                                    </select>
+                                </div><!-- End .col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <label>Documento de Identidad *</label>
+                                    <input type="text" class="form-control" formControlName="document" required>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Telefono *</label>
+                                    <input type="tel" class="form-control" formControlName="phone" required>
+                                </div><!-- End .col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <label>Correo electronico *</label>
+                                    <input type="email" formControlName="email" class="form-control" required>
+                                </div>
+                            </div><!-- End .row -->
 
-                                <label>Direccion *</label>
-                                <input type="text" class="form-control" placeholder="Calle 1#2-3 barrio pepito" required>
-                                <input type="text" class="form-control" placeholder="Apartamento, Casa, Unidad etc ..." required>
+                            <label>Direccion *</label>
+                            <input type="text" formControlName="address1" class="form-control"
+                                placeholder="Calle 1#2-3 barrio pepito" required>
+                            <input type="text" formControlName="address2" class="form-control"
+                                placeholder="Apartamento, Casa, Unidad etc ..." required>
 
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Ciudad *</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="department">Departamento</label>
+                                    <select id="department" class="form-control" formControlName="department"
+                                        (change)="onDepartmentChange($event)">
+                                        <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}
+                                        </option>
+                                    </select>
+                                </div><!-- End .col-sm-6 -->
 
-                                    <div class="col-sm-6">
-                                        <label>Departamento*</label>
-                                        <input type="text" class="form-control" required>
-                                    </div><!-- End .col-sm-6 -->
-                                </div><!-- End .row -->
+                                <div class="col-sm-6">
+                                    <label for="city">Ciudad</label>
+                                    <select id="city" class="form-control" formControlName="city"
+                                        (change)="onCityChange($event)">
+                                        <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+                                    </select>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
 
 
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                    <label class="custom-control-label" for="checkout-create-acc">Crear una cuenta?</label>
-                                </div><!-- End .custom-checkbox -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+                                <label class="custom-control-label" for="checkout-create-acc">Crear una cuenta?</label>
+                            </div><!-- End .custom-checkbox -->
 
-                                <label>Notas (opcional)</label>
-                                <textarea class="form-control" cols="30" rows="4" placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
+                            <label>Notas (opcional)</label>
+                            <textarea class="form-control" formControlName="notes" cols="30" rows="4"
+                                placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary">
@@ -93,105 +104,72 @@
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                            <td>$84.00</td>
+                                        <tr *ngFor="let item of cartItems">
+                                            <td>{{ item.name }} x {{ item.quantity }}</td>
+
+                                            <td>{{ item.price * item.quantity | currency }}</td>
                                         </tr>
 
-                                        <tr>
-                                            <td><a href="#">Blue utility pinafore denimdress</a></td>
-                                            <td>$76,00</td>
-                                        </tr>
                                         <tr class="summary-subtotal">
                                             <td>Subtotal:</td>
-                                            <td>$160.00</td>
+                                            <td>{{ subtotal | currency }}</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr>
                                             <td>Envio:</td>
-                                            <td>Free shipping</td>
+                                            <td>{{shippingCost | currency}}</td>
                                         </tr>
                                         <tr class="summary-total">
                                             <td>Total:</td>
-                                            <td>$160.00</td>
+                                            <td>{{ total | currency }}</td>
                                         </tr><!-- End .summary-total -->
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
-                                <div class="accordion-summary" id="accordion-payment">
-                                    <div class="card">
-                                        <div class="card-header" id="heading-1">
-                                            <h2 class="card-title">
-                                                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-                                                    Direct bank transfer
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-payment">
-                                            <div class="card-body">
-                                                Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
+                                
+                                    <div class="accordion-summary" id="accordion-payment">
+  <div class="card" *ngFor="let pmg of paymentMethods">
+    <div class="card-header" id="heading-{{pmg.id}}">
+      <h2 class="card-title">
+        <label class="d-flex align-items-center w-100">
+          <input class="d-none"
+  type="radio"
+  [value]="pmg.id"
+  formControlName="payment_method"
+  name="payment_method"
+/>
+          <a
+            (click)="selectPaymentMethod(pmg)"
+            class="collapsed w-100"
+            role="button"
+            data-toggle="collapse"
+            [attr.href]="'#collapse-' + pmg.id"
+            aria-expanded="false"
+            [attr.aria-controls]="'collapse-' + pmg.id"
+          >
+            <span class="d-block">{{ pmg.name }}</span>
+            <img
+              *ngIf="pmg.url"
+              [src]="pmg.url"
+              alt="{{ pmg.name }}"
+              class="payment-logo ml-2"
+            />
+          </a>
+        </label>
+      </h2>
+    </div>
 
-                                    <div class="card">
-                                        <div class="card-header" id="heading-2">
-                                            <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
-                                                    Check payments
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment">
-                                            <div class="card-body">
-                                                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. 
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-
-                                    <div class="card">
-                                        <div class="card-header" id="heading-3">
-                                            <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-                                                    Cash on delivery
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-                                            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-
-                                    <div class="card">
-                                        <div class="card-header" id="heading-4">
-                                            <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-                                                    PayPal <small class="float-right paypal-link">What is PayPal?</small>
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
-                                            <div class="card-body">
-                                                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-
-                                    <div class="card">
-                                        <div class="card-header" id="heading-5">
-                                            <h2 class="card-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
-                                                    Credit Card (Stripe)
-                                                    <img src="assets/images/payments-summary.png" alt="payments cards">
-                                                </a>
-                                            </h2>
-                                        </div><!-- End .card-header -->
-                                        <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
-                                            <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .collapse -->
-                                    </div><!-- End .card -->
-                                </div><!-- End .accordion -->
+    <div
+      [id]="'collapse-' + pmg.id"
+      class="collapse"
+      [attr.aria-labelledby]="'heading-' + pmg.id"
+      data-parent="#accordion-payment"
+    >
+      <div class="card-body">
+        {{ pmg.alt }}
+      </div>
+    </div>
+  </div>
+</div>
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                     <span class="btn-text">Pagar</span>

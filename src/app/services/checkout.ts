@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CheckoutService {
-  private readonly API = '/api';
+  private readonly API = 'api/checkout';
 
   constructor(private http: HttpClient) {}
 
@@ -13,11 +13,15 @@ export class CheckoutService {
   }
 
   getCities(departmentId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API}/cities?department=${departmentId}`);
+    return this.http.get<any[]>(`${this.API}/cities/${departmentId}`);
+  }
+  getPaymentMethods(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API}/payment-methods`);
   }
 
-  getShippingInfo(cityId: string): Observable<any> {
-    return this.http.get<any>(`${this.API}/shipping?city=${cityId}`);
+  getShippingInfo(cityId: string, total: number, cart: any): Observable<any> {
+    const payload = { city: cityId, total, cart };
+    return this.http.post<any>(`${this.API}/shipping`, payload);
   }
 
   validateCoupon(code: string): Observable<any> {

@@ -19,7 +19,7 @@ export class Checkout implements OnInit {
   departments: any[] = [];
   cities: any[] = [];
   paymentMethods: any[] = [];
-
+  selectedPaymentMethod: any = null;
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
@@ -38,30 +38,46 @@ export class Checkout implements OnInit {
       address2: [''],
       department: ['', Validators.required],
       city: ['', Validators.required],
-      notes: ['']
+      notes: [''],
+      payment_method: ['', Validators.required]
     });
 
     this.cartItems = this.cartService.getCart();
+    //console.log(this.cartItems[0].name);
+    
     this.subtotal = this.cartService.getTotalPrice();
     this.total = this.subtotal;
 
     this.checkoutService.getDepartments().subscribe(data => {
       this.departments = data;
     });
+     this.checkoutService.getPaymentMethods().subscribe(methods => {
+        this.paymentMethods = methods;
+      });
   }
-
-  onDepartmentChange(deptId: string): void {
-    this.checkoutService.getCities(deptId).subscribe(data => {
-      this.cities = data;
-    });
+   
+  onDepartmentChange(event: Event): void {
+    let departmentId:any = +(event.target as HTMLSelectElement).value;
+    if (departmentId) {
+      this.checkoutService.getCities(departmentId).subscribe(res => {
+        this.cities = res;
+        this.checkoutForm.patchValue({ city_id: '' });
+      });
+    }
   }
-
-  onCityChange(cityId: string): void {
-    this.checkoutService.getShippingInfo(cityId).subscribe(data => {
-      this.shippingCost = data.cost;
-      this.total = this.subtotal + this.shippingCost;
-      this.paymentMethods = data.methods;
-    });
+ selectPaymentMethod(method: any) {
+  this.selectedPaymentMethod = method;
+  console.log('Método seleccionado:', method);
+}
+  onCityChange(event: Event): void {
+    let cityId:any = +(event.target as HTMLSelectElement).value;
+    if (cityId) {
+      this.checkoutService.getShippingInfo(cityId,this.subtotal,this.cartItems).subscribe(rate => {
+        this.shippingCost = rate.valor; // o rate.valor dependiendo de tu base
+        this.total = this.subtotal + this.shippingCost;
+      });
+     
+    }
   }
 
   validateCoupon(code: string): void {
@@ -73,6 +89,8 @@ export class Checkout implements OnInit {
   }
 
   submitOrder(): void {
+    console.log('Enviando orden con los siguientes datos:', this.checkoutForm.value);
+    
     if (this.checkoutForm.valid) {
       const payload = {
         ...this.checkoutForm.value,

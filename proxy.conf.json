@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://192.168.1.6/adminNuevo/serverback/public/index.php",
+    "target": "http://adminnuevo.test/serverback/public/index.php",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

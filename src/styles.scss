@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 ::-moz-selection {
-    background-color: #126458
+    background-color: #015959
 }
 
 ::selection {
-    background-color: #126458
+    background-color: #015959
 }
 
 .bg-primary {
-    background-color: #126458 !important
+    background-color: #015959 !important
 }
 
 .bg-secondary {
@@ -16,7 +16,7 @@
 }
 
 a {
-    color: #126458
+    color: #015959
 }
 
 a:hover,
@@ -25,11 +25,11 @@ a:focus {
 }
 
 .link-underline {
-    box-shadow: 0 1px 0 0 #126458
+    box-shadow: 0 1px 0 0 #015959
 }
 
 .text-primary {
-    color: #126458 !important
+    color: #015959 !important
 }
 
 .text-secondary {
@@ -37,12 +37,12 @@ a:focus {
 }
 
 .alert-primary {
-    background-color: #126458
+    background-color: #015959
 }
 
 .banner-badge .banner-link:hover .banner-link-text,
 .banner-badge .banner-link:focus .banner-link-text {
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-3 .header-search-extended .btn,
@@ -55,11 +55,11 @@ a:focus {
 .header-3 .header-search-extended .btn:focus,
 .header-4 .header-search-extended .btn:hover,
 .header-4 .header-search-extended .btn:focus {
-    color: #126458
+    color: #015959
 }
 
 .btn-video {
-    color: #126458
+    color: #015959
 }
 
 .btn-video:hover,
@@ -69,25 +69,25 @@ a:focus {
 
 .breadcrumb-item a:hover,
 .breadcrumb-item a:focus {
-    color: #126458
+    color: #015959
 }
 
 .btn-link {
-    color: #126458
+    color: #015959
 }
 
 .btn-link:hover,
 .btn-link:focus,
 .btn-link .btn-link-dark:hover,
 .btn-link .btn-link-dark:focus {
-    color: #126458;
-    border-color: #126458
+    color: #015959;
+    border-color: #015959
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -106,8 +106,8 @@ a:focus {
 .btn-primary.disabled,
 .btn-primary:disabled {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458
+    background-color: #015959;
+    border-color: #015959
 }
 
 .btn-secondary {
@@ -124,8 +124,8 @@ a:focus {
 .btn-secondary:not(:disabled):not(.disabled).active,
 .show>.btn-secondary.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -150,8 +150,8 @@ a:focus {
 .btn-white:not(:disabled):not(.disabled).active,
 .show>.btn-white.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -190,8 +190,8 @@ a:focus {
 
 .btn-primary-white {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -201,7 +201,7 @@ a:focus {
 .btn-primary-white:not(:disabled):not(.disabled):active,
 .btn-primary-white:not(:disabled):not(.disabled).active,
 .show>.btn-primary-white.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: #fff;
     border-color: #fff;
     box-shadow: none
@@ -210,12 +210,12 @@ a:focus {
 .btn-primary-white.disabled,
 .btn-primary-white:disabled {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458
+    background-color: #015959;
+    border-color: #015959
 }
 
 .btn-white-primary {
-    color: #126458;
+    color: #015959;
     background-color: #fff;
     border-color: #fff;
     box-shadow: none
@@ -228,14 +228,14 @@ a:focus {
 .btn-white-primary:not(:disabled):not(.disabled).active,
 .show>.btn-white-primary.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
 .btn-white-primary.disabled,
 .btn-white-primary:disabled {
-    color: #126458;
+    color: #015959;
     background-color: #fff;
     border-color: #fff
 }
@@ -254,8 +254,8 @@ a:focus {
 .btn-dark:not(:disabled):not(.disabled).active,
 .show>.btn-dark.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -267,7 +267,7 @@ a:focus {
 }
 
 .btn-outline {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     background-image: none;
     border-color: #ebebeb;
@@ -280,7 +280,7 @@ a:focus {
 .btn-outline:not(:disabled):not(.disabled):active,
 .btn-outline:not(:disabled):not(.disabled).active,
 .show>.btn-outline.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     border-color: #ebebeb;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15)
@@ -288,15 +288,15 @@ a:focus {
 
 .btn-outline.disabled,
 .btn-outline:disabled {
-    color: #126458;
+    color: #015959;
     background-color: transparent
 }
 
 .btn-outline-primary {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     background-image: none;
-    border-color: #126458;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -306,7 +306,7 @@ a:focus {
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .btn-outline-primary:not(:disabled):not(.disabled).active,
 .show>.btn-outline-primary.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     border-color: #ebebeb;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05)
@@ -314,15 +314,15 @@ a:focus {
 
 .btn-outline-primary.disabled,
 .btn-outline-primary:disabled {
-    color: #126458;
+    color: #015959;
     background-color: transparent
 }
 
 .btn-outline-primary-2 {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     background-image: none;
-    border-color: #126458;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -333,14 +333,14 @@ a:focus {
 .btn-outline-primary-2:not(:disabled):not(.disabled).active,
 .show>.btn-outline-primary-2.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
 .btn-outline-primary-2.disabled,
 .btn-outline-primary-2:disabled {
-    color: #126458;
+    color: #015959;
     background-color: transparent
 }
 
@@ -358,7 +358,7 @@ a:focus {
 .btn-outline-light:not(:disabled):not(.disabled):active,
 .btn-outline-light:not(:disabled):not(.disabled).active,
 .show>.btn-outline-light.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     border-color: #fff;
     box-shadow: none
@@ -384,7 +384,7 @@ a:focus {
 .btn-outline-dark:not(:disabled):not(.disabled):active,
 .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show>.btn-outline-dark.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
     border-color: #ebebeb;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05)
@@ -410,7 +410,7 @@ a:focus {
 .btn-outline-dark-2:not(:disabled):not(.disabled):active,
 .btn-outline-dark-2:not(:disabled):not(.disabled).active,
 .show>.btn-outline-dark-2.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: #fafafa;
     border-color: #ebebeb;
     box-shadow: none
@@ -436,9 +436,9 @@ a:focus {
 .btn-outline-dark-3:not(:disabled):not(.disabled):active,
 .btn-outline-dark-3:not(:disabled):not(.disabled).active,
 .show>.btn-outline-dark-3.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: transparent;
-    border-color: #126458;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -463,8 +463,8 @@ a:focus {
 .btn-outline-darker:not(:disabled):not(.disabled).active,
 .show>.btn-outline-darker.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -489,8 +489,8 @@ a:focus {
 .btn-outline-gray:not(:disabled):not(.disabled).active,
 .show>.btn-outline-gray.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -514,7 +514,7 @@ a:focus {
 .btn-outline-lightgray:not(:disabled):not(.disabled):active,
 .btn-outline-lightgray:not(:disabled):not(.disabled).active,
 .show>.btn-outline-lightgray.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: #f5f6f9;
     border-color: #ebebeb;
     box-shadow: none
@@ -541,8 +541,8 @@ a:focus {
 .btn-outline-white:not(:disabled):not(.disabled).active,
 .show>.btn-outline-white.dropdown-toggle {
     color: #fff;
-    background-color: #126458;
-    border-color: #126458;
+    background-color: #015959;
+    border-color: #015959;
     box-shadow: none
 }
 
@@ -592,7 +592,7 @@ a:focus {
 .btn-outline-white-4:not(:disabled):not(.disabled):active,
 .btn-outline-white-4:not(:disabled):not(.disabled).active,
 .show>.btn-outline-white-4.dropdown-toggle {
-    color: #126458;
+    color: #015959;
     background-color: #fff;
     border-color: #fff;
     box-shadow: none
@@ -606,13 +606,13 @@ a:focus {
 
 .newsletter-popup-container .input-group .btn:hover,
 .newsletter-popup-container .input-group .btn:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .bg-image .btn-link-dark:hover,
 .bg-image .btn-link-dark:focus {
-    color: #126458;
-    border-color: #126458
+    color: #015959;
+    border-color: #015959
 }
 
 .bg-image .btn-outline-primary:hover,
@@ -621,8 +621,8 @@ a:focus {
 .bg-image .btn-outline-primary:not(:disabled):not(.disabled):active,
 .bg-image .btn-outline-primary:not(:disabled):not(.disabled).active,
 .show>.bg-image .btn-outline-primary.dropdown-toggle {
-    background-color: #126458;
-    border-color: #126458
+    background-color: #015959;
+    border-color: #015959
 }
 
 .bg-image .btn-outline-dark:hover,
@@ -631,132 +631,132 @@ a:focus {
 .bg-image .btn-outline-dark:not(:disabled):not(.disabled):active,
 .bg-image .btn-outline-dark:not(:disabled):not(.disabled).active,
 .show>.bg-image .btn-outline-dark.dropdown-toggle {
-    color: #126458
+    color: #015959
 }
 
 .card-title a {
-    color: #126458
+    color: #015959
 }
 
 .card-title a:before {
-    color: #126458
+    color: #015959
 }
 
 .card-title a.collapsed:hover,
 .card-title a.collapsed:focus {
-    color: #126458
+    color: #015959
 }
 
 .count-wrapper {
-    color: #126458
+    color: #015959
 }
 
 .feature-box i {
-    color: #126458
+    color: #015959
 }
 
 .feature-box-simple i {
-    color: #126458
+    color: #015959
 }
 
 .form-control:focus {
-    border-color: #126458
+    border-color: #015959
 }
 
 .custom-control.custom-radio .custom-control-input:checked~.custom-control-label::before {
-    border-color: #126458
+    border-color: #015959
 }
 
 .custom-control.custom-radio .custom-control-input:checked~.custom-control-label::after {
-    background-color: #126458
+    background-color: #015959
 }
 
 .icon-box-icon {
-    color: #126458
+    color: #015959
 }
 
 .icon-box-circle .icon-box-icon {
-    background-color: #126458
+    background-color: #015959
 }
 
 .instagram-feed-content a:hover,
 .instagram-feed-content a:focus {
-    color: #126458
+    color: #015959
 }
 
 .close:hover,
 .close:focus {
-    color: #126458
+    color: #015959
 }
 
 .page-header h1 span {
-    color: #126458
+    color: #015959
 }
 
 .page-link:hover,
 .page-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .page-item.active .page-link {
-    color: #126458
+    color: #015959
 }
 
 .social-icon:hover,
 .social-icon:focus {
-    color: #126458;
-    border-color: #126458
+    color: #015959;
+    border-color: #015959
 }
 
 .testimonial-icon:before {
-    color: #126458
+    color: #015959
 }
 
 .nav.nav-tabs .nav-link:hover,
 .nav.nav-tabs .nav-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .nav.nav-tabs .nav-item.show .nav-link,
 .nav.nav-tabs .nav-item .nav-link.active {
-    color: #126458
+    color: #015959
 }
 
 .nav.nav-pills .nav-link:hover,
 .nav.nav-pills .nav-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .nav.nav-pills .nav-item.show .nav-link,
 .nav.nav-pills .nav-item .nav-link.active {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .nav.nav-border-anim .nav-link:before {
-    background-color: #126458
+    background-color: #015959
 }
 
 .title-link:hover,
 .title-link:focus {
-    box-shadow: 0 1px 0 0 #126458
+    box-shadow: 0 1px 0 0 #015959
 }
 
 .product-countdown.countdown-primary .countdown-amount {
-    color: #126458
+    color: #015959
 }
 
 .product-title a:hover,
 .product-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .product-price {
-    color: #126458
+    color: #015959
 }
 
 .product-label.label-primary {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product-label.label-secondary {
@@ -764,44 +764,44 @@ a:focus {
 }
 
 .product-label-text {
-    color: #126458
+    color: #015959
 }
 
 .ratings-primary .ratings-val {
-    color: #126458
+    color: #015959
 }
 
 .ratings-text a:hover,
 .ratings-text a:focus {
-    color: #126458
+    color: #015959
 }
 
 .btn-product {
-    color: #126458
+    color: #015959
 }
 
 .btn-product:hover span,
 .btn-product:focus span {
-    color: #126458;
-    box-shadow: 0 1px 0 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 0 #015959
 }
 
 .btn-product-icon {
-    color: #126458
+    color: #015959
 }
 
 .btn-product-icon:hover,
 .btn-product-icon:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product-body .btn-wishlist:hover,
 .product-body .btn-wishlist:focus {
-    color: #126458
+    color: #015959
 }
 
 .btn-expandable span {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product.product-4 .btn-product:hover,
@@ -810,268 +810,268 @@ a:focus {
 }
 
 .product.product-5 .btn-product {
-    color: #126458
+    color: #015959
 }
 
 .product.product-5 .btn-product:hover,
 .product.product-5 .btn-product:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product.product-7 .btn-product {
-    color: #126458
+    color: #015959
 }
 
 .product.product-7 .btn-product span {
-    color: #126458
+    color: #015959
 }
 
 .product.product-7 .btn-product:hover,
 .product.product-7 .btn-product:focus {
-    background-color: #126458;
-    border-bottom-color: #126458
+    background-color: #015959;
+    border-bottom-color: #015959
 }
 
 .product.product-8 .new-price {
-    color: #126458
+    color: #015959
 }
 
 .product.product-8 .btn-product:before {
-    color: #126458
+    color: #015959
 }
 
 .product.product-8 .btn-product:hover,
 .product.product-8 .btn-product:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product.product-list .btn-product:hover,
 .product.product-list .btn-product:focus {
-    color: #126458
+    color: #015959
 }
 
 .product.product-list .btn-product.btn-cart {
-    color: #126458;
-    border-color: #126458;
+    color: #015959;
+    border-color: #015959;
 }
 
 .product.product-list .btn-product.btn-cart:hover,
 .product.product-list .btn-product.btn-cart:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .footer a:hover,
 .footer a:focus {
-    color: #126458
+    color: #015959
 }
 
 .footer-dark.footer-2 .widget-about-title {
-    color: #126458
+    color: #015959
 }
 
 .header-top a:hover,
 .header-top a:focus {
-    color: #126458
+    color: #015959
 }
 
 .top-menu span {
-    color: #126458
+    color: #015959
 }
 
 .header-menu a:hover,
 .header-menu a:focus {
-    color: #126458
+    color: #015959
 }
 
 .account a:hover,
 .account a:focus {
-    color: #126458
+    color: #015959
 }
 
 .wishlist a:hover,
 .wishlist a:focus {
-    color: #126458
+    color: #015959
 }
 
 .wishlist a .wishlist-count {
-    background-color: #126458
+    background-color: #015959
 }
 
 .cart-dropdown:hover .dropdown-toggle,
 .cart-dropdown.show .dropdown-toggle,
 .compare-dropdown:hover .dropdown-toggle,
 .compare-dropdown.show .dropdown-toggle {
-    color: #126458
+    color: #015959
 }
 
 .compare-product-title a:hover,
 .compare-product-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .compare-actions .action-link:hover,
 .compare-actions .action-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .cart-dropdown .cart-count {
-    background-color: #126458
+    background-color: #015959
 }
 
 .cart-dropdown .product-title a:hover,
 .cart-dropdown .product-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .wishlist-link .wishlist-count {
-    background-color: #126458
+    background-color: #015959
 }
 
 .wishlist-link:hover,
 .wishlist-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .search-toggle:hover,
 .search-toggle:focus,
 .search-toggle.active {
-    color: #126458
+    color: #015959
 }
 
 .menu li:hover>a,
 .menu li.show>a,
 .menu li.active>a {
-    color: #126458
+    color: #015959
 }
 
 .demo-item a:hover,
 .demo-item a:focus {
-    color: #126458
+    color: #015959
 }
 
 .tip {
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-bottom .menu>li>a:before {
-    background-color: #126458
+    background-color: #015959
 }
 
 .category-dropdown .dropdown-toggle:before {
-    background-color: #126458
+    background-color: #015959
 }
 
 .category-dropdown .dropdown-toggle:hover,
 .category-dropdown .dropdown-toggle:focus {
     color: #fff;
-    background-color: #126458
+    background-color: #015959
 }
 
 .category-dropdown:not(.is-on):hover .dropdown-toggle {
-    background-color: #126458
+    background-color: #015959
 }
 
 .category-dropdown.show .dropdown-toggle {
     color: #fff;
-    background-color: #126458
+    background-color: #015959
 }
 
 .category-dropdown .dropdown-item:hover,
 .category-dropdown .dropdown-item:focus {
-    color: #126458
+    color: #015959
 }
 
 .menu-vertical li:hover>a,
 .menu-vertical li.show>a,
 .menu-vertical li.active>a {
-    color: #126458
+    color: #015959
 }
 
 .menu-vertical>li:hover>a,
 .menu-vertical>li.show>a,
 .menu-vertical>li.active>a {
-    color: #126458
+    color: #015959
 }
 
 .mobile-menu-close:hover,
 .mobile-menu-close:focus {
-    color: #126458
+    color: #015959
 }
 
 .mobile-menu li a:hover,
 .mobile-menu li a:focus {
-    color: #126458
+    color: #015959
 }
 
 .mobile-menu li.open>a,
 .mobile-menu li.active>a {
-    color: #126458
+    color: #015959
 }
 
 .mmenu-btn:hover,
 .mmenu-btn:focus {
-    color: #126458
+    color: #015959
 }
 
 .mobile-search .form-control:focus {
-    border-color: #126458
+    border-color: #015959
 }
 
 .nav.nav-pills-mobile .nav-link.active,
 .nav.nav-pills-mobile .nav-link:hover,
 .nav.nav-pills-mobile .nav-link:focus {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .mobile-cats-menu li a:hover,
 .mobile-cats-menu li a:focus {
-    color: #126458
+    color: #015959
 }
 
 .mobile-menu-light .mobile-menu li.open>a,
 .mobile-menu-light .mobile-menu li.active>a {
-    color: #126458
+    color: #015959
 }
 
 .mobile-menu-light .mobile-search .form-control:focus {
-    border-color: #126458
+    border-color: #015959
 }
 
 .header-4 .header-search .header-search-wrapper {
-    border-color: #126458
+    border-color: #015959
 }
 
 .header-4 .dropdown.category-dropdown .dropdown-toggle:not(:hover):not(:focus) {
-    color: #126458
+    color: #015959
 }
 
 @media screen and (max-width: 991px) {
     .header-4 .header-search-visible .header-search-wrapper:before {
-        border-bottom-color: #126458
+        border-bottom-color: #015959
     }
 }
 
 .header-6 .header-middle a:hover,
 .header-6 .header-middle a:focus {
-    color: #126458
+    color: #015959
 }
 
 .header-8 .header-top {
     color: #d1e8ff;
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-10 .header-search .header-search-wrapper {
-    border-color: #126458
+    border-color: #015959
 }
 
 .header-10 .category-dropdown .dropdown-toggle {
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-10 .menu-vertical .menu-title {
-    color: #126458
+    color: #015959
 }
 .header-10 .header-bottom {
     background-color: #015959;
@@ -1081,391 +1081,391 @@ a:focus {
     color: #ffffff!important;
 }
 .header-12 .dropdown.category-dropdown .dropdown-toggle {
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-13 .dropdown.category-dropdown .dropdown-toggle {
-    background-color: #126458
+    background-color: #015959
 }
 
 .header-14 .header-search .header-search-wrapper {
-    border-color: #126458
+    border-color: #015959
 }
 
 .header-14 .dropdown.category-dropdown .dropdown-toggle {
-    background-color: #126458
+    background-color: #015959
 }
 
 .entry-video a:hover:after,
 .entry-video a:focus:after {
-    color: #126458
+    color: #015959
 }
 
 .entry-meta a:hover,
 .entry-meta a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .entry-title a:hover,
 .entry-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .entry-cats a:hover,
 .entry-cats a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .read-more:hover,
 .read-more:focus {
-    box-shadow: 0 1px 0 0 #126458
+    box-shadow: 0 1px 0 0 #015959
 }
 
 .menu-cat a:hover,
 .menu-cat a:focus {
-    color: #126458
+    color: #015959
 }
 
 .menu-cat li.active a {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .widget-search .btn:hover,
 .widget-search .btn:focus {
-    color: #126458
+    color: #015959
 }
 
 .widget-cats a:hover,
 .widget-cats a:focus {
-    color: #126458
+    color: #015959
 }
 
 .posts-list a:hover,
 .posts-list a:focus {
-    color: #126458
+    color: #015959
 }
 
 .tagcloud a:hover,
 .tagcloud a:focus {
-    color: #126458
+    color: #015959
 }
 
 .table .total-col {
-    color: #126458
+    color: #015959
 }
 
 .btn.btn-spinner:hover,
 .btn.btn-spinner:focus {
-    color: #126458
+    color: #015959
 }
 
 .table.table-summary .summary-shipping-estimate a:hover,
 .table.table-summary .summary-shipping-estimate a:focus {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .sidebar-toggler:hover,
 .sidebar-toggler:focus {
-    color: #126458
+    color: #015959
 }
 
 #filter-price-range {
-    color: #126458
+    color: #015959
 }
 
 .checkout-discount label span {
-    color: #126458
+    color: #015959
 }
 
 .checkout-discount .form-control:focus {
-    border-color: #126458
+    border-color: #015959
 }
 
 .table.table-summary a:hover,
 .table.table-summary a:focus {
-    color: #126458
+    color: #015959
 }
 
 .table.table-summary .summary-total td {
-    color: #126458
+    color: #015959
 }
 
 .accordion-summary .card-title a:before {
-    border-color: #126458
+    border-color: #015959
 }
 
 .accordion-summary .card-title a:after {
-    background-color: #126458
+    background-color: #015959
 }
 
 .paypal-link:hover,
 .paypal-link:focus {
-    color: #126458 !important
+    color: #015959 !important
 }
 
 .coming-countdown .countdown-amount {
-    color: #126458
+    color: #015959
 }
 
 .coming-countdown.countdown-separator .countdown-section:not(:last-child):after {
-    color: #126458
+    color: #015959
 }
 
 .contact-box a:hover,
 .contact-box a:focus {
-    color: #126458
+    color: #015959
 }
 
 .contact-list a:hover,
 .contact-list a:focus {
-    color: #126458
+    color: #015959
 }
 
 .contact-list i {
-    color: #126458
+    color: #015959
 }
 
 .store a:not(.btn):hover,
 .store a:not(.btn):focus {
-    color: #126458
+    color: #015959
 }
 
 .nav-dashboard .nav-link:hover,
 .nav-dashboard .nav-link:focus,
 .nav-dashboard .nav-link.active {
-    color: #126458
+    color: #015959
 }
 
 .form-tab .form-footer a:hover,
 .form-tab .form-footer a:focus {
-    color: #126458
+    color: #015959
 }
 
 .nav-filter a:hover,
 .nav-filter a:focus {
-    color: #126458
+    color: #015959
 }
 
 .nav-filter .active a {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .portfolio-title a:hover,
 .portfolio-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .portfolio-tags a {
-    color: #126458
+    color: #015959
 }
 
 .portfolio-tags a:hover,
 .portfolio-tags a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .btn-product-gallery:hover,
 .btn-product-gallery:focus {
-    background-color: #126458
+    background-color: #015959
 }
 
 .product-gallery-item:before {
-    border-color: #126458
+    border-color: #015959
 }
 
 .product-pager-link:hover,
 .product-pager-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .product-pager-link:hover span,
 .product-pager-link:focus span {
-    box-shadow: 0 1px 0 #126458
+    box-shadow: 0 1px 0 #015959
 }
 
 .product-details .product-cat a:hover,
 .product-details .product-cat a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .product-details .product-size a.active,
 .product-details .product-size a:hover,
 .product-details .product-size a:focus {
-    color: #126458;
-    border-color: #126458
+    color: #015959;
+    border-color: #015959
 }
 
 .size-guide:hover,
 .size-guide:focus {
-    color: #126458
+    color: #015959
 }
 
 .product-details-action .btn-cart {
-    color: #126458;
-    border-color: #126458
+    color: #015959;
+    border-color: #015959
 }
 
 .product-details-action .btn-cart:hover,
 .product-details-action .btn-cart:focus {
-    border-color: #126458;
-    background-color: #126458
+    border-color: #015959;
+    background-color: #015959
 }
 
 .product-details-tab .nav.nav-pills .nav-link:hover,
 .product-details-tab .nav.nav-pills .nav-link:focus {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .product-desc-content a:hover,
 .product-desc-content a:focus {
-    color: #126458;
-    border-bottom-color: #126458
+    color: #015959;
+    border-bottom-color: #015959
 }
 
 .review h4 a:hover,
 .review h4 a:focus {
-    color: #126458
+    color: #015959
 }
 
 .review-action a:hover,
 .review-action a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .product-details-extended .nav.nav-pills .nav-link.active,
 .product-details-extended .nav.nav-pills .nav-link:hover,
 .product-details-extended .nav.nav-pills .nav-link:focus {
-    border-color: #126458
+    border-color: #015959
 }
 
 .editor-content a:hover,
 .editor-content a:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .editor-content blockquote {
-    border-left-color: #126458
+    border-left-color: #015959
 }
 
 .entry-tags a:hover,
 .entry-tags a:focus {
-    color: #126458
+    color: #015959
 }
 
 .entry-author-details h4 a:hover,
 .entry-author-details h4 a:focus {
-    color: #126458
+    color: #015959
 }
 
 .author-link:hover,
 .author-link:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .pager-link {
-    color: #126458
+    color: #015959
 }
 
 .pager-link:hover,
 .pager-link:focus {
-    color: #126458
+    color: #015959
 }
 
 .pager-link:hover:after,
 .pager-link:focus:after {
-    color: #126458
+    color: #015959
 }
 
 .comment-reply:hover,
 .comment-reply:focus {
-    color: #126458;
-    box-shadow: 0 1px 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 #015959
 }
 
 .comment-user h4 a:hover,
 .comment-user h4 a:focus {
-    color: #126458
+    color: #015959
 }
 
 .product-col .product-title a:hover,
 .product-col .product-title a:focus {
-    color: #126458
+    color: #015959
 }
 
 .owl-theme .owl-nav [class*='owl-'] {
-    color: #126458
+    color: #015959
 }
 
 .owl-theme .owl-nav [class*='owl-']:not(.disabled):hover {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-theme.owl-light .owl-nav [class*='owl-']:not(.disabled):hover {
-    border-color: #126458
+    border-color: #015959
 }
 
 .owl-theme.owl-light .owl-dots .owl-dot:hover span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-theme.owl-light .owl-dots .owl-dot.active span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-full .owl-nav [class*='owl-'] {
-    color: #126458
+    color: #015959
 }
 
 .owl-full .owl-nav [class*='owl-']:hover,
 .owl-full .owl-nav [class*='owl-']:focus {
-    color: #126458
+    color: #015959
 }
 
 .owl-full .owl-dots .owl-dot span {
-    border-color: #126458
+    border-color: #015959
 }
 
 .owl-full .owl-dots .owl-dot:hover span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-full .owl-dots .owl-dot.active span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-full.owl-nav-dark .owl-nav [class*='owl-']:hover,
 .owl-full.owl-nav-dark .owl-nav [class*='owl-']:focus {
-    color: #126458
+    color: #015959
 }
 
 .owl-simple .owl-nav [class*='owl-']:not(.disabled):hover {
-    color: #126458
+    color: #015959
 }
 
 .owl-simple.owl-light .owl-dots .owl-dot:hover span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .owl-simple.owl-light .owl-dots .owl-dot.active span {
-    border-color: #126458;
-    background: #126458
+    border-color: #015959;
+    background: #015959
 }
 
 .quickView-content .owl-theme.owl-light .owl-nav [class*='owl-'] {
@@ -1476,14 +1476,14 @@ a:focus {
 
 .quickView-content .owl-theme.owl-light .owl-nav [class*='owl-']:hover,
 .quickView-content .owl-theme.owl-light .owl-nav [class*='owl-']:focus {
-    color: #126458;
+    color: #015959;
     background-color: transparent
 }
 
 .quickView-content .details-action-wrapper .btn-product:hover span,
 .quickView-content .details-action-wrapper .btn-product:focus span {
-    color: #126458;
-    box-shadow: 0 1px 0 0 #126458
+    color: #015959;
+    box-shadow: 0 1px 0 0 #015959
 }
 
 .quickView-content .product-details-action .btn-cart {
@@ -1492,8 +1492,8 @@ a:focus {
 
 .quickView-content .product-details-action .btn-cart:hover,
 .quickView-content .product-details-action .btn-cart:focus {
-    border-color: #126458;
-    background-color: #126458;
+    border-color: #015959;
+    background-color: #015959;
     color: #fff
 }
 
@@ -1504,14 +1504,14 @@ a:focus {
 
 .quickView-content .btn-wishlist:before,
 .quickView-content .btn-compare:before {
-    color: #126458
+    color: #015959
 }
 
 .quickView-content .btn-wishlist:hover,
 .quickView-content .btn-wishlist:focus,
 .quickView-content .btn-compare:hover,
 .quickView-content .btn-compare:focus {
-    color: #126458;
+    color: #015959;
     background-color: transparent
 }
 
@@ -1519,18 +1519,18 @@ a:focus {
 .quickView-content .btn-wishlist:focus span,
 .quickView-content .btn-compare:hover span,
 .quickView-content .btn-compare:focus span {
-    color: #126458
+    color: #015959
 }
 
 .quickView-content .btn-fullscreen:hover,
 .quickView-content .btn-fullscreen:focus {
     color: #fff;
-    background-color: #126458
+    background-color: #015959
 }
 
 .quickView-content .product-left .carousel-dot.active img {
     opacity: 1;
-    box-shadow: 0 0 0 1px #126458
+    box-shadow: 0 0 0 1px #015959
 }
 
 .quickView-content .product-left .carousel-dot:hover img,
@@ -1539,7 +1539,7 @@ a:focus {
 }
 
 .newsletter-popup-container .banner-title span {
-    color: #126458
+    color: #015959
 }
 
 /*# sourceMappingURL=skin-demo-13.css.map */

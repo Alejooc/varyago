@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { ProductService } from '../../services/product';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart';
+declare var $: any; // Para usar jQuery
 
 @Component({
   selector: 'app-product',
@@ -27,7 +28,43 @@ export class Product implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService
   ) {}
+  ngAfterViewInit() {
+    if ($.fn.elevateZoom) {
+      $('#product-zoom').elevateZoom({
+        gallery: 'product-zoom-gallery',
+        galleryActiveClass: 'active',
+        zoomType: 'inner',
+        cursor: 'crosshair',
+        zoomWindowFadeIn: 400,
+        zoomWindowFadeOut: 400,
+        responsive: true
+      });
 
+      $('.product-gallery-item').on('click',  (e: any) => {
+        $('#product-zoom-gallery').find('a').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+      });
+
+      const ez = $('#product-zoom').data('elevateZoom');
+
+      $('#btn-product-gallery').on('click', function (e: any) {
+        if ($.fn.magnificPopup) {
+          $.magnificPopup.open({
+            items: ez.getGalleryList(),
+            type: 'image',
+            gallery: {
+              enabled: true
+            },
+            fixedContentPos: false,
+            removalDelay: 600,
+            closeBtnInside: false
+          }, 0);
+          e.preventDefault();
+        }
+      });
+    }
+  }
   ngOnInit(): void {
     const productId = this.route.snapshot.params['id'];
     let variations: any[] = [];

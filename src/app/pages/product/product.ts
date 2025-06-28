@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart';
+import { SharedService } from '../../services/shared';
 declare var $: any; // Para usar jQuery
 
 @Component({
@@ -27,7 +28,9 @@ export class Product implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private fb: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private sharedService: SharedService
+    
   ) {}
   ngAfterViewInit() {
     if ($.fn.elevateZoom) {
@@ -185,7 +188,19 @@ this.productTableHtml = `
       measure: this.selectedVariation.measure,
       color: this.selectedVariation.color
     });
+  // 🔄 Notificar al Header para que se actualice
+    this.sharedService.notifyCartUpdated();
 
+    // Mostrar la cart-dropdown manualmente
+  const dropdown = document.querySelector('.cart-dropdown');
+  if (dropdown) {
+    dropdown.classList.add('show');
+
+    // Ocultarla después de 2 segundos
+    setTimeout(() => {
+      dropdown.classList.remove('show');
+    }, 2000);
+  }
     console.log('🛒 Agregado al carrito:', this.selectedVariation);
   }
 }

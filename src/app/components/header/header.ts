@@ -3,6 +3,7 @@ import { ActivatedRoute,RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { HeaderService } from "../../services/header";
+import { SharedService } from '../../services/shared';
 @Component({
   selector: 'app-header',
   imports: [CommonModule,RouterModule],
@@ -16,7 +17,8 @@ export class Header {
   constructor(
       private route: ActivatedRoute,
       private cartService: CartService,
-      private headerService: HeaderService
+      private headerService: HeaderService,
+      private sharedService: SharedService
     ) {}
 
   ngOnInit(): void {
@@ -25,7 +27,15 @@ export class Header {
     console.log(this.cartItems);
     this.getMenu();
     console.log(this.menu);
+     this.sharedService.cartUpdated$.subscribe(() => {
+      this.refreshCart(); // actualiza totales o vuelve a consultar el carrito
+    });
     
+  }
+  refreshCart() {
+    // lógica para actualizar el ícono o contenido del carrito
+     this.cartCount = this.cartService.getTotalItems();
+      this.cartItems = this.getCartItems();
   }
   ngOnDestroy(): void {
     // Aquí podrías limpiar recursos si es necesario

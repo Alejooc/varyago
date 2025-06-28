@@ -14,6 +14,7 @@ export class Header {
   cartCount = 0;
   cartItems: any[] = [];
   menu: any ;
+  totalPrice: number=0;
   constructor(
       private route: ActivatedRoute,
       private cartService: CartService,
@@ -24,9 +25,9 @@ export class Header {
   ngOnInit(): void {
     this.cartCount = this.cartService.getTotalItems();
     this.cartItems = this.getCartItems();
+    this.totalPrice = this.cartService.getTotalPrice();
     console.log(this.cartItems);
     this.getMenu();
-    console.log(this.menu);
      this.sharedService.cartUpdated$.subscribe(() => {
       this.refreshCart(); // actualiza totales o vuelve a consultar el carrito
     });
@@ -36,6 +37,7 @@ export class Header {
     // lógica para actualizar el ícono o contenido del carrito
      this.cartCount = this.cartService.getTotalItems();
       this.cartItems = this.getCartItems();
+      this.totalPrice = this.cartService.getTotalPrice();
   }
   ngOnDestroy(): void {
     // Aquí podrías limpiar recursos si es necesario

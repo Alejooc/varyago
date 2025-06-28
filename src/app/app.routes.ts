@@ -7,6 +7,7 @@ import { Cart } from './pages/cart/cart';
 import { Category } from './pages/category/category';
 import { Product } from './pages/product/product';
 import { Account } from './pages/account/account';
+import { Page } from './pages/page/page';
 export const routes: Routes = [
 
     { path: '', component: Home },
@@ -15,7 +16,8 @@ export const routes: Routes = [
     { path: 'cart', component: Cart },
     { path: 'category/:id', component: Category }, // ✅ Ruta dinámica
     { path: 'product/:id', component: Product }, // ✅ Ruta dinámica
-    { path: 'checkout', component: Checkout}
+    { path: 'checkout', component: Checkout},
+    { path: 'pages/:id', component: Page}
     //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
 
 ];

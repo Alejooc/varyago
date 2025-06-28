@@ -121,13 +121,13 @@
         </div><!-- End .modal-content -->
     </div><!-- End .modal-dialog -->
 </div><!-- End .modal -->
-<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+<div *ngIf="gralData.modalPopup" class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
     <div class="row justify-content-center">
         <div class="col-10">
             <div class="row no-gutters bg-white newsletter-popup-content">
                 <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
                     <div class="banner-content text-center">
-                        <img src="assets/images/popup/newsletter/logo.png" class="logo" alt="logo" width="60"
+                        <img src="/assets/images/logos/logoweb.png" class="logo" alt="varyago logo" width="60"
                             height="15">
                         <h2 class="banner-title">get <span>25%</span> off</h2>
                         <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite
@@ -229,11 +229,11 @@ Escríbenos y te ayudamos a elegir lo mejor para tu hogar.</p>
                         <div class="widget-about-info">
                             <div class="row">
                                 <div class="col-sm-6 col-md-4">
-                                    <span class="widget-about-title">Got Question? Call us 24/7</span>
-                                    <a href="tel:123456789">+0123 456 789</a>
+                                    <span class="widget-about-title">Atención personalizada</span>
+                                    <a href="tel:57{{gralData.whatsapp}}">57{{gralData.whatsapp}}</a>
                                 </div><!-- End .col-sm-6 -->
                                 <div class="col-sm-6 col-md-8">
-                                    <span class="widget-about-title">Payment Method</span>
+                                    <span class="widget-about-title">Metodos de pago</span>
                                     <figure class="footer-payments">
                                         <img src="assets/images/payments.png" alt="Payment methods" width="272"
                                             height="20">
@@ -246,43 +246,41 @@ Escríbenos y te ayudamos a elegir lo mejor para tu hogar.</p>
 
                 <div class="col-sm-4 col-lg-2">
                     <div class="widget">
-                        <h4 class="widget-title">Information</h4><!-- End .widget-title -->
+                        <h4 class="widget-title">Informacion</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="about.html">About Molla</a></li>
-                            <li><a href="#">How to shop on Molla</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="contact.html">Contact us</a></li>
-                            <li><a href="login.html">Log in</a></li>
+                            <li><a href="about.html">Sobre Varyago</a></li>
+                            <li><a href="#">Como Comprar en Varyago</a></li>
+                            <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                            <li><a href="contact.html">Contactanos</a></li>
+                            <li><a [routerLink]="['/login']">Iniciar sesion</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-4 col-lg-3 -->
 
                 <div class="col-sm-4 col-lg-2">
                     <div class="widget">
-                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+                        <h4 class="widget-title">Servicio al Cliente</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Money-back guarantee!</a></li>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Shipping</a></li>
-                            <li><a href="#">Terms and conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a [routerLink]="['/pages',gralData.url_devolu]">Devoluciones y reembolsos</a></li>
+                            <li><a [routerLink]="['/pages',gralData.url_envios]">Envios</a></li>
+                            <li><a [routerLink]="['/pages',gralData.url_term_condi]">Terminos y condiciones</a></li>
+                            <li><a [routerLink]="['/pages',gralData.url_privacy]">Política de privacidad</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-4 col-lg-3 -->
 
                 <div class="col-sm-4 col-lg-2">
                     <div class="widget">
-                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+                        <h4 class="widget-title">Mi Cuenta</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="cart.html">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
-                            <li><a href="#">Help</a></li>
+                            <li><a  [routerLink]="['/login']">Registrarme</a></li>
+                            <li><a  [routerLink]="['/cart']">Carrito</a></li>
+                            <li><a href="#">Lista de deseos</a></li>
+                            <li><a href="#">Seguimiento de orden</a></li>
+                            <li><a href="#">Centro de ayuda</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-64 col-lg-3 -->
@@ -295,17 +293,17 @@ Escríbenos y te ayudamos a elegir lo mejor para tu hogar.</p>
             <p class="footer-copyright">Copyright © 2025 Varyago. Todos los derechos reservados.</p>
             <!-- End .footer-copyright -->
             <ul class="footer-menu">
-                <li><a href="#">Terms Of Use</a></li>
-                <li><a href="#">Privacy Policy</a></li>
+                <li><a [routerLink]="['/pages',gralData.url_term_condi]">Terminos y condiciones</a></li>
+                <li><a [routerLink]="['/pages',gralData.url_privacy]" >Politica de privacidad</a></li>
             </ul><!-- End .footer-menu -->
 
             <div class="social-icons social-icons-color">
                 <span class="social-label">Social Media</span>
-                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                <a href="{{gralData.rs_fb}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i
                         class="icon-facebook-f"></i></a>
                 <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
                         class="icon-twitter"></i></a>
-                <a href="#" class="social-icon social-instagram" title="Instagram" target="_blank"><i
+                <a href="{{gralData.rs_ins}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i
                         class="icon-instagram"></i></a>
                 <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
                         class="icon-youtube"></i></a>
@@ -318,7 +316,7 @@ Escríbenos y te ayudamos a elegir lo mejor para tu hogar.</p>
 <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 <!-- Botón flotante WhatsApp -->
 <!-- Botón flotante WhatsApp (ajustado) -->
-<a href="https://wa.me/573154165228?text=%C2%A1Hola!%20%C2%BFMe%20pueden%20ayudar%3F%20%F0%9F%98%8A"
+<a *ngIf="gralData.whatsapp_btn" href="https://wa.me/57{{gralData.whatsapp}}?text=%C2%A1Hola!%20%C2%BFMe%20pueden%20ayudar%3F%20%F0%9F%98%8A"
    target="_blank"
    rel="noopener noreferrer"
    aria-label="Chatea por WhatsApp"

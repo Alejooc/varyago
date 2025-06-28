@@ -1,0 +1,17 @@
+ .whatsapp-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    animation: vibrar 1.5s infinite;
+  }
+
+  @keyframes vibrar {
+    0%   { transform: rotate(0deg); }
+    10%  { transform: rotate(2deg); }
+    20%  { transform: rotate(-2deg); }
+    30%  { transform: rotate(2deg); }
+    40%  { transform: rotate(-2deg); }
+    50%  { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }

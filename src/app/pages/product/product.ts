@@ -21,6 +21,7 @@ export class Product implements OnInit {
   colors: string[] = [];
   measures: string[] = [];
   hasColor = false;
+  productTableHtml: string= '';
 
   constructor(
     private route: ActivatedRoute,
@@ -72,6 +73,50 @@ export class Product implements OnInit {
       this.product = res;
 
       variations = this.product.variaciones;
+      let tableRows = '';
+
+      if (Array.isArray(this.product.especificaciones) && this.product.especificaciones.length > 0) {
+  tableRows += this.product.especificaciones
+    .map((spec: any) => `
+      <tr>
+        <td class="text-center align-middle p-3"><strong>${spec.specname}</strong></td>
+        <td class="text-center align-middle p-3">${spec.specvalue}</td>
+      </tr>
+    `)
+    .join('');
+}
+
+if (Array.isArray(this.product.propiedades) && this.product.propiedades.length > 0) {
+  tableRows += this.product.propiedades
+    .map((prop: any) => `
+      <tr>
+        <td class="text-center align-middle p-3"><strong>${prop.propname}</strong></td>
+        <td class="text-center align-middle p-3">${prop.provalue}</td>
+      </tr>
+    `)
+    .join('');
+}
+
+if (!tableRows) {
+  tableRows = `<tr><td colspan="2" class="text-center text-muted p-3">N/A</td></tr>`;
+}
+
+this.productTableHtml = `
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover shadow-sm rounded text-center">
+      <thead class="thead-white bg-primary text-white">
+        <tr>
+          <th class="align-middle p-3 text-white">Características</th>
+          <th class="align-middle p-3 text-white">Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
+  </div>
+`;
+
 
       // Detectar si hay colores reales
       this.colors = [...new Set(variations.map(v => v.color).filter(c => !!c && c.trim() !== ''))];
@@ -117,6 +162,10 @@ export class Product implements OnInit {
 
   selectColor(color: string): void {
     this.productForm.patchValue({ color });
+  }
+  truncateDesc(text: string, limit: number): string {
+    if (!text) return '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
 
   addToCart() {

@@ -456,32 +456,36 @@
                     <div class="header-center">
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
-                                <li class="megamenu-sm">
-                                    <a href="index.html" class="sf-with-ul">Inico</a>
-                                </li>
+                               
                                 <li *ngFor="let menus of menu">
-                                    <a  class="sf-with-ul">{{menus.name}}</a>
-
-                                    <div class="megamenu megamenu-sm">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-12">
-                                            <div class="menu-col">
-                                                <div class="row">
-                                                    <div class="col-md-6" *ngFor="let column of menus.submenuColumns">
-                                                        <!--<div class="menu-title">Shop with sidebar</div>--><!-- End .menu-title -->
-                                                        <ul>
-                                                            <li *ngFor="let sub of column">
-                                                                <a [routerLink]="[sub.url]">{{sub.nombre}}</a>
-                                                            </li>
-                                                        </ul>
-
-                                                        
-                                                    </div><!-- End .col-md-6 -->
-                                                </div><!-- End .row -->
-                                            </div><!-- End .menu-col -->
-                                        </div><!-- End .col-md-8 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .megamenu megamenu-md -->
+                                    
+                                    <ng-container [ngSwitch]="menus.type">
+                                        <a *ngSwitchCase="'1'" [routerLink]="[menus.url]">{{ menus.name }}</a>
+                                        <a *ngSwitchCase="'4'" class="sf-with-ul" >{{ menus.name }}</a>
+                                        <a *ngSwitchDefault [routerLink]="[menus.url]">{{ menus.name }}</a>
+                                    </ng-container>
+                                    <div *ngIf="menus.type === '4'" class="megamenu megamenu-sm">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-12">
+                                                <div class="menu-col">
+                                                    <div class="row">
+                                                        <div class="col-md-6" *ngFor="let column of menus.submenuColumns">
+                                                            <!--<div class="menu-title">Shop with sidebar</div>-->
+                                                            <ul>
+                                                                <li *ngFor="let sub of column">
+                                                                    <a [routerLink]="[sub.url]">{{sub.nombre}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div><!-- End .col-md-6 -->
+                                                    </div><!-- End .row -->
+                                                </div><!-- End .menu-col -->
+                                            </div><!-- End .col-md-8 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .megamenu megamenu-md -->
+                                    
+                                       
+                                    
+                                
                                 </li>
                             </ul><!-- End .menu -->
                         </nav><!-- End .main-nav -->

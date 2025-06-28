@@ -6,10 +6,12 @@ import { authGuard } from './guards/auth.guard'; // Asegúrate de importar corre
 import { Cart } from './pages/cart/cart';
 import { Category } from './pages/category/category';
 import { Product } from './pages/product/product';
+import { Account } from './pages/account/account';
 export const routes: Routes = [
 
     { path: '', component: Home },
     { path: 'login', component: Login },
+    { path: 'account', component: Account, canActivate: [authGuard] }, // Asegúrate de importar correctamente el componente Account
     { path: 'cart', component: Cart },
     { path: 'category/:id', component: Category }, // ✅ Ruta dinámica
     { path: 'product/:id', component: Product }, // ✅ Ruta dinámica

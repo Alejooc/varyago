@@ -2,9 +2,9 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a>Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Centered</li>
+                <li class="breadcrumb-item"><a href="index.html">Tienda</a></li>
+                <li class="breadcrumb-item"><a>Producto</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
             </ol>
 
             <!-- End .pager-nav -->
@@ -19,7 +19,7 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" [src]="this.product.images?.[0]?.url" [attr.data-zoom-image]="this.product.images?.[0]?.url" alt="product image">
+                                    <img id="product-zoom" [src]="product.images?.[0]?.url" [attr.data-zoom-image]="this.product.images?.[0]?.url" alt="product image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>

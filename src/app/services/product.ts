@@ -42,6 +42,23 @@ export class ProductService {
 
     return this.http.get<Product[]>(this.baseUrl, { params });
   }
+  getProductsBySearch(
+    categoryId: string,
+    filters: any = {},
+    page: number = 1
+  ): Observable<Product[]> {
+    let params = new HttpParams()
+      .set('category', categoryId)
+      .set('page', page);
+
+    for (const key in filters) {
+      if (filters[key] != null && filters[key] !== '') {
+        params = params.set(key, filters[key]);
+      }
+    }
+
+    return this.http.get<Product[]>(this.baseUrl, { params });
+  }
 
   /**
    * Obtener un solo producto por ID

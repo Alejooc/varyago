@@ -70,8 +70,14 @@ export class Product implements OnInit {
     }
   }
   ngOnInit(): void {
-    const productId = this.route.snapshot.params['id'];
-    let variations: any[] = [];
+   this.route.params.subscribe(params => {
+    const productId = params['id'];
+    this.cargarProducto(productId); // mueves toda tu lógica aquí dentro
+  });
+   
+  }
+  cargarProducto(productId: string): void {
+ let variations: any[] = [];
     this.productService.getProductById(productId).subscribe(res => {
       this.product = res;
 
@@ -162,7 +168,6 @@ this.productTableHtml = `
       });
     });
   }
-
   selectColor(color: string): void {
     this.productForm.patchValue({ color });
   }

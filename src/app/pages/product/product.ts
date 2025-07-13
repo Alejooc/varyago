@@ -36,7 +36,7 @@ export class Product implements OnInit {
     if ($.fn.elevateZoom) {
       $('#product-zoom').elevateZoom({
         gallery: 'product-zoom-gallery',
-        galleryActiveClass: 'active',
+        galleryActiveClass: 'false',
         zoomType: 'inner',
         cursor: 'crosshair',
         zoomWindowFadeIn: 400,

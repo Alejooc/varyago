@@ -1,4 +1,4 @@
 export const environment = {
-    API_BASE_URL: 'http://adminnuevo.test/serverback/public/index.php/api',
+    API_BASE_URL: 'https://api.varyago.com',
     TOKEN_KEY: 'auth_token'
   };

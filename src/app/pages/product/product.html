@@ -19,20 +19,20 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" [src]="product.images?.[0]?.url" [attr.data-zoom-image]="this.product.images?.[0]?.url" alt="product image">
+                                <img id="product-zoom" [src]="product.images?.[0]?.url" alt="product image">
 
-                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                        <i class="icon-arrows"></i>
-                                    </a>
-                                </figure><!-- End .product-main-image -->
+                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                    <i class="icon-arrows"></i>
+                                </a>
+                                </figure>
 
                                 <div id="product-zoom-gallery" class="product-image-gallery">
-                                    <a href="#" *ngFor="let image of product.images" class="product-gallery-item" [attr.data-image]="image.url" [attr.data-zoom-image]="image.url">
-                                        <img [src]="image.url" alt="product side">
-                                    </a>
+                                <a href="#" *ngFor="let image of product.images" class="product-gallery-item"
+                                    [attr.data-image]="image.url">
+                                    <img [src]="image.url" alt="product side">
+                                </a>
+                                </div>
 
-                                   
-                                </div><!-- End .product-image-gallery -->
                             </div><!-- End .row -->
                         </div><!-- End .product-gallery -->
                     </div><!-- End .col-md-6 -->

@@ -7,7 +7,7 @@ import { environment } from '../config';
 })
 export class AuthService {
   //private readonly API_URL = `${environment.API_BASE_URL}/auth`;
-  private readonly API_URL = '/api/auth';
+  private readonly API_URL = `${environment.API_BASE_URL}/api/auth`;
 
   private readonly TOKEN_KEY = environment.TOKEN_KEY;
 

@@ -36,7 +36,7 @@
                 </button>
 
                 <a href="index.html" class="logo">
-                    <img src="/assets/images/logos/logoweb.png" alt="varyago logo" width="205" class="img-responsive">
+                    <img src="/assets/images/logos/logoweb.png" alt="varyago logo" width="180" class="img-responsive">
                 </a>
             </div><!-- End .header-left -->
 
@@ -54,23 +54,17 @@
                                 <i class="icon-search"></i>
                             </button>
 
-                           <!-- Resultados -->
-                            <div
-                            class="dropdown-menu show w-100 mt-0 py-4"
-                            *ngIf="results.length > 0"
-                            style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
-                            >
-                            <a 
-                                *ngFor="let itemSerarch of results"
-                                [routerLink]="['product',itemSerarch.slug]"
-                                (click)="onSelectItem(itemSerarch.slug)"
-                                class="dropdown-item text-left text-decoration-none "
-                                style="cursor: pointer;"
-                            >
-                                <div class="text-dark mb-1 text-wrap  selc text-break" style="white-space: normal;font-size:13px;">
-                                {{ itemSerarch.name }}
-                                </div>
-                            </a>
+                            <!-- Resultados -->
+                            <div class="dropdown-menu show w-100 mt-0 py-4" *ngIf="results.length > 0"
+                                style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;">
+                                <a *ngFor="let itemSerarch of results" [routerLink]="['product',itemSerarch.slug]"
+                                    (click)="onSelectItem(itemSerarch.slug)"
+                                    class="dropdown-item text-left text-decoration-none " style="cursor: pointer;">
+                                    <div class="text-dark mb-1 text-wrap  selc text-break"
+                                        style="white-space: normal;font-size:13px;">
+                                        {{ itemSerarch.name }}
+                                    </div>
+                                </a>
                             </div>
 
                         </div>
@@ -170,7 +164,43 @@
                     </div><!-- End .cart-dropdown -->
                 </div>
             </div><!-- End .header-right -->
+            
+
         </div><!-- End .container -->
+        <!-- BUSCADOR SOLO EN MÓVIL -->
+            <!-- BUSCADOR SOLO EN MÓVIL -->
+<div class=" p-3 d-lg-none">
+  <form (submit)="preventSubmit($event)">
+    <div class="header-search-wrapper position-relative">
+      <label for="q-mobile" class="sr-only">Buscar</label>
+      <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
+        (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
+
+      <button class="btn btn-primary position-absolute" style="top: 0; right: 0; height: 100%;">
+        <i class="icon-search"></i>
+      </button>
+
+      <!-- Resultados -->
+      <div
+        class="dropdown-menu show w-100 mt-0 py-4"
+        *ngIf="results.length > 0"
+        style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
+      >
+        <a 
+          *ngFor="let itemSerarch of results"
+          [routerLink]="['product', itemSerarch.slug]"
+          (click)="onSelectItem(itemSerarch.slug)"
+          class="dropdown-item text-left text-decoration-none"
+          style="cursor: pointer;"
+        >
+          <div class="text-dark mb-1 text-wrap text-break" style="white-space: normal; font-size: 13px;">
+            {{ itemSerarch.name }}
+          </div>
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
     </div><!-- End .header-middle -->
 
     <div class="header-bottom sticky-header">
@@ -547,17 +577,10 @@
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-        <form action="#" method="get" class="mobile-search">
-            <label for="mobile-search" class="sr-only">Search</label>
-            <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..."
-                required>
-            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-        </form>
-
         <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab" role="tab"
-                    aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
+                    aria-controls="mobile-menu-tab" aria-selected="true">¡Hola!</a>
             </li>
 
         </ul>

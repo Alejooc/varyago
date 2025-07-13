@@ -18,7 +18,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private readonly baseUrl = "/api/products";
+  private readonly baseUrl = `${environment.API_BASE_URL}/api/products`;
 
   constructor(private http: HttpClient) {}
 

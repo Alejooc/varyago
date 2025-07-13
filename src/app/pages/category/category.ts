@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product';
 import { FiltersService } from '../../services/filter-service'; // Nuevo servicio importado
 import { CommonModule } from '@angular/common';
+import { ZoomCleanerService } from '../../services/zoom-cleaner';
 
 @Component({
   selector: 'app-category',
@@ -19,14 +20,17 @@ export class Category implements OnInit {
   page: number = 1;
   loading = false;
   hasMore = true;
+showFiltersMobile: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private filtersService: FiltersService
+    private filtersService: FiltersService,
+    private zoomCleaner: ZoomCleanerService
   ) {}
 
   ngOnInit(): void {
+   
     this.route.params.subscribe(params => {
       this.categoryId = params['id'];
       this.fetchAvailableFilters();  // Carga los filtros posibles
@@ -34,7 +38,18 @@ export class Category implements OnInit {
       this.resetAndLoad();           // Carga productos
     });
   }
+toggleBackdrop(open: boolean) {
+  this.showFiltersMobile = open;
+}
 
+closeFilters() {
+  this.showFiltersMobile = false;
+  // También cerramos manualmente el collapse
+  const collapse = document.getElementById('filtersAside');
+  if (collapse?.classList.contains('show')) {
+    collapse.classList.remove('show');
+  }
+}
   fetchAvailableFilters(): void {
     this.filtersService.getFilters(this.categoryId).subscribe({
       next: res => {

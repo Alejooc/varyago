@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from "../config";
 
 @Injectable({ providedIn: 'root' })
 export class CheckoutService {
-  private readonly API = 'api/checkout';
+  private readonly API = `${environment.API_BASE_URL}/api/checkout`;
 
   constructor(private http: HttpClient) {}
 

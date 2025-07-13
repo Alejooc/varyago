@@ -12,7 +12,7 @@ export interface HomeData {
   providedIn: 'root'
 })
 export class HomeService {
-  private readonly baseUrl = "/api/home";
+  private readonly baseUrl = `${environment.API_BASE_URL}/api/home`;
 
   constructor(private http: HttpClient) {}
 

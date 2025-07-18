@@ -39,7 +39,9 @@ export class Login implements OnInit {
         },
         error: (err) => {
           console.warn('❌ Login inválido', err);
-          this.error = 'Credenciales inválidas';
+          console.log(err);
+          
+          this.error = err.error.messages.error;
         }
       });
     }

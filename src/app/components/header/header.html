@@ -50,7 +50,7 @@
                             <label for="q" class="sr-only">Buscar</label>
                             <input #busquedaInput type="search" class="form-control" placeholder="¿Qué buscas hoy?"
                                 (input)="onSearch(busquedaInput.value)" autocomplete="off">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" (click)="searchMore(busquedaInput.value)">
                                 <i class="icon-search"></i>
                             </button>
 
@@ -64,6 +64,9 @@
                                         style="white-space: normal;font-size:13px;">
                                         {{ itemSerarch.name }}
                                     </div>
+                                </a>
+                                <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInput.value)">
+                                    Ver todos los resultados
                                 </a>
                             </div>
 
@@ -176,7 +179,7 @@
       <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
         (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
 
-      <button class="btn btn-primary position-absolute" style="top: 0; right: 0; height: 100%;">
+      <button class="btn btn-primary position-absolute" style="top: 0; right: 0; height: 100%;" (click)="searchMore(busquedaInputMobile.value)">
         <i class="icon-search"></i>
       </button>
 
@@ -184,7 +187,7 @@
       <div
         class="dropdown-menu show w-100 mt-0 py-4"
         *ngIf="results.length > 0"
-        style="max-height: 300px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
+        style="max-height: 600px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
       >
         <a 
           *ngFor="let itemSerarch of results"
@@ -197,6 +200,9 @@
             {{ itemSerarch.name }}
           </div>
         </a>
+         <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInputMobile.value)">
+                                    Ver todos los resultados
+                                </a>
       </div>
     </div>
   </form>

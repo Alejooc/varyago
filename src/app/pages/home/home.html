@@ -4,37 +4,29 @@
         <ng-container *ngIf="section.type === '1'">
             <div class="intro-slider-container">
                 <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
-                                "nav": false,
-                                "responsive": {
-                                    "992": {
-                                        "nav": true
-                                    }
-                                }
-                }'>
-                    <a   *ngFor="let section_values of section.data" [routerLink]="section_values.url">
-                        <div class="intro-slide" [ngStyle]="{ 'background-image': 'url(' + section_values.img + ')' }">
+                        "nav": true,
+                        "responsive": {
+                        "992": { "nav": true }
+                        }
+                    }'>
 
-                            <div class="container intro-content" *ngIf="section_values.show_html == 1">
-                                <div class="row">
-                                    <div class="col-auto offset-lg-3 intro-col">
-                                        <h3 class="intro-subtitle">Trevel & Outdoor</h3><!-- End .h3 intro-subtitle -->
-                                        <h1 class="intro-title">Original Outdoor <br>Beanbag
-                                            <span>
-                                                <sup class="font-weight-light line-through">$89,99</sup>
-                                                <span class="text-primary">$29<sup>,99</sup></span>
-                                            </span>
-                                        </h1><!-- End .intro-title -->
+                    <a *ngFor="let section_values of section.data" [routerLink]="section_values.url">
+                        <div class="intro-slide p-0 m-0">
 
-                                        <a href="category.html" class="btn btn-outline-primary-2">
-                                            <span>Shop Now</span>
-                                            <i class="icon-long-arrow-right"></i>
-                                        </a>
-                                    </div><!-- End .col-auto offset-lg-3 -->
-                                </div><!-- End .row -->
-                            </div><!-- End .container intro-content -->
-                        </div><!-- End .intro-slide -->
+                            <!-- Imagen escritorio -->
+                            <img [src]="section_values.img" alt="Sección escritorio"
+                                class="img-fluid w-100 d-none d-lg-block"
+                                style="object-fit: cover; max-height: 500px;" />
+
+                            <!-- Imagen móvil -->
+                            <img [src]="section_values.img2" alt="Sección móvil"
+                                class="img-fluid w-100 d-block d-lg-none"
+                                style="object-fit: cover; max-height: 500px;" />
+
+                        </div>
                     </a>
-            </div><!-- End .owl-carousel owl-simple -->
+                </div>
+
 
             <span class="slider-loader"></span><!-- End .slider-loader -->
             </div><!-- End .intro-slider-container -->
@@ -46,7 +38,8 @@
     <ng-container *ngFor="let section of data.layaout">
         <ng-container *ngIf="section.type === '2'">
             <div class="container">
-                <h2 class="title text-center mb-2" *ngIf="section.show_title == 1">{{section.title}}</h2><!-- End .title -->
+                <h2 class="title text-center mb-2" *ngIf="section.show_title == 1">{{section.title}}</h2>
+                <!-- End .title -->
 
                 <div class="cat-blocks-container">
                     <div class="row">

@@ -20,22 +20,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="toolbox">
+                    <div class="toolbox" style="flex-direction: unset;">
+                        
                         <div class="toolbox-left">
-                            <!--<div class="toolbox-info">
-                                Resultados
-                            </div>--><!-- End .toolbox-info -->
+                            <div class="toolbox-info">
+                               <p class="d-lg-none text-black" data-toggle="collapse" data-target="#filtersAside">
+                                    <i  class="icon-bars" style="font-size: 18px;"></i> Filtros
+                               </p>
+                            </div><!-- End .toolbox-info -->
                             <!-- Solo visible en pantallas pequeñas -->
                         <!-- Botón solo en móvil -->
-                        <button class="btn btn-outline-primary d-lg-none mb-3" data-toggle="collapse" data-target="#filtersAside">
-  Filtros
-</button>
+                        
 <div *ngIf="showFiltersMobile" class="filter-backdrop d-lg-none" (click)="closeFilters()"></div>
                         </div><!-- End .toolbox-left -->
 
                         <div class="toolbox-right">
                             <div class="toolbox-sort">
-                                <label for="sortby">Ordenar por:</label>
+                                <label for="sortby">Ordenar:</label>
                                 <div class="select-custom">
                                     <select name="sortby" id="sortby" class="form-control">
                                         <option value="price" selected="selected">Precio de menor a mayor</option>
@@ -69,9 +70,9 @@
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
-                                        <div class="product-cat">
+                                        <!--<div class="product-cat">
                                             <a [routerLink]="['/product', product.slug]">{{product.provider_name}}</a>
-                                        </div><!-- End .product-cat -->
+                                        </div>--><!-- End .product-cat -->
                                         <h3 class="product-title"><a
                                                 [routerLink]="['/product', product.slug]">{{truncateText(product.name,50)}}</a>
                                         </h3>
@@ -81,13 +82,18 @@
                                                 currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
 
                                         </div><!-- End .product-price -->
-                                        <div class="product-action" style="position:relative;left: 0;">
+                                        <div class="product-action d-none d-lg-block" style="position:relative;left: 0;">
                                             <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
                                                 style="color:white!important">
                                                 <p class="text-white">Comprar</p>
                                             </a>
                                         </div><!-- End .product-action -->
-
+                                        <div class="d-lg-none" style="position:relative;left: 0;">
+                                            <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
+                                                style="color:white!important">
+                                                <p class="text-white">Agregar <i class="icon-shopping-bag"></i></p>
+                                            </a>
+                                        </div>
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
                             </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
@@ -124,9 +130,9 @@
                 <aside id="filtersAside" class="col-lg-3 order-lg-first collapse d-lg-block">
                     <!-- Botón cerrar solo en móviles -->
                     <div class="d-lg-none text-right mb-2">
-                        <button class="btn btn-sm btn-outline-secondary" (click)="closeFilters()">
-                        Cerrar ✕
-                        </button>
+                        <a class="p-3" (click)="closeFilters()">
+                               <b>✕</b>
+                        </a>
                     </div>
                     <div class="sidebar sidebar-shop">
                         <div class="widget widget-clean">

@@ -57,6 +57,7 @@ export class Header implements AfterViewInit {
     event.preventDefault();
   }
   ngAfterViewInit(): void {
+    this.results = [];
     this.getMenu(); // Carga el menú y luego ejecuta reinicio con delay
   }
   
@@ -157,12 +158,19 @@ export class Header implements AfterViewInit {
   });
 }
 
-// Función para dividir en columnas
-splitIntoColumns(items: any[], itemsPerColumn: number = 5): any[][] {
-  const result = [];
-  for (let i = 0; i < items.length; i += itemsPerColumn) {
-    result.push(items.slice(i, i + itemsPerColumn));
+  // Función para dividir en columnas
+  splitIntoColumns(items: any[], itemsPerColumn: number = 5): any[][] {
+    const result = [];
+    for (let i = 0; i < items.length; i += itemsPerColumn) {
+      result.push(items.slice(i, i + itemsPerColumn));
+    }
+    return result;
   }
-  return result;
-}
+  searchMore(query: string): void {
+    if (query.length > 2) {
+      this.results = []; // limpia la lista
+      this.router.navigate(['search', query]);
+      
+    }
+  }
 }

@@ -6,6 +6,8 @@ import { HeaderService } from "../../services/header";
 import { SharedService } from '../../services/shared';
 import { debounceTime, Subject } from 'rxjs';
 import { SearchService } from '../../services/search';
+import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/auth';
 
 declare var $: any;
 @Component({
@@ -27,6 +29,7 @@ export class Header implements AfterViewInit {
       private headerService: HeaderService,
       private sharedService: SharedService,
       private searchService: SearchService,
+      private authService: AuthService,
        private router: Router
     ) {
       this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
@@ -172,5 +175,23 @@ export class Header implements AfterViewInit {
       this.router.navigate(['search', query]);
       
     }
+  }
+  account(){
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      const user: any = jwtDecode(token);
+     // console.log(user);
+      this.router.navigate(['account']);
+    }else{
+      
+      this.router.navigate(['login']); // redirige a login si no hay token
+      return;
+    }
+    
+  }
+  onLogout(): void {
+    this.cartService.clearCart(); // Limpia el carrito al cerrar sesión
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

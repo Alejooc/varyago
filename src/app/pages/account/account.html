@@ -4,8 +4,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                <li class="breadcrumb-item active" aria-current="page">My Account</li>
+                <li class="breadcrumb-item"><a href="#">Tienda</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mi Cuenta</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -23,22 +23,18 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab"
-                                    aria-controls="tab-orders" aria-selected="false">Orders</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads"
-                                    role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+                                    aria-controls="tab-orders" aria-selected="false">Compras</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
-                                    role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+                                    role="tab" aria-controls="tab-address" aria-selected="false">Direcciones</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
-                                    role="tab" aria-controls="tab-account" aria-selected="false">Account Details</a>
+                                    role="tab" aria-controls="tab-account" aria-selected="false">Mi datos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sign Out</a>
+                                <a class="nav-link" (click)="onLogout()">Cerrar sesion</a>
                             </li>
                         </ul>
                     </aside><!-- End .col-lg-3 -->
@@ -47,21 +43,36 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
                                 aria-labelledby="tab-dashboard-link">
-                                <p>Hello <span class="font-weight-normal text-dark">User</span> (not <span
-                                        class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>)
+                                <p>Hola <span class="font-weight-normal text-dark">{{user.name}}</span>
                                     <br>
-                                    From your account dashboard you can view your <a href="#tab-orders"
-                                        class="tab-trigger-link link-underline">recent orders</a>, manage your <a
-                                        href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>,
-                                    and <a href="#tab-account" class="tab-trigger-link">edit your password and account
-                                        details</a>.
+                                    Desde el panel de tu cuenta puedes ver tus <a href="#tab-orders"
+                                        class="tab-trigger-link link-underline">compras recientes</a>, administrar tus <a
+                                        href="#tab-address" class="tab-trigger-link">direcciones de envío y facturación</a>,
+                                    y <a href="#tab-account" class="tab-trigger-link">editar tu contraseña y datos de cuenta</a>.
                                 </p>
                             </div><!-- .End .tab-pane -->
 
                             <div class="tab-pane fade" id="tab-orders" role="tabpanel"
                                 aria-labelledby="tab-orders-link">
-                                <p>No order has been made yet.</p>
-                                <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                                <p *ngIf="!ordenes">No se ha realizado ninguna compra todavía.</p>
+                                <div class="row">
+                                    <div class="col-lg-6" *ngFor="let sale of ordenes">
+                                        <div class="card card-dashboard">
+                                            <div class="card-body">
+                                                <h3 class="card-title">#{{sale.id}}</h3><!-- End .card-title -->
+
+                                                <p>
+                                                    {{sale.subtotal}}<br>
+                                                    {{sale.delivery}}<br>
+                                                    {{sale.total}}<br>
+                                                    
+                                                    <a href="#">Ver resumen <i class="icon-eye"></i></a>
+                                                </p>
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .card-dashboard -->
+                                    </div><!-- End .col-lg-6 -->
+                                </div><!-- End .row -->
+                                <a [routerLink]="['/']" class="btn btn-outline-primary-2"><span>Comprar</span><i
                                         class="icon-long-arrow-right"></i></a>
                             </div><!-- .End .tab-pane -->
 
@@ -74,33 +85,19 @@
 
                             <div class="tab-pane fade" id="tab-address" role="tabpanel"
                                 aria-labelledby="tab-address-link">
-                                <p>The following addresses will be used on the checkout page by default.</p>
+                                <p>Las siguientes direcciones se usarán por defecto en la página de pago.</p>
 
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6" *ngFor="let address of direcciones">
                                         <div class="card card-dashboard">
                                             <div class="card-body">
-                                                <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+                                                <h3 class="card-title">{{address.name}}</h3><!-- End .card-title -->
 
-                                                <p>User Name<br>
-                                                    User Company<br>
-                                                    John str<br>
-                                                    New York, NY 10001<br>
-                                                    1-234-987-6543<br>
-                                                    yourmailmail.com<br>
-                                                    <a href="#">Edit <i class="icon-edit"></i></a>
-                                                </p>
-                                            </div><!-- End .card-body -->
-                                        </div><!-- End .card-dashboard -->
-                                    </div><!-- End .col-lg-6 -->
-
-                                    <div class="col-lg-6">
-                                        <div class="card card-dashboard">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
-
-                                                <p>You have not set up this type of address yet.<br>
-                                                    <a href="#">Edit <i class="icon-edit"></i></a>
+                                                <p>
+                                                    {{address.address}}<br>
+                                                    {{address?.nbh}}<br>
+                                                    {{address.city}} - {{address.state}}<br>
+                                                    <a href="#">Editar <i class="icon-edit"></i></a>
                                                 </p>
                                             </div><!-- End .card-body -->
                                         </div><!-- End .card-dashboard -->

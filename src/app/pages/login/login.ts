@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { HttpClientModule } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class Login implements OnInit {
   loginForm!: FormGroup;
+  registerForm!: FormGroup;
   error: string | null = null;
 
   activeTab: 'login' | 'register' = 'login'; // por defecto
@@ -25,6 +27,12 @@ export class Login implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      pp: ['', [Validators.required]]
+    });
   }
 
   onSubmit(): void {
@@ -34,6 +42,14 @@ export class Login implements OnInit {
       this.auth.login(email, password).subscribe({
         next: (res) => {
           this.auth.storeToken(res.token);
+          const token = localStorage.getItem('auth_token');
+          if (token) {
+            const user: any = jwtDecode(token);
+            sessionStorage.setItem('cl', JSON.stringify(user));
+          } else {
+            this.error = 'No auth token found after login.';
+            return;
+          }
           console.log('✅ Login correcto');
           this.router.navigate(['/']);
         },
@@ -48,6 +64,25 @@ export class Login implements OnInit {
   }
 
   onRegister(): void {
-    console.log('Registro enviado');
+    if (this.registerForm.valid) {
+        const { name,email, password } = this.registerForm.value;
+
+        this.auth.register(name,email, password).subscribe({
+          next: (res) => {
+            //this.auth.storeToken(res.token);
+            this.router.navigate(['login']);
+          },
+          error: (err) => {
+            console.warn('❌ Login inválido', err);
+            console.log(err);
+            
+            this.error = err.error.messages.error;
+          }
+        });
+      
+    }else{
+      console.warn('❌ Formulario de registro inválido');
+      this.error = 'Formulario de registro inválido';
+    }
   }
 }

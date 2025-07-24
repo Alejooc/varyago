@@ -33,3 +33,36 @@
 .selc:hover{
     color: #015959 !important;
 }
+
+
+.cart-aside {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  transition: right 0.3s ease-in-out;
+  z-index: 1055;
+  overflow-y: auto;
+}
+
+.cart-aside.open {
+  right: 0;
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 1050;
+}
+.cart-itemss{
+    overflow-y: scroll;
+    max-height: 450px;
+    overflow-x: hidden;
+}

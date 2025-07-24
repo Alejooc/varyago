@@ -117,53 +117,13 @@
                         </a>
                     </div>
                     <div class="dropdown cart-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" data-display="static">
+                        <a role="button" class="dropdown-toggle" (click)="toggleCart()">
                             <i class="icon-shopping-cart"></i>
                             <span class="cart-count">{{cartCount}}</span>
                             <span class="cart-txt">Carrito</span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-cart-products scrollcus">
-                                <div class="product" *ngFor="let item of cartItems">
-                                    <div class="product-cart-details">
-                                        <h4 class="product-title">
-                                            <a href="product.html">{{item.name}} - {{item.variationSku}}</a>
-                                        </h4>
-
-                                        <span class="cart-product-info">
-
-                                            <span class="cart-product-qty">{{item.quantity}}</span>
-                                            x {{item.quantity * item.price | currency}}
-                                        </span>
-                                    </div><!-- End .product-cart-details -->
-
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img [src]="item.image" alt="product">
-                                        </a>
-                                    </figure>
-                                    <a (click)="delItem(item.id,item.variationId)" class="btn-remove"
-                                        title="Remove Product"><i class="icon-close"></i></a>
-                                </div><!-- End .product -->
-
-                            </div><!-- End .cart-product -->
-
-                            <div class="dropdown-cart-total">
-                                <span>Total</span>
-
-                                <span class="cart-total-price">{{totalPrice |
-                                    currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
-                            </div><!-- End .dropdown-cart-total -->
-
-                            <div class="dropdown-cart-action">
-
-                                <a [routerLink]="['/cart']" class="btn btn-primary">Ver Carrito</a>
-                                <a [routerLink]="['/checkout']" class="btn btn-outline-primary-2"><span>Ir a
-                                        Pagar</span><i class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .dropdown-cart-total -->
-                        </div><!-- End .dropdown-menu -->
+                        
                     </div><!-- End .cart-dropdown -->
                 </div>
             </div><!-- End .header-right -->
@@ -637,3 +597,72 @@
         </div><!-- End .social-icons -->
     </div><!-- End .mobile-menu-wrapper -->
 </div><!-- End .mobile-menu-container -->
+
+<!-- Aside del carrito -->
+<div class="cart-aside d-flex flex-column" [class.open]="isCartOpen">
+  <!-- Header -->
+  <div class="cart-header d-flex justify-content-between align-items-center p-3 border-bottom">
+    <h5 class="mb-0">Carrito de compras</h5>
+    <a (click)="toggleCart()" title="Cerrar carrito">
+          <i class="icon-close"></i>
+        </a>
+  </div>
+
+  <!-- Cuerpo -->
+  <div class="cart-body p-3 flex-grow-1 overflow-auto">
+    <!-- Mensaje si está vacío -->
+    <p *ngIf="cartItems.length === 0" class="text-center py-4">Tu carrito está vacío.</p>
+    <a *ngIf="cartItems.length === 0" [routerLink]="['/']" class="btn btn-primary text-center d-block">
+      <span>Comprar</span><i class="icon-long-arrow-right"></i>
+    </a>
+
+    <!-- Productos -->
+    <div class="cart-items">
+      <div class="d-flex align-items-center mb-0 product-cart-details" *ngFor="let item of cartItems">
+        <figure class="product-image-container mb-0 me-2" style="width: 80px; flex-shrink: 0;">
+          <a href="product.html" class="product-image">
+            <img [src]="item.image" alt="product" style="width: 100%; height: auto; display: block;">
+          </a>
+        </figure>
+        <div class="flex-grow-1 py-2 px-3">
+          <h4 class="product-title mb-1" style="font-size: 15px;">
+            <a href="product.html">{{ item.name }}</a>
+          </h4>
+          <span class="cart-product-info d-block" style="font-size: 13px;">
+            <span class="d-block">Variacion: {{ item.variationSku }}</span>
+            <b><span class="cart-product-qty">{{ item.quantity }}</span>
+              x {{ item.price | currency: 'COP':'symbol':'1.0-0':'es-CO' }}</b>
+          </span>
+        </div>
+        <a (click)="delItem(item.id, item.variationId)" class="btn-remove ms-2" title="Eliminar producto">
+          <i class="icon-close"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Total simple (puedes omitir si usas el footer abajo) -->
+    <!--
+    <div class="cart-total d-flex justify-content-between align-items-center mt-3">
+      <span>Total:</span>
+      <span class="total-price">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+    </div>
+    -->
+  </div>
+
+  <!-- Footer -->
+  <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
+    <div class="d-flex justify-content-between mb-2">
+      <span class="text-dark font-weight-bold">Subtotal:</span>
+      <span class="text-dark">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+    </div>
+    <button class="btn btn-primary btn-block mb-2 w-100" (click)="goToCheckout()">
+      Ir a Pagar <i class="icon-long-arrow-right"></i>
+    </button>
+    <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">
+      Ver carrito
+    </a>
+  </div>
+</div>
+
+<!-- Fondo oscurecido -->
+<div class="cart-overlay" *ngIf="isCartOpen" (click)="toggleCart()"></div>

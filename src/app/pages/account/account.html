@@ -62,9 +62,10 @@
                                                 <h3 class="card-title">#{{sale.id}}</h3><!-- End .card-title -->
 
                                                 <p>
-                                                    {{sale.subtotal}}<br>
-                                                    {{sale.delivery}}<br>
-                                                    {{sale.total}}<br>
+                                                    {{sale.created | date:'dd/MM/yyyy'}}<br>
+                                                    {{sale.statename}}<br>
+                                                    {{sale.total |
+                                                currency:'COP':'symbol':'1.0-0':'es-CO'}}<br>
                                                     
                                                     <a href="#">Ver resumen <i class="icon-eye"></i></a>
                                                 </p>

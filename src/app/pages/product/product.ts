@@ -191,21 +191,11 @@ this.productTableHtml = `
       variationSku: this.selectedVariation.sku,
       image: this.product.images?.[0]?.url,
       measure: this.selectedVariation.measure,
-      color: this.selectedVariation.color
+      color: this.selectedVariation.color,
+      slug: this.product.slug
     });
   // 🔄 Notificar al Header para que se actualice
     this.sharedService.notifyCartUpdated();
-
-    // Mostrar la cart-dropdown manualmente
-  const dropdown = document.querySelector('.cart-dropdown');
-  if (dropdown) {
-    dropdown.classList.add('show');
-
-    // Ocultarla después de 2 segundos
-    setTimeout(() => {
-      dropdown.classList.remove('show');
-    }, 2000);
-  }
     console.log('🛒 Agregado al carrito:', this.selectedVariation);
   }
 }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ActivatedRoute,Router,RouterModule } from '@angular/router';
+import { ActivatedRoute,Router,RouterModule,NavigationEnd  } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { HeaderService } from "../../services/header";
@@ -22,6 +22,10 @@ export class Header implements AfterViewInit {
   menu: any ;
   totalPrice: number=0;
   results: any[] = [];
+
+  isCartOpen: boolean = false;
+
+
   private searchSubject = new Subject<string>();
   constructor(
       private route: ActivatedRoute,
@@ -30,7 +34,8 @@ export class Header implements AfterViewInit {
       private sharedService: SharedService,
       private searchService: SearchService,
       private authService: AuthService,
-       private router: Router
+       private router: Router,
+      
     ) {
       this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
       if (query.length > 2) {
@@ -62,6 +67,12 @@ export class Header implements AfterViewInit {
   ngAfterViewInit(): void {
     this.results = [];
     this.getMenu(); // Carga el menú y luego ejecuta reinicio con delay
+     // Cierra el carrito cuando cambia de ruta
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isCartOpen = false;
+      }
+    });
   }
   
  reiniciarMenuMolla(): void {
@@ -135,6 +146,7 @@ export class Header implements AfterViewInit {
      this.cartCount = this.cartService.getTotalItems();
       this.cartItems = this.getCartItems();
       this.totalPrice = this.cartService.getTotalPrice();
+      this.toggleCart();
   }
   ngOnDestroy(): void {
     // Aquí podrías limpiar recursos si es necesario
@@ -194,4 +206,12 @@ export class Header implements AfterViewInit {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+  toggleCart() {
+    this.isCartOpen = !this.isCartOpen;
+  }
+  goToCheckout(): void {
+    this.toggleCart(); // Cierra el aside si quieres
+    this.router.navigate(['/checkout']);
+  }
+
 }

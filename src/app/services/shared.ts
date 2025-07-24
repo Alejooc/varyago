@@ -9,4 +9,7 @@ export class SharedService {
   notifyCartUpdated() {
     this.cartUpdated.next();
   }
+  toggleCart() {
+    this.notifyCartUpdated();
+  }
 }

@@ -175,7 +175,12 @@ this.productTableHtml = `
     if (!text) return '';
     return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
-
+ onQuantityChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const qty = Number(input.value);
+    this.product.qty = qty;
+    console.log('Cantidad cambiada:', qty);
+  }
   addToCart() {
     if (!this.selectedVariation) {
       alert('❌ Selección inválida');
@@ -186,7 +191,7 @@ this.productTableHtml = `
       id: this.product.id,
       name: this.product.name,
       price: parseFloat(this.selectedVariation.price2),
-      quantity: 1,
+      quantity: this.product.qty,
       variationId: this.selectedVariation.id,
       variationSku: this.selectedVariation.sku,
       image: this.product.images?.[0]?.url,

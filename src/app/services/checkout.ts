@@ -30,6 +30,6 @@ export class CheckoutService {
   }
 
   submitOrder(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.API}/order`, payload);
+    return this.http.post<any>(`${this.API}/submit`, payload);
   }
 }

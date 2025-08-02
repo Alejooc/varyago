@@ -39,7 +39,7 @@ export class Checkout implements OnInit {
       department: ['', Validators.required],
       city: ['', Validators.required],
       notes: [''],
-      payment_method: ['', Validators.required]
+      payment_method: ['']
     });
 
     this.cartItems = this.cartService.getCart();
@@ -89,17 +89,23 @@ export class Checkout implements OnInit {
   }
 
   submitOrder(): void {
-    console.log('Enviando orden con los siguientes datos:', this.checkoutForm.value);
+    //console.log('Enviando orden con los siguientes datos:', this.checkoutForm.value);
     
     if (this.checkoutForm.valid) {
       const payload = {
         ...this.checkoutForm.value,
         cart: this.cartItems,
-        total: this.total
+        total: this.total,
+        shippingCost: this.shippingCost,
+        paymentMethod: this.selectedPaymentMethod.pmg_id
       };
+      console.log('Datos de la orden:', payload);
+      
       this.checkoutService.submitOrder(payload).subscribe(res => {
         console.log('✅ Orden enviada:', res);
       });
+    }else {
+      console.error('Formulario inválido');
     }
   }
 }

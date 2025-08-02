@@ -3,11 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { CheckoutService } from '../../services/checkout';
+import { LoadingService } from '../../services/loader';
+import { LoadingComponent } from '../loader/loader';
 import { ActivatedRoute,Router,RouterModule } from '@angular/router';
+import { SharedService } from '../../services/shared';
 
 @Component({
   selector: 'app-checkout',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
@@ -25,11 +28,12 @@ export class Checkout implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private router: Router
+    private router: Router,private loadingService: LoadingService,private sharedService: SharedService
 
   ) {}
 
   ngOnInit(): void {
+     
     this.checkoutForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -103,15 +107,19 @@ export class Checkout implements OnInit {
         paymentMethod: this.selectedPaymentMethod.pmg_id
       };
       console.log('Datos de la orden:', payload);
-      
+       this.loadingService.show();
       this.checkoutService.submitOrder(payload).subscribe(res => {
-        console.log('✅ Orden enviada:', res);
+         this.loadingService.hide();
+        
         if(res.type == 1){
+          this.cartService.clearCart();
+          this.sharedService.notifyCartUpdated();
           this.router.navigate(['/confirm', res.order_id]);
         }
       });
     }else {
       console.error('Formulario inválido');
+       this.loadingService.hide();
     }
   }
 }

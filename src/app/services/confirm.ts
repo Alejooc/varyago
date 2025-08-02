@@ -12,7 +12,7 @@ export class ConfirmService {
   constructor(private http: HttpClient) {}
 
   getOrderDetails(orderId: string): Observable<any> {
-    return this.http.post<any>(`${this.API}/order`, { orderId });
+    return this.http.post<any>(`${this.API}/sale`, { orderId });
   }
   
 }

@@ -80,7 +80,7 @@ export class Product implements OnInit {
  let variations: any[] = [];
     this.productService.getProductById(productId).subscribe(res => {
       this.product = res;
-
+      this.product.qty = 1; // Inicializar cantidad en 1
       variations = this.product.variaciones;
       let tableRows = '';
 

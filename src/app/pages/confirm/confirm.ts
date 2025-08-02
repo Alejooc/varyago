@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmService } from '../../services/confirm';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,RouterModule } from '@angular/router';
 @Component({
   selector: 'app-confirm',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './confirm.html',
   styleUrl: './confirm.scss'
 })

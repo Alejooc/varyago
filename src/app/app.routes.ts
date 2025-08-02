@@ -9,6 +9,7 @@ import { Product } from './pages/product/product';
 import { Account } from './pages/account/account';
 import { Page } from './pages/page/page';
 import { Search } from './pages/search/search';
+import { Confirm } from './pages/confirm/confirm';
 export const routes: Routes = [
 
     { path: '', component: Home },
@@ -19,7 +20,8 @@ export const routes: Routes = [
     { path: 'product/:id', component: Product }, // ✅ Ruta dinámica
     { path: 'checkout', component: Checkout},
     { path: 'pages/:id', component: Page},
-    { path: 'search/:id', component: Search }
+    { path: 'search/:id', component: Search },
+    { path: 'confirm/:id', component: Confirm }, // Asegúrate de importar correctamente el componente confirm
     //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
 
 ];

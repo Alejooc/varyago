@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { CheckoutService } from '../../services/checkout';
+import { ActivatedRoute,Router,RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -23,7 +24,9 @@ export class Checkout implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private router: Router
+
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +106,9 @@ export class Checkout implements OnInit {
       
       this.checkoutService.submitOrder(payload).subscribe(res => {
         console.log('✅ Orden enviada:', res);
+        if(res.type == 1){
+          this.router.navigate(['/confirm', res.order_id]);
+        }
       });
     }else {
       console.error('Formulario inválido');

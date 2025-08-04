@@ -24,6 +24,7 @@ export class Checkout implements OnInit {
   cities: any[] = [];
   paymentMethods: any[] = [];
   selectedPaymentMethod: any = null;
+  showError = false;
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
@@ -117,8 +118,10 @@ export class Checkout implements OnInit {
           this.router.navigate(['/confirm', res.order_id]);
         }
       });
+      this.showError = false;
     }else {
       console.error('Formulario inválido');
+      this.showError = true;
        this.loadingService.hide();
     }
   }

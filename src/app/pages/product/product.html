@@ -47,13 +47,19 @@
                                 </div><!-- End .ratings -->
                                 <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                             </div><!-- End .rating-container -->
-                            <div class="product-content" [innerHTML]="truncateDesc(product?.desc,250)">
+                            <div class="product-content mb-3" [innerHTML]="truncateDesc(product?.desc,250)">
                                
                             </div><!-- End .product-content -->
-                           <div class="product-price d-flex align-items-end" *ngIf="selectedVariation">
+                            <div class="product-price d-flex align-items-end" *ngIf="selectedVariation">
                             {{ selectedVariation.price2 | currency:'COP':'symbol':'1.0-0':'es-CO'}}
                             <span style="font-size: 13px; margin-left: 6px; align-self: flex-end;"><b>Hoy</b></span>
+                            <span *ngIf="selectedVariation.discount>0" class="badge label-discount" style="margin-left: 8px; font-size: 13px;align-self: flex-start;">{{ selectedVariation.discount }}% OFF</span>
                             </div>
+                            <div class="product-price product-price-antes d-flex align-items-end mb-3" *ngIf="selectedVariation">
+                               <span class="product-price-antesSpan"> {{ selectedVariation.price | currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
+                                <span style="font-size: 12px; margin-left: 6px; align-self: flex-end;text-decoration: none;"><b>Antes</b></span>
+                           </div>
+                                
 
 
                             

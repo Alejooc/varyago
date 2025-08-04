@@ -19,6 +19,9 @@
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
                 </div>--><!-- End .checkout-discount -->
+                <div *ngIf="showError" class="alert alert-danger" role="alert">
+                    Por favor completa todos los campos requeridos antes de continuar.
+                </div>
                 <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
                     <div class="row">
                         <div class="col-lg-9">
@@ -61,7 +64,7 @@
                             <input type="text" formControlName="address1" class="form-control"
                                 placeholder="Calle 1#2-3 barrio pepito" required>
                             <input type="text" formControlName="address2" class="form-control"
-                                placeholder="Apartamento, Casa, Unidad etc ..." required>
+                                placeholder="Apartamento, Casa, Unidad etc ...">
 
                             <div class="row">
                                 <div class="col-sm-6">

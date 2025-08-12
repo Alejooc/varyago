@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmService } from '../../services/confirm';
-import { ActivatedRoute,RouterModule } from '@angular/router';
+import { ActivatedRoute,RouterModule,Router } from '@angular/router';
 @Component({
   selector: 'app-confirm',
   imports: [CommonModule,RouterModule],
@@ -11,14 +11,34 @@ import { ActivatedRoute,RouterModule } from '@angular/router';
 export class Confirm implements OnInit {
   orderDetails: any = {};
   orderId: string | null = null;
+  error = '';
 
-  constructor(private confirmService: ConfirmService,private route: ActivatedRoute,) {}
+  constructor(private confirmService: ConfirmService,private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.orderId = this.getOrderIdFromRoute();
+    // 1) Lee id de param o de query (?id=...)
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const idQuery = this.route.snapshot.queryParamMap.get('id');
+    const txId = idParam ?? idQuery;
+
+    if (!txId) {
+      this.error = 'No se recibió el ID de la transacción.';
+      return;
+    }
+    // 2) Normaliza: si vino como query, conviértelo a /confirm/:id
+    if (!idParam && idQuery) {
+      this.router.navigate(['/confirm', txId], { replaceUrl: true });
+      return;
+    }
+
+    // 3) Carga detalles
+    this.orderId = txId;
+    this.fetchOrderDetails(txId);
+
+    /*this.orderId = this.getOrderIdFromRoute();
     if (this.orderId) {
       this.fetchOrderDetails(this.orderId);
-    }
+    }*/
   }
 
   getOrderIdFromRoute() {
@@ -31,17 +51,14 @@ export class Confirm implements OnInit {
     return this.orderId;
   }
 
-  fetchOrderDetails(orderId: string): void {
-    // Aquí deberías implementar la lógica para obtener los detalles de la orden
-    // Por ejemplo, llamando a un servicio que haga una petición HTTP
-    this.confirmService.getOrderDetails(orderId).subscribe(
-      (data) => {
-        this.orderDetails = data;
-      },
-      (error) => {
-        console.error('Error fetching order details:', error);
+  private fetchOrderDetails(id: string): void {
+    this.confirmService.getOrderDetails(id).subscribe({
+      next: (data) => { this.orderDetails = data; },
+      error: (err) => {
+        console.error('Error fetching order details:', err);
+        this.error = 'No se pudo verificar la transacción.';
       }
-    );
+    });
   }
 
 }

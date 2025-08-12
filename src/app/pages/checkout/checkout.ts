@@ -115,6 +115,24 @@ export class Checkout implements OnInit {
         if(res.type == 1){
           this.cartService.clearCart();
           this.sharedService.notifyCartUpdated();
+          
+          if (res.payment?.method === 'wompi_webcheckout') {
+            const { endpoint, params } = res.payment;
+            const form = document.createElement('form');
+            form.action = endpoint;   // "https://checkout.wompi.co/p/"
+            form.method = 'GET';
+            Object.entries(params).forEach(([k, v]) => {
+              if (v == null || v === '') return;
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = String(k);
+              input.value = String(v);
+              form.appendChild(input);
+            });
+            document.body.appendChild(form);
+            form.submit();
+            return;
+          }
           this.router.navigate(['/confirm', res.order_id]);
         }
       });

@@ -5,9 +5,19 @@
       <div class="text-center mb-4">
         <i class="fas fa-check-circle confirmation-icon"></i>
         <h2 class="font-weight-bold mt-3" style="color: #015959;">¡Gracias por tu compra!</h2>
-        <p class="lead">Tu orden ha sido creada exitosamente.</p>
-        <div class="alert alert-success mt-3">
-          <strong>Número de Orden:</strong> #{{orderDetails.id}}
+        <p class="lead">Tu orden  ha sido creada exitosamente.</p>
+        <h4 class="font-weight-bold"><strong>Número de Orden:</strong> #{{orderDetails.id}}</h4>
+        <div class="alert alert-success mt-3" *ngIf="orderDetails.statename == 'Aprobada'">
+          <strong>Estado de pago:</strong> {{orderDetails.statename}} <br>
+          
+        </div>
+        <div class="alert alert-warning mt-3" *ngIf="orderDetails.statename == 'Pendiente'">
+           <strong>Estado de pago:</strong> {{orderDetails.statename}} <br>
+         
+        </div>
+        <div class="alert alert-danger mt-3" *ngIf="orderDetails.statename == 'Cancelada'">
+           <strong>Estado de pago:</strong> {{orderDetails.statename}} <br>
+         
         </div>
       </div>
 

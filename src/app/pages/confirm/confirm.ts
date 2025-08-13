@@ -17,23 +17,24 @@ export class Confirm implements OnInit {
 
   ngOnInit(): void {
     // 1) Lee id de param o de query (?id=...)
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const idQuery = this.route.snapshot.queryParamMap.get('id');
-    const txId = idParam ?? idQuery;
+     const ref = this.route.snapshot.paramMap.get('ref');   // referencia en la ruta
+    const txId = this.route.snapshot.queryParamMap.get('id'); // transaction_id (query)
 
-    if (!txId) {
-      this.error = 'No se recibió el ID de la transacción.';
-      return;
+    if (!ref) {
+      this.error = 'Referencia no recibida.'; return;
     }
+    console.log(ref);
+    
+    this.orderId = ref;      // tu "track"
     // 2) Normaliza: si vino como query, conviértelo a /confirm/:id
-    if (!idParam && idQuery) {
+    if (!ref) {
       this.router.navigate(['/confirm', txId], { replaceUrl: true });
       return;
     }
 
     // 3) Carga detalles
     this.orderId = txId;
-    this.fetchOrderDetails(txId);
+    this.fetchOrderDetails(ref);
 
     /*this.orderId = this.getOrderIdFromRoute();
     if (this.orderId) {

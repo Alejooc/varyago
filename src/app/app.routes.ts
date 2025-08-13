@@ -22,7 +22,7 @@ export const routes: Routes = [
     { path: 'pages/:id', component: Page},
     { path: 'search/:id', component: Search },
     { path: 'confirm', component: Confirm },
-    { path: 'confirm/:id', component: Confirm }, // Asegúrate de importar correctamente el componente confirm
+    { path: 'confirm/:ref', component: Confirm }, // Asegúrate de importar correctamente el componente confirm
     //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
 
 ];

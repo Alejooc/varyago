@@ -28,7 +28,7 @@ export class Confirm implements OnInit {
     this.orderId = ref;      // tu "track"
     // 2) Normaliza: si vino como query, conviértelo a /confirm/:id
     if (!ref) {
-      this.router.navigate(['/confirm', txId], { replaceUrl: true });
+      this.router.navigate(['/confirm', ref], { replaceUrl: true });
       return;
     }
 

@@ -34,7 +34,7 @@ showFiltersMobile: boolean = false;
     this.route.params.subscribe(params => {
       this.categoryId = params['id'];
       this.fetchAvailableFilters();  // Carga los filtros posibles
-      
+      this.filters = {};
       this.resetAndLoad();           // Carga productos
     });
   }
@@ -67,6 +67,7 @@ closeFilters() {
     this.products = [];
     this.page = 1;
     this.hasMore = true;
+    
     this.loadMore();
   }
 
@@ -97,11 +98,16 @@ closeFilters() {
   }
   onFilterChange(type: string, value: any, checked: boolean) {
     if (!this.filters[type]) this.filters[type] = [];
-    if (checked) {
-      this.filters[type].push(value);
-    } else {
-      this.filters[type] = this.filters[type].filter((v: any) => v !== value);
+    if (type === 'order_By') {
+      this.filters[type] = value; // Para ordenamiento, solo guardamos el valor
+    }else{
+      if (checked) {
+        this.filters[type].push(value);
+      } else {
+        this.filters[type] = this.filters[type].filter((v: any) => v !== value);
+      }
     }
+    
     this.applyFilters(this.filters);
   }
 
@@ -120,6 +126,9 @@ closeFilters() {
   }
   getRangeValue(event: Event): number {
     return Number((event.target as HTMLInputElement)?.value) ?? 0;
+  }
+  getOrderValue(event: Event):any {
+    return ((event.target as HTMLInputElement)?.value) ?? 0;
   }
   onPriceChange(value: any) {
     this.filters.min_price = value;

@@ -38,10 +38,10 @@
                             <div class="toolbox-sort">
                                 <label for="sortby">Ordenar:</label>
                                 <div class="select-custom">
-                                    <select name="sortby" id="sortby" class="form-control">
-                                        <option value="price" selected="selected">Precio de menor a mayor</option>
-                                        <option value="rating">Precio de mayor a menor</option>
-                                        <option value="date">Nuevo</option>
+                                    <select name="sortby" id="sortby" class="form-control" (change)="onFilterChange('order_By', getOrderValue($event), true)">
+                                        <option value="desc" selected="selected">Precio de menor a mayor</option>
+                                        <option value="asc">Precio de mayor a menor</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                         <div class="widget widget-collapsible" *ngIf="availableFilters?.category">
                             <h3 class="widget-title">
                                 <a role="button" data-toggle="collapse" href="#widget-category" role="button"
-                                    aria-expanded="true">Category</a>
+                                    aria-expanded="true">Categoria</a>
                             </h3>
                             <div class="collapse show" id="widget-category">
                                 <div class="widget-body">
@@ -188,7 +188,7 @@
                         </div>
 
                         <!-- Color Filter -->
-                        <div class="widget widget-collapsible" *ngIf="availableFilters?.colors">
+                        <div class="widget widget-collapsible" *ngIf="availableFilters?.colors.length > 0">
                             <h3 class="widget-title">
                                 <a data-toggle="collapse" href="#widget-color" role="button"
                                     aria-expanded="true">Color</a>
@@ -230,17 +230,16 @@
                         <div class="widget widget-collapsible" *ngIf="availableFilters.price">
                             <h3 class="widget-title">
                                 <a data-toggle="collapse" href="#widget-price" role="button"
-                                    aria-expanded="true">Price</a>
+                                    aria-expanded="true">Rango de precios</a>
                             </h3>
                             <div class="collapse show" id="widget-price">
                                 <div class="widget-body">
                                     <div class="filter-price-text">
-                                        Price Range:
-                                        <span>{{ filters.min_price || availableFilters.price.min }} - {{
-                                            filters.max_price || availableFilters.price.max }}</span>
+                                        <span>{{ filters.min_price || availableFilters.price.max | currency:'COP':'symbol':'1.0-0':'es-CO'}} - {{
+                                            filters.max_price || availableFilters.price.min |currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
                                     </div>
-                                    <input type="range" [min]="availableFilters.price.min"
-                                        [max]="availableFilters.price.max"
+                                    <input type="range" [min]="availableFilters.price.max"
+                                        [max]="availableFilters.price.min"
                                         (change)="onPriceChange(getRangeValue($event))" />
                                 </div>
                             </div>

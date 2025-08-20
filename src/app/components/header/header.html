@@ -108,7 +108,7 @@
                                 <span class="wishlist-count">3</span>
                                 <span class="wishlist-txt">Wishlist</span>
                             </a>-->
-                    <div class="account">
+                    <div class="account ml-0">
                         <a (click)="account()" title="My account">
                             <div class="icon">
                                 <i class="icon-user"></i>
@@ -132,41 +132,40 @@
         </div><!-- End .container -->
         <!-- BUSCADOR SOLO EN MÓVIL -->
             <!-- BUSCADOR SOLO EN MÓVIL -->
-<div class="p-3 d-lg-none">
-    <form (submit)="preventSubmit($event)">
-        <div class="header-search-wrapper position-relative">
-            <label for="q-mobile" class="sr-only">Buscar</label>
-            <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
-                (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
+<div class=" p-3 d-lg-none">
+  <form (submit)="preventSubmit($event)">
+    <div class="header-search-wrapper position-relative">
+      <label for="q-mobile" class="sr-only">Buscar</label>
+      <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
+        (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
 
-            <button class="btn btn-primary position-absolute px-2 py-1" style="top: 50%; right: 5px; transform: translateY(-50%); height: auto; min-width: 32px;"
-                (click)="searchMore(busquedaInputMobile.value)">
-                <i class="icon-search"></i>
-            </button>
+      <button class="btn btn-primary position-absolute" style="top: 0; right: 0; height: 100%;" (click)="searchMore(busquedaInputMobile.value)">
+        <i class="icon-search"></i>
+      </button>
 
-            <!-- Resultados -->
-            <div
-                class="dropdown-menu show w-100 mt-0 py-4"
-                *ngIf="results.length > 0"
-                style="max-height: 600px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
-            >
-                <a 
-                    *ngFor="let itemSerarch of results"
-                    [routerLink]="['product', itemSerarch.slug]"
-                    (click)="onSelectItem(itemSerarch.slug)"
-                    class="dropdown-item text-left text-decoration-none"
-                    style="cursor: pointer;"
-                >
-                    <div class="text-dark mb-1 text-wrap text-break" style="white-space: normal; font-size: 13px;">
-                        {{ itemSerarch.name }}
-                    </div>
-                </a>
-                <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInputMobile.value)">
-                    Ver todos los resultados
-                </a>
-            </div>
-        </div>
-    </form>
+      <!-- Resultados -->
+      <div
+        class="dropdown-menu show w-100 mt-0 py-4"
+        *ngIf="results.length > 0"
+        style="max-height: 600px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
+      >
+        <a 
+          *ngFor="let itemSerarch of results"
+          [routerLink]="['product', itemSerarch.slug]"
+          (click)="onSelectItem(itemSerarch.slug)"
+          class="dropdown-item text-left text-decoration-none"
+          style="cursor: pointer;"
+        >
+          <div class="text-dark mb-1 text-wrap text-break" style="white-space: normal; font-size: 13px;">
+            {{ itemSerarch.name }}
+          </div>
+        </a>
+         <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInputMobile.value)">
+                                    Ver todos los resultados
+                                </a>
+      </div>
+    </div>
+  </form>
 </div>
     </div><!-- End .header-middle -->
 

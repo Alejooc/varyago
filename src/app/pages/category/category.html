@@ -55,6 +55,7 @@
                                 <div class="product product-7 text-center">
                                     <figure class="product-media">
                                         <span class="product-label label-new">Nuevo</span>
+                                        <!--<span class="product-label label-sale">Promoción</span>-->
                                         <a [routerLink]="['/product', product.slug]">
                                             <img [src]="product.url" alt="Product image" class="product-image">
                                         </a>
@@ -78,8 +79,11 @@
                                         </h3>
                                         <!-- End .product-title -->
                                         <div class="product-price">
-                                            <span class="new-price">Desde {{product.pricemostrar |
-                                                currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
+                                             <span class="new-price">Desde {{ product.pricemostrar | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+                                            <span class="old-price">
+                                                <s>{{ product.pricemostrartachado | currency:'COP':'symbol':'1.0-0':'es-CO' }}</s>
+                                            </span>
+                                           
 
                                         </div><!-- End .product-price -->
                                         <div class="product-action d-none d-lg-block" style="position:relative;left: 0;">
@@ -232,16 +236,28 @@
                                 <a data-toggle="collapse" href="#widget-price" role="button"
                                     aria-expanded="true">Rango de precios</a>
                             </h3>
-                            <div class="collapse show" id="widget-price">
-                                <div class="widget-body">
+                            <div class="collapse show" id="widget-5">
+                                <!--<div class="widget-body">
                                     <div class="filter-price-text">
                                         <span>{{ filters.min_price || availableFilters.price.max | currency:'COP':'symbol':'1.0-0':'es-CO'}} - {{
                                             filters.max_price || availableFilters.price.min |currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
                                     </div>
                                     <input type="range" [min]="availableFilters.price.max"
                                         [max]="availableFilters.price.min"
-                                        (change)="onPriceChange(getRangeValue($event))" />
-                                </div>
+                                        (change)="onPriceChange(getRangeValue($event))" />.
+
+                                        
+                                </div>-->
+                                <div class="widget-body">
+                                            <div class="filter-price">
+                                                <div class="filter-price-text">
+                                                    Price Range:
+                                                    <span id="filter-price-range"></span>
+                                                </div><!-- End .filter-price-text -->
+
+                                                <div id="price-slider"></div><!-- End #price-slider -->
+                                            </div><!-- End .filter-price -->
+										</div>
                             </div>
                         </div>
                     </div>

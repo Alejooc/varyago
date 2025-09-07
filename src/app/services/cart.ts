@@ -10,6 +10,7 @@ export interface CartItem {
   variationSku?: string;
   measure?: string;
   color?: string;
+  slug?: string;
   [key: string]: any;
 }
 

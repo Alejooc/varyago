@@ -16,6 +16,8 @@ export class Cart {
 
   ngOnInit(): void {
     this.cart = this.cartService.getCart();
+    console.log(this.cart);
+    
   }
 
   updateQuantity(item: CartItem, qty: number) {

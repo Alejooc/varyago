@@ -25,6 +25,7 @@ export class Checkout implements OnInit {
   paymentMethods: any[] = [];
   selectedPaymentMethod: any = null;
   showError = false;
+  shippingCod:any= 1;
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
@@ -82,8 +83,10 @@ export class Checkout implements OnInit {
     if (cityId) {
       this.checkoutService.getShippingInfo(cityId,this.subtotal,this.cartItems).subscribe(rate => {
         this.shippingCost = rate.valor; // o rate.valor dependiendo de tu base
+         this.shippingCod = rate.contraentrega; // o rate.valor dependiendo de tu base
         this.total = this.subtotal + this.shippingCost;
       });
+     console.log(this.shippingCod);
      
     }
   }

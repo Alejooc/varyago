@@ -22,7 +22,17 @@ export class Header implements AfterViewInit {
   menu: any ;
   totalPrice: number=0;
   results: any[] = [];
-
+  notifyMessages = [
+    '🚚 Envio gratis en pedidos superiores a $250.000',
+    '🆕 Nuevos productos cada semana',
+    '📞 Atencion al cliente 24/7',
+    '💸 Garantia de devolucion de dinero',
+    '🔒 Pagos seguros en linea',
+    '🎁 Sorpresas y descuentos exclusivos',
+    '⭐ Productos de alta calidad garantizada',
+    '🌍 Enviamos a todo el pais',
+    '🛒 Compra facil y rapida',
+  ];
   isCartOpen: boolean = false;
 
 

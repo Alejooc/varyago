@@ -16,7 +16,9 @@ export class App {
   this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
       this.zoomCleaner.destroyAllZoom();
+      
     }
+     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   });
 }
 }

@@ -1,9 +1,23 @@
-<!--<div class="notification">
-    <div class="notify-content">
-        <h3>FREE SHIPPING FOR ALL ORDERS OVER $50</h3>
+<div id="notifyCarousel"
+     class="carousel slide notification"
+     data-ride="carousel"
+     data-interval="3500"
+     data-pause="hover"
+     data-wrap="true">
+
+  <div class="carousel-inner">
+    <div class="carousel-item"
+         *ngFor="let msg of notifyMessages; let i = index"
+         [class.active]="i === 0">
+      <div class="notify-content d-flex justify-content-center align-items-center">
+        <h3 class="m-0">{{ msg }}</h3>
+      </div>
     </div>
-    
-</div>-->
+  </div>
+</div>
+
+
+
 <header class="header header-10 header-intro-clearance">
     <!--<div class="header-top">
                 <div class="container">

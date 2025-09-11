@@ -8,7 +8,7 @@ import { LoadingComponent } from '../loader/loader';
 import { ActivatedRoute,Router,RouterModule } from '@angular/router';
 import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
-
+const uuid = () => crypto.randomUUID();
 @Component({
   selector: 'app-checkout',
   imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
@@ -65,7 +65,7 @@ export class Checkout implements OnInit {
         this.paymentMethods = methods;
       });
     const items = this.cartItems.map(p => ({ id: p.variationSku, quantity: p.quantity }));
-    console.log(items);
+    console.log(uuid());
     
     this.pixel.initiateCheckout({
       contents: items,
@@ -147,6 +147,14 @@ export class Checkout implements OnInit {
             return;
           }
           this.router.navigate(['/confirm', res.order_id]);
+          const eventId = uuid(); // o genera un string único
+          this.pixel.purchase({
+            contents: this.cartItems.map(i => ({ id: i.variationSku, quantity: i.quantity })),
+            value: Number(this.total),
+            currency: 'COP',
+            order_id: res.order_id,
+            event_id: eventId
+          });
         }
       });
       this.showError = false;

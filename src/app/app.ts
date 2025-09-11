@@ -4,6 +4,8 @@ import { Footer} from './components/footer/footer'; // ← ajusta ruta real
 import { Header } from './components/header/header'; // ← también importa el header si lo usas
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ZoomCleanerService } from './services/zoom-cleaner';
+import { MetaPixel } from './services/meta-pixel';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,Footer, Header,ReactiveFormsModule],
@@ -12,7 +14,8 @@ import { ZoomCleanerService } from './services/zoom-cleaner';
 })
 export class App {
   protected title = 'varyago';
-  constructor(private router: Router, private zoomCleaner: ZoomCleanerService) {
+  constructor(private router: Router, private zoomCleaner: ZoomCleanerService,private pixel: MetaPixel) {
+    this.pixel.init();
   this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
       this.zoomCleaner.destroyAllZoom();

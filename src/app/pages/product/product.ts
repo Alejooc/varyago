@@ -1,10 +1,12 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { ProductService } from '../../services/product';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart';
 import { SharedService } from '../../services/shared';
+import { MetaPixel } from '../../services/meta-pixel';
+
 declare var $: any; // Para usar jQuery
 
 @Component({
@@ -12,7 +14,8 @@ declare var $: any; // Para usar jQuery
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './product.html',
-  styleUrl: './product.scss'
+  styleUrl: './product.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Product implements OnInit {
   product!: any;
@@ -29,7 +32,8 @@ export class Product implements OnInit {
     private productService: ProductService,
     private fb: FormBuilder,
     private cartService: CartService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private pixel: MetaPixel
     
   ) {}
   ngAfterViewInit() {
@@ -166,6 +170,13 @@ this.productTableHtml = `
             : v.measure === val.measure
         );
       });
+      
+    });
+    this.pixel.viewContent({
+      content_ids: [this.selectedVariation.sku || String(this.selectedVariation.id)],
+      content_type: 'product',
+      value: Number(this.selectedVariation.price2),   // precio visible
+      currency: 'COP'
     });
   }
   selectColor(color: string): void {
@@ -202,5 +213,15 @@ this.productTableHtml = `
   // 🔄 Notificar al Header para que se actualice
     this.sharedService.notifyCartUpdated();
     console.log('🛒 Agregado al carrito:', this.selectedVariation);
+    this.pixel.addToCart({
+      content_ids: [this.selectedVariation.sku],
+      content_type: 'product',
+      value: Number(this.selectedVariation.price2), // valor del ítem agregado
+      currency: 'COP',
+      contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty }]
+    });
   }
+  toNumber(v: any): number {
+  return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));
+}
 }

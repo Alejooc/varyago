@@ -7,6 +7,7 @@ import { LoadingService } from '../../services/loader';
 import { LoadingComponent } from '../loader/loader';
 import { ActivatedRoute,Router,RouterModule } from '@angular/router';
 import { SharedService } from '../../services/shared';
+import { MetaPixel } from '../../services/meta-pixel';
 
 @Component({
   selector: 'app-checkout',
@@ -30,7 +31,7 @@ export class Checkout implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private router: Router,private loadingService: LoadingService,private sharedService: SharedService
+    private router: Router,private loadingService: LoadingService,private sharedService: SharedService,private pixel: MetaPixel
 
   ) {}
 
@@ -52,7 +53,7 @@ export class Checkout implements OnInit {
     });
 
     this.cartItems = this.cartService.getCart();
-    //console.log(this.cartItems[0].name);
+    console.log(this.cartItems);
     
     this.subtotal = this.cartService.getTotalPrice();
     this.total = this.subtotal;
@@ -63,6 +64,15 @@ export class Checkout implements OnInit {
      this.checkoutService.getPaymentMethods().subscribe(methods => {
         this.paymentMethods = methods;
       });
+    const items = this.cartItems.map(p => ({ id: p.variationSku, quantity: p.quantity }));
+    console.log(items);
+    
+    this.pixel.initiateCheckout({
+      contents: items,
+      num_items: this.cartItems.reduce((a,b)=>a+b.qty, 0),
+      value: Number(this.total),
+      currency: 'COP'
+    });
   }
    
   onDepartmentChange(event: Event): void {

@@ -60,7 +60,36 @@
                                 <span style="font-size: 12px; margin-left: 6px; align-self: flex-end;text-decoration: none;"><b>Antes</b></span>
                            </div>
                                 
-
+                             <addi-widget *ngIf="selectedVariation"
+        [price]="toNumber(selectedVariation?.price)"
+        ally-slug="varyago-ecommerce"
+        custom-widget-styles='{
+            "widget": {
+                "borderColor": "blue",
+                "borderRadius": "5px",
+                "fontColor": "blue",
+                "fontFamily": "system-ui",
+                "fontSize": "14px",
+                "badgeBackgroundColor": "white",
+                "infoBackgroundColor": "transparent",
+                "margin": "0",
+                "whiteLogo": "true"
+            },
+            "modal": {
+                "backgroundColor": "#eee",
+                "fontColor": "blue",
+                "fontFamily": "system-ui",
+                "priceColor": "#3c65ec",
+                "badgeBorderRadius": "5px",
+                "badgeBackgroundColor": "#4cbd99",
+                "badgeFontColor": "black",
+                "cardColor": "white",
+                "buttonBorderColor": "#4cbd99",
+                "buttonBorderRadius": "5px",
+                "buttonBackgroundColor": "transparent",
+                "buttonFontColor": "#4cbd99"
+            }
+        }'></addi-widget>
 
                             
                             
@@ -93,7 +122,7 @@
                                   </div>
                                 </div>
                               </form>
-                            
+                           
                             <div class="product-stock" *ngIf="selectedVariation">
                                 {{ selectedVariation?.cant }} disponibles
                             </div><!-- End .product-price -->

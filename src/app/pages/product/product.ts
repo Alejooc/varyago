@@ -6,9 +6,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart';
 import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
+import { MetaCapi } from '../../services/meta-capi';
 
 declare var $: any; // Para usar jQuery
-
+const uuid = () => crypto.randomUUID();
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -33,7 +34,8 @@ export class Product implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private sharedService: SharedService,
-    private pixel: MetaPixel
+    private pixel: MetaPixel,
+    private capi: MetaCapi
     
   ) {}
   ngAfterViewInit() {
@@ -212,7 +214,7 @@ this.productTableHtml = `
     });
   // 🔄 Notificar al Header para que se actualice
     this.sharedService.notifyCartUpdated();
-    console.log('🛒 Agregado al carrito:', this.selectedVariation);
+     const eventId = uuid(); // o genera un string único
     this.pixel.addToCart({
       content_ids: [this.selectedVariation.sku],
       content_type: 'product',
@@ -220,6 +222,18 @@ this.productTableHtml = `
       currency: 'COP',
       contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty }]
     });
+    this.capi.sendEvent('AddToCart', {
+      event_id: eventId, // genera un ID único
+      value: Number(this.selectedVariation.price2) * this.product.qty,
+      currency: 'COP',
+      contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty, item_price: Number(this.selectedVariation.price2) }],
+      client_user_agent: navigator.userAgent,
+      event_source_url: window.location.href
+    }).subscribe({
+      next: res => console.log('CAPI AddToCart enviado', res),
+      error: err => console.error('Error CAPI AddToCart', err)
+    });
+    
   }
   toNumber(v: any): number {
   return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));

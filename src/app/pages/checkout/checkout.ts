@@ -29,6 +29,7 @@ export class Checkout implements OnInit {
   selectedPaymentMethod: any = null;
   showError = false;
   shippingCod:any= 1;
+  cantITems: any= 0;
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
@@ -62,6 +63,7 @@ export class Checkout implements OnInit {
   
     
     this.subtotal = this.cartService.getTotalPrice();
+    this.cantITems = this.cartService.getTotalItems();
     this.total = this.subtotal;
 
     this.checkoutService.getDepartments().subscribe(data => {
@@ -74,7 +76,7 @@ export class Checkout implements OnInit {
     
     this.pixel.initiateCheckout({
       contents: items,
-      num_items: this.cartItems.reduce((a,b)=>a+b.qty, 0),
+      num_items: this.cantITems,
       value: Number(this.total),
       currency: 'COP'
     });
@@ -158,25 +160,15 @@ export class Checkout implements OnInit {
             order_id: res.order_id,
             event_id: eventId
           });
-
-          this.capi.sendPurchase({
+          this.capi.sendEvent('Purchase', {
             event_id: eventId,
-            order_id: res.order_id,
-            value: Number(this.total),
+            order_id: res.order.id,
+            value: this.total,
             currency: 'COP',
-            contents: this.cartItems.map(i => ({
-              id: i.variationSku,
-              quantity: i.quantity,
-              item_price: Number(i.price2) // opcional pero útil
-            })),
+            contents: this.cartItems.map(i => ({ id: i.variationSku, quantity: i.quantity, item_price: i.price2 })),
             client_user_agent: navigator.userAgent,
-            // opcional si tienes consentimiento explícito:
-            // email: order.customer?.email,
-            // phone: order.customer?.phone,
-          }).subscribe({
-            next: () => {},
-            error: (e) => console.error('CAPI purchase error', e)
-          });
+            event_source_url: window.location.href
+          }).subscribe();
         }
       });
       this.showError = false;

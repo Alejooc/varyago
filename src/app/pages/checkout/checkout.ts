@@ -8,6 +8,8 @@ import { LoadingComponent } from '../loader/loader';
 import { ActivatedRoute,Router,RouterModule } from '@angular/router';
 import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
+import { MetaCapi } from '../../services/meta-capi';
+
 const uuid = () => crypto.randomUUID();
 @Component({
   selector: 'app-checkout',
@@ -31,7 +33,11 @@ export class Checkout implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private router: Router,private loadingService: LoadingService,private sharedService: SharedService,private pixel: MetaPixel
+    private router: Router,
+    private loadingService: LoadingService,
+    private sharedService: SharedService,
+    private pixel: MetaPixel,
+    private capi: MetaCapi
 
   ) {}
 
@@ -53,7 +59,7 @@ export class Checkout implements OnInit {
     });
 
     this.cartItems = this.cartService.getCart();
-    console.log(this.cartItems);
+  
     
     this.subtotal = this.cartService.getTotalPrice();
     this.total = this.subtotal;
@@ -65,7 +71,6 @@ export class Checkout implements OnInit {
         this.paymentMethods = methods;
       });
     const items = this.cartItems.map(p => ({ id: p.variationSku, quantity: p.quantity }));
-    console.log(uuid());
     
     this.pixel.initiateCheckout({
       contents: items,
@@ -86,7 +91,6 @@ export class Checkout implements OnInit {
   }
  selectPaymentMethod(method: any) {
   this.selectedPaymentMethod = method;
-  console.log('Método seleccionado:', method);
 }
   onCityChange(event: Event): void {
     let cityId:any = +(event.target as HTMLSelectElement).value;
@@ -96,8 +100,7 @@ export class Checkout implements OnInit {
          this.shippingCod = rate.contraentrega; // o rate.valor dependiendo de tu base
         this.total = this.subtotal + this.shippingCost;
       });
-     console.log(this.shippingCod);
-     
+
     }
   }
 
@@ -120,7 +123,7 @@ export class Checkout implements OnInit {
         shippingCost: this.shippingCost,
         paymentMethod: this.selectedPaymentMethod.pmg_id
       };
-      console.log('Datos de la orden:', payload);
+      
        this.loadingService.show();
       this.checkoutService.submitOrder(payload).subscribe(res => {
          this.loadingService.hide();
@@ -154,6 +157,25 @@ export class Checkout implements OnInit {
             currency: 'COP',
             order_id: res.order_id,
             event_id: eventId
+          });
+
+          this.capi.sendPurchase({
+            event_id: eventId,
+            order_id: res.order_id,
+            value: Number(this.total),
+            currency: 'COP',
+            contents: this.cartItems.map(i => ({
+              id: i.variationSku,
+              quantity: i.quantity,
+              item_price: Number(i.price2) // opcional pero útil
+            })),
+            client_user_agent: navigator.userAgent,
+            // opcional si tienes consentimiento explícito:
+            // email: order.customer?.email,
+            // phone: order.customer?.phone,
+          }).subscribe({
+            next: () => {},
+            error: (e) => console.error('CAPI purchase error', e)
           });
         }
       });

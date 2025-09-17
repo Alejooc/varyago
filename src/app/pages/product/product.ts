@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart';
 import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
 import { MetaCapi } from '../../services/meta-capi';
+import { Gtm } from '../../services/gtm';
 
 declare var $: any; // Para usar jQuery
 const uuid = () => crypto.randomUUID();
@@ -35,7 +36,8 @@ export class Product implements OnInit {
     private cartService: CartService,
     private sharedService: SharedService,
     private pixel: MetaPixel,
-    private capi: MetaCapi
+    private capi: MetaCapi,
+    private gtm: Gtm
     
   ) {}
   ngAfterViewInit() {
@@ -121,7 +123,7 @@ this.productTableHtml = `
     <table class="table table-striped table-bordered table-hover shadow-sm rounded text-center">
       <thead class="thead-white bg-primary text-white">
         <tr>
-          <th class="align-middle p-3 text-white">Características</th>
+          <th class="align-middle p-3 text-white">Característica</th>
           <th class="align-middle p-3 text-white">Detalle</th>
         </tr>
       </thead>
@@ -163,7 +165,12 @@ this.productTableHtml = `
           ...new Set(variations.map(v => v.measure).filter(Boolean))
         ];
       }
-
+      this.productForm.patchValue({ measure: this.measures[0] });
+      // Ejecutar valueChanges manualmente al inicializar el valor de measure
+      setTimeout(() => {
+        this.productForm.updateValueAndValidity();
+        
+      });
       // Siempre: al cambiar medida (y color si aplica), buscar la variación
       this.productForm.valueChanges.subscribe(val => {
         this.selectedVariation = variations.find(v =>
@@ -171,16 +178,27 @@ this.productTableHtml = `
             ? v.color === val.color && v.measure === val.measure
             : v.measure === val.measure
         );
+         this.gtm.viewItem({
+          currency: 'COP',
+          value:Number(this.selectedVariation.price2),
+          items: [{ item_id: this.selectedVariation.sku, item_name: this.product.name, price: this.selectedVariation.price2, quantity: this.product.qty }]
+          });
+          console.log('cambia la info');
+          const eventId = uuid(); // o genera un string único
+        this.pixel.viewContent({
+          content_ids: [this.selectedVariation.sku],
+          content_type: 'product',
+          value: Number(this.selectedVariation.price2),   // precio visible
+          currency: 'COP'
+        },eventId);
       });
-      
+     
     });
-    this.pixel.viewContent({
-      content_ids: [this.selectedVariation.sku || String(this.selectedVariation.id)],
-      content_type: 'product',
-      value: Number(this.selectedVariation.price2),   // precio visible
-      currency: 'COP'
-    });
+    
+    
+    
   }
+  
   selectColor(color: string): void {
     this.productForm.patchValue({ color });
   }
@@ -214,6 +232,11 @@ this.productTableHtml = `
     });
   // 🔄 Notificar al Header para que se actualice
     this.sharedService.notifyCartUpdated();
+    this.gtm.addToCart({
+      currency: 'COP',
+      value: Number(this.selectedVariation.price2) * this.product.qty,
+      items: [{ item_id: this.selectedVariation.sku, item_name: this.product.name, price: Number(this.selectedVariation.price2), quantity: this.product.qty }]
+    });
      const eventId = uuid(); // o genera un string único
     this.pixel.addToCart({
       content_ids: [this.selectedVariation.sku],
@@ -221,7 +244,7 @@ this.productTableHtml = `
       value: Number(this.selectedVariation.price2), // valor del ítem agregado
       currency: 'COP',
       contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty }]
-    });
+    },eventId);
     this.capi.sendEvent('AddToCart', {
       event_id: eventId, // genera un ID único
       value: Number(this.selectedVariation.price2) * this.product.qty,

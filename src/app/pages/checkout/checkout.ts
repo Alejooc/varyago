@@ -73,13 +73,13 @@ export class Checkout implements OnInit {
         this.paymentMethods = methods;
       });
     const items = this.cartItems.map(p => ({ id: p.variationSku, quantity: p.quantity }));
-    
+    const eventId = uuid(); // o genera un string único
     this.pixel.initiateCheckout({
       contents: items,
       num_items: this.cantITems,
       value: Number(this.total),
       currency: 'COP'
-    });
+    },eventId);
   }
    
   onDepartmentChange(event: Event): void {
@@ -159,7 +159,7 @@ export class Checkout implements OnInit {
             currency: 'COP',
             order_id: res.order_id,
             event_id: eventId
-          });
+          },eventId);
           this.capi.sendEvent('Purchase', {
             event_id: eventId,
             order_id: res.order.id,

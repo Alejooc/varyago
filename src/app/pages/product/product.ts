@@ -1,7 +1,14 @@
-import { Component, OnInit,AfterViewInit,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Inject,
+} from '@angular/core';
 import { ProductService } from '../../services/product';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute,RouterModule  } from '@angular/router';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CartService } from '../../services/cart';
 import { SharedService } from '../../services/shared';
@@ -14,20 +21,21 @@ const uuid = () => crypto.randomUUID();
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterModule ],
   templateUrl: './product.html',
-  styleUrl: './product.scss',
+  styleUrls: ['./product.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Product implements OnInit {
   product!: any;
+  productSeo: any;
   selectedVariation: any = null;
   productForm!: FormGroup;
 
   colors: string[] = [];
   measures: string[] = [];
   hasColor = false;
-  productTableHtml: string= '';
+  productTableHtml: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -37,11 +45,15 @@ export class Product implements OnInit {
     private sharedService: SharedService,
     private pixel: MetaPixel,
     private capi: MetaCapi,
-    private gtm: Gtm
-    
-  ) {}
+    private gtm: Gtm,
+    private title: Title,
+    private meta: Meta,
+    @Inject(DOCUMENT) private doc: Document
+  ) {
+  }
   ngAfterViewInit() {
     if ($.fn.elevateZoom) {
+      // Inicializar el zoom
       $('#product-zoom').elevateZoom({
         gallery: 'product-zoom-gallery',
         galleryActiveClass: 'false',
@@ -49,10 +61,10 @@ export class Product implements OnInit {
         cursor: 'crosshair',
         zoomWindowFadeIn: 400,
         zoomWindowFadeOut: 400,
-        responsive: true
+        responsive: true,
       });
 
-      $('.product-gallery-item').on('click',  (e: any) => {
+      $('.product-gallery-item').on('click', (e: any) => {
         $('#product-zoom-gallery').find('a').removeClass('active');
         $(this).addClass('active');
         e.preventDefault();
@@ -62,63 +74,77 @@ export class Product implements OnInit {
 
       $('#btn-product-gallery').on('click', function (e: any) {
         if ($.fn.magnificPopup) {
-          $.magnificPopup.open({
-            items: ez.getGalleryList(),
-            type: 'image',
-            gallery: {
-              enabled: true
+          $.magnificPopup.open(
+            {
+              items: ez.getGalleryList(),
+              type: 'image',
+              gallery: {
+                enabled: true,
+              },
+              fixedContentPos: false,
+              removalDelay: 600,
+              closeBtnInside: false,
             },
-            fixedContentPos: false,
-            removalDelay: 600,
-            closeBtnInside: false
-          }, 0);
+            0
+          );
           e.preventDefault();
         }
       });
     }
   }
   ngOnInit(): void {
-   this.route.params.subscribe(params => {
-    const productId = params['id'];
-    this.cargarProducto(productId); // mueves toda tu lógica aquí dentro
-  });
-   
+    this.route.params.subscribe((params) => {
+      const productId = params['id'];
+
+      this.cargarProducto(productId); // mueves toda tu lógica aquí dentro
+    });
   }
+
   cargarProducto(productId: string): void {
- let variations: any[] = [];
-    this.productService.getProductById(productId).subscribe(res => {
+    let variations: any[] = [];
+    this.productService.getProductById(productId).subscribe((res) => {
       this.product = res;
       this.product.qty = 1; // Inicializar cantidad en 1
       variations = this.product.variaciones;
       let tableRows = '';
 
-      if (Array.isArray(this.product.especificaciones) && this.product.especificaciones.length > 0) {
-  tableRows += this.product.especificaciones
-    .map((spec: any) => `
+      if (
+        Array.isArray(this.product.especificaciones) &&
+        this.product.especificaciones.length > 0
+      ) {
+        tableRows += this.product.especificaciones
+          .map(
+            (spec: any) => `
       <tr>
         <td class="text-center align-middle p-3"><strong>${spec.specname}</strong></td>
         <td class="text-center align-middle p-3">${spec.specvalue}</td>
       </tr>
-    `)
-    .join('');
-}
+    `
+          )
+          .join('');
+      }
 
-if (Array.isArray(this.product.propiedades) && this.product.propiedades.length > 0) {
-  tableRows += this.product.propiedades
-    .map((prop: any) => `
+      if (
+        Array.isArray(this.product.propiedades) &&
+        this.product.propiedades.length > 0
+      ) {
+        tableRows += this.product.propiedades
+          .map(
+            (prop: any) => `
       <tr>
         <td class="text-center align-middle p-3"><strong>${prop.propname}</strong></td>
         <td class="text-center align-middle p-3">${prop.provalue}</td>
       </tr>
-    `)
-    .join('');
-}
+    `
+          )
+          .join('');
+      }
 
-if (!tableRows) {
-  tableRows = `<tr><td colspan="2" class="text-center text-muted p-3">N/A</td></tr>`;
-}
+      if (!tableRows) {
+        tableRows = `<tr><td colspan="2" class="text-center text-muted p-3">N/A</td></tr>`;
+      }
 
-this.productTableHtml = `
+      this.productTableHtml = `
   <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover shadow-sm rounded text-center">
       <thead class="thead-white bg-primary text-white">
@@ -134,71 +160,80 @@ this.productTableHtml = `
   </div>
 `;
 
-
       // Detectar si hay colores reales
-      this.colors = [...new Set(variations.map(v => v.color).filter(c => !!c && c.trim() !== ''))];
+      this.colors = [
+        ...new Set(
+          variations.map((v) => v.color).filter((c) => !!c && c.trim() !== '')
+        ),
+      ];
       this.hasColor = this.colors.length > 0;
 
       // Crear formulario según necesidad
       this.productForm = this.fb.group({
         ...(this.hasColor ? { color: [''] } : {}),
-        measure: ['']
+        measure: [''],
       });
 
       // Si tiene color: al cambiar color, actualiza medidas disponibles
       if (this.hasColor) {
-        this.productForm.get('color')!.valueChanges.subscribe(selectedColor => {
-          this.measures = [
-            ...new Set(
-              variations
-                .filter(v => v.color === selectedColor)
-                .map(v => v.measure)
-                .filter(Boolean)
-            )
-          ];
-          this.productForm.patchValue({ measure: '' });
-          this.selectedVariation = null;
-        });
+        this.productForm
+          .get('color')!
+          .valueChanges.subscribe((selectedColor) => {
+            this.measures = [
+              ...new Set(
+                variations
+                  .filter((v) => v.color === selectedColor)
+                  .map((v) => v.measure)
+                  .filter(Boolean)
+              ),
+            ];
+            this.productForm.patchValue({ measure: '' });
+            this.selectedVariation = null;
+          });
       } else {
         // Si no tiene color: mostrar todas las medidas
         this.measures = [
-          ...new Set(variations.map(v => v.measure).filter(Boolean))
+          ...new Set(variations.map((v) => v.measure).filter(Boolean)),
         ];
       }
       this.productForm.patchValue({ measure: this.measures[0] });
       // Ejecutar valueChanges manualmente al inicializar el valor de measure
       setTimeout(() => {
         this.productForm.updateValueAndValidity();
-        
       });
       // Siempre: al cambiar medida (y color si aplica), buscar la variación
-      this.productForm.valueChanges.subscribe(val => {
-        this.selectedVariation = variations.find(v =>
+      this.productForm.valueChanges.subscribe((val) => {
+        this.selectedVariation = variations.find((v) =>
           this.hasColor
             ? v.color === val.color && v.measure === val.measure
             : v.measure === val.measure
         );
-         this.gtm.viewItem({
+        this.gtm.viewItem({
           currency: 'COP',
-          value:Number(this.selectedVariation.price2),
-          items: [{ item_id: this.selectedVariation.sku, item_name: this.product.name, price: this.selectedVariation.price2, quantity: this.product.qty }]
-          });
-          console.log('cambia la info');
-          const eventId = uuid(); // o genera un string único
-        this.pixel.viewContent({
-          content_ids: [this.selectedVariation.sku],
-          content_type: 'product',
-          value: Number(this.selectedVariation.price2),   // precio visible
-          currency: 'COP'
-        },eventId);
+          value: Number(this.selectedVariation.price2),
+          items: [
+            {
+              item_id: this.selectedVariation.sku,
+              item_name: this.product.name,
+              price: this.selectedVariation.price2,
+              quantity: this.product.qty,
+            },
+          ],
+        });
+        const eventId = uuid(); // o genera un string único
+        this.pixel.viewContent(
+          {
+            content_ids: [this.selectedVariation.sku],
+            content_type: 'product',
+            value: Number(this.selectedVariation.price2), // precio visible
+            currency: 'COP',
+          },
+          eventId
+        );
       });
-     
     });
-    
-    
-    
   }
-  
+
   selectColor(color: string): void {
     this.productForm.patchValue({ color });
   }
@@ -206,7 +241,7 @@ this.productTableHtml = `
     if (!text) return '';
     return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
- onQuantityChange(event: Event) {
+  onQuantityChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const qty = Number(input.value);
     this.product.qty = qty;
@@ -228,37 +263,56 @@ this.productTableHtml = `
       image: this.product.images?.[0]?.url,
       measure: this.selectedVariation.measure,
       color: this.selectedVariation.color,
-      slug: this.product.slug
+      slug: this.product.slug,
     });
-  // 🔄 Notificar al Header para que se actualice
+    // 🔄 Notificar al Header para que se actualice
     this.sharedService.notifyCartUpdated();
     this.gtm.addToCart({
       currency: 'COP',
       value: Number(this.selectedVariation.price2) * this.product.qty,
-      items: [{ item_id: this.selectedVariation.sku, item_name: this.product.name, price: Number(this.selectedVariation.price2), quantity: this.product.qty }]
+      items: [
+        {
+          item_id: this.selectedVariation.sku,
+          item_name: this.product.name,
+          price: Number(this.selectedVariation.price2),
+          quantity: this.product.qty,
+        },
+      ],
     });
-     const eventId = uuid(); // o genera un string único
-    this.pixel.addToCart({
-      content_ids: [this.selectedVariation.sku],
-      content_type: 'product',
-      value: Number(this.selectedVariation.price2), // valor del ítem agregado
-      currency: 'COP',
-      contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty }]
-    },eventId);
-    this.capi.sendEvent('AddToCart', {
-      event_id: eventId, // genera un ID único
-      value: Number(this.selectedVariation.price2) * this.product.qty,
-      currency: 'COP',
-      contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty, item_price: Number(this.selectedVariation.price2) }],
-      client_user_agent: navigator.userAgent,
-      event_source_url: window.location.href
-    }).subscribe({
-      next: res => console.log('CAPI AddToCart enviado', res),
-      error: err => console.error('Error CAPI AddToCart', err)
-    });
-    
+    const eventId = uuid(); // o genera un string único
+    this.pixel.addToCart(
+      {
+        content_ids: [this.selectedVariation.sku],
+        content_type: 'product',
+        value: Number(this.selectedVariation.price2), // valor del ítem agregado
+        currency: 'COP',
+        contents: [
+          { id: this.selectedVariation.sku, quantity: this.product.qty },
+        ],
+      },
+      eventId
+    );
+    this.capi
+      .sendEvent('AddToCart', {
+        event_id: eventId, // genera un ID único
+        value: Number(this.selectedVariation.price2) * this.product.qty,
+        currency: 'COP',
+        contents: [
+          {
+            id: this.selectedVariation.sku,
+            quantity: this.product.qty,
+            item_price: Number(this.selectedVariation.price2),
+          },
+        ],
+        client_user_agent: navigator.userAgent,
+        event_source_url: window.location.href,
+      })
+      .subscribe({
+        next: (res) => console.log('CAPI AddToCart enviado', res),
+        error: (err) => console.error('Error CAPI AddToCart', err),
+      });
   }
   toNumber(v: any): number {
-  return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));
-}
+    return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));
+  }
 }

@@ -3,8 +3,10 @@
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Tienda</a></li>
-                <li class="breadcrumb-item"><a>Producto</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{product?.name}}</li>
+                <li class="breadcrumb-item"><a>Productos</a></li>
+                <li class="breadcrumb-item active"  aria-current="page">
+                    <a [routerLink]="['/category', product?.cat_ref]">{{product?.category_name}}</a>
+                </li>
             </ol>
 
             <!-- End .pager-nav -->
@@ -38,33 +40,23 @@
                     </div><!-- End .col-md-6 -->
 
                     <div class="col-md-6">
-                        <div class="product-details product-details-centered">
+                        <div class="product-details">
                             <h1 class="product-title">{{product?.name}}</h1><!-- End .product-title -->
 
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                            </div><!-- End .rating-container -->
-                            <div class="product-content mb-3" [innerHTML]="truncateDesc(product?.desc,250)">
-
-                            </div><!-- End .product-content -->
-                            <div class="product-price d-flex align-items-end" *ngIf="selectedVariation">
-                                {{ selectedVariation.price2 | currency:'COP':'symbol':'1.0-0':'es-CO'}}
-                                <span style="font-size: 13px; margin-left: 6px; align-self: flex-end;"><b>Hoy</b></span>
-                                <span *ngIf="selectedVariation.discount>0" class="badge label-discount"
-                                    style="margin-left: 8px; font-size: 13px;align-self: flex-start;">{{
-                                    selectedVariation.discount }}% OFF</span>
-                            </div>
-                            <div class="product-price product-price-antes d-flex align-items-end mb-3"
+                            <div class="product-price product-price-antes d-flex align-items-end mt-3"
                                 *ngIf="selectedVariation">
                                 <span class="product-price-antesSpan"> {{ selectedVariation.price |
                                     currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
                                 <span
                                     style="font-size: 12px; margin-left: 6px; align-self: flex-end;text-decoration: none;"><b>Antes</b></span>
                             </div>
-                            
+                            <div class="product-price d-flex align-items-end mb-3" *ngIf="selectedVariation">
+                                {{ selectedVariation.price2 | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+                                <span style="font-size: 13px; margin-left: 6px; align-self: flex-end;"><b>Hoy</b></span>
+                                <span *ngIf="selectedVariation.discount>0" class="badge label-discount"
+                                    style="margin-left: 8px; font-size: 13px;align-self: flex-start;">{{
+                                    selectedVariation.discount }}% OFF</span>
+                            </div>
                             <form *ngIf="productForm" [formGroup]="productForm">
                                 <!-- COLOR -->
                                 <div *ngIf="hasColor" class="details-filter-row details-row-size">
@@ -90,18 +82,26 @@
                                     </div>
                                 </div>
                             </form>
-
+                            <div class="details-filter-row details-row-size">
+                                <label for="qty">Cantidad:</label>
+                                <div class="product-details-quantity ml-3">
+                                        <input type="number" id="qty" class="form-control" value="1" min="1"
+                                            max="{{selectedVariation?.cant}}" step="1" data-decimals="0" required
+                                            (input)="onQuantityChange($event)">
+                                    </div><!-- End .product-details-quantity --><!-- End .product-details-quantity -->
+                            </div>
+                            
                             <div class="product-stock" *ngIf="selectedVariation">
                                 {{ selectedVariation?.cant }} disponibles
                             </div><!-- End .product-price -->
-                            <div class="text-center d-flex justify-content-center my-3">
+                            <div class="text-center d-flex my-3">
 
-                            
+
                                 <addi-widget *ngIf="selectedVariation" [attr.price]="selectedVariation?.price2"
-                                ally-slug="varyago-ecommerce" custom-widget-styles='{
+                                    ally-slug="varyago-ecommerce" custom-widget-styles='{
                                 "widget": {
                                     "borderColor": "blue",
-                                    "borderRadius": "20px",
+                                    "borderRadius": "2px",
                                     "fontColor": "blue",
                                     "fontFamily": "system-ui",
                                     "fontSize": "14px",
@@ -127,26 +127,21 @@
                                  }'></addi-widget>
                             </div>
                             <div class="product-details-action">
-                                <div class="details-action-col">
-                                    <div class="product-details-quantity">
-                                        <input type="number" id="qty" class="form-control" value="1" min="1"
-                                            max="{{selectedVariation?.cant}}" step="1" data-decimals="0" required
-                                            (input)="onQuantityChange($event)">
-                                    </div><!-- End .product-details-quantity -->
-
                                     <button (click)="addToCart()" [disabled]="!selectedVariation"
-                                        class="btn-product btn-cart"><span>Agregar al carrito</span></button>
-                                </div><!-- End .details-action-col -->
-
-                                <!--<div class="details-action-wrapper">
-                                    <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                    <a href="#" class="btn-product btn-compare" title="Compare"><span>Comprar</span></a>
-                                </div>--><!-- End .details-action-wrapper -->
-                            </div><!-- End .product-details-action -->
+                                        class="btn-product btn-cart d-block w-100"><span>Agregar al carrito</span></button>
+                            </div>
+                            
+                            <!-- End .product-details-action -->
 
                             <div class="product-details-footer">
                                 <p>Codigo: {{selectedVariation?.sku}}</p>
-
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews
+                                        )</a>
+                                </div>
 
                             </div><!-- End .product-details-footer -->
                         </div><!-- End .product-details -->

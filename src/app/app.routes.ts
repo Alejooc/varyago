@@ -10,6 +10,7 @@ import { Account } from './pages/account/account';
 import { Page } from './pages/page/page';
 import { Search } from './pages/search/search';
 import { Confirm } from './pages/confirm/confirm';
+import { NotFound } from './pages/not-found/not-found';
 export const routes: Routes = [
 
     { path: '', component: Home },
@@ -24,5 +25,5 @@ export const routes: Routes = [
     { path: 'confirm', component: Confirm },
     { path: 'confirm/:ref', component: Confirm }, // Asegúrate de importar correctamente el componente confirm
     //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
-
+    { path: '**', component: NotFound }, // 👈 SIEMPRE al final
 ];

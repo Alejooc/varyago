@@ -61,8 +61,7 @@ export class Header implements AfterViewInit {
 
   fetchResults(query: string): void {
     this.searchService.buscarProductos(query).subscribe(data => {
-      console.log(data);
-      
+     
       this.results = data;
     });
   }
@@ -144,7 +143,6 @@ export class Header implements AfterViewInit {
     this.cartCount = this.cartService.getTotalItems();
     this.cartItems = this.getCartItems();
     this.totalPrice = this.cartService.getTotalPrice();
-    console.log(this.cartItems);
     //this.getMenu();
      this.sharedService.cartUpdated$.subscribe(() => {
       this.refreshCart(); // actualiza totales o vuelve a consultar el carrito
@@ -177,7 +175,6 @@ export class Header implements AfterViewInit {
         submenuColumns: this.splitIntoColumns(item.submenu, 5)
       };
     });
-    console.log(this.menu);
     // Una vez cargado el menú, aplicar lógica jQuery
     setTimeout(() => this.reiniciarMenuMolla(), 100);
   });

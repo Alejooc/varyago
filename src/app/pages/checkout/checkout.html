@@ -127,34 +127,46 @@
 
                                 <div class="accordion-summary mt-2" id="accordion-payment">
                                     <h3 class="summary-title">Metodo de pago</h3><!-- End .summary-title -->
-                                    <ng-container *ngFor="let pmg of paymentMethods">
-                                        <div class="card" *ngIf="!(pmg.pmg_id == 101 && shippingCod == 0)">
-                                            <div class="card-header" id="heading-{{pmg.id}}">
-                                                <h2 class="card-title">
-                                                    <label class="d-flex align-items-center w-100">
-                                                        <input class="d-none" type="radio" [value]="pmg.id"
-                                                            formControlName="payment_method" name="payment_method" />
-                                                        <a (click)="selectPaymentMethod(pmg)" class="collapsed w-100"
-                                                            role="button" data-toggle="collapse"
-                                                            [attr.href]="'#collapse-' + pmg.id" aria-expanded="false"
-                                                            [attr.aria-controls]="'collapse-' + pmg.id">
-                                                            <span class="d-block">{{ pmg.name }}</span>
-                                                            <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}"
-                                                                class="payment-logo ml-2" />
-                                                        </a>
-                                                    </label>
-                                                </h2>
-                                            </div>
+                                    <ng-container *ngIf="radiosVisible">
+  <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
+    <div class="card" *ngIf="!(pmg.pmg_id == 101 && shippingCod == 0)">
+      <div class="card-header" id="heading-{{pmg.id}}">
+        <h2 class="card-title">
+          <label class="d-flex align-items-center w-100"
+                 [class.active]="checkoutForm.get('payment_method')?.value === pmg.id">
+            <input #pmRadio
+                   class="d-none"
+                   type="radio"
+                   [value]="+pmg.id"                          
+                   [name]="'payment_method_' + formId"         
+                   [checked]="checkoutForm.get('payment_method')?.value === pmg.id" />
 
-                                            <div [id]="'collapse-' + pmg.id" class="collapse"
-                                                [attr.aria-labelledby]="'heading-' + pmg.id"
-                                                data-parent="#accordion-payment">
-                                                <div class="card-body">
-                                                    {{ pmg.alt }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ng-container>
+            <a (click)="selectPaymentMethod(pmg)"
+               class="collapsed w-100"
+               role="button"
+               data-toggle="collapse"
+               [attr.href]="'#collapse-' + pmg.id"
+               aria-expanded="false"
+               [attr.aria-controls]="'collapse-' + pmg.id">
+              <span class="d-block">{{ pmg.name }}</span>
+              <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2" />
+            </a>
+          </label>
+        </h2>
+      </div>
+
+      <div [id]="'collapse-' + pmg.id"
+           class="collapse"
+           [attr.aria-labelledby]="'heading-' + pmg.id"
+           data-parent="#accordion-payment">
+        <div class="card-body">
+          {{ pmg.alt }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
 
                                 </div>
 

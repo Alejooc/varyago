@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChildren, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
@@ -18,6 +18,10 @@ const uuid = () => crypto.randomUUID();
   styleUrl: './checkout.scss'
 })
 export class Checkout implements OnInit {
+  @ViewChildren('pmRadio') pmRadios!: QueryList<ElementRef<HTMLInputElement>>;
+  trackById = (_: number, x: any) => x.id;
+  formId = Date.now();                       // asegura name único
+radiosVisible = true;
  checkoutForm!: FormGroup;
   cartItems: any[] = [];
   subtotal: number = 0;
@@ -28,8 +32,10 @@ export class Checkout implements OnInit {
   paymentMethods: any[] = [];
   selectedPaymentMethod: any = null;
   showError = false;
-  shippingCod:any= 1;
+  shippingCod:any= 0;
   cantITems: any= 0;
+  shippingCodPrice: any;
+  shippingCostOrg: any;
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
@@ -38,7 +44,8 @@ export class Checkout implements OnInit {
     private loadingService: LoadingService,
     private sharedService: SharedService,
     private pixel: MetaPixel,
-    private capi: MetaCapi
+    private capi: MetaCapi,
+    private cdr: ChangeDetectorRef
 
   ) {}
 
@@ -93,13 +100,44 @@ export class Checkout implements OnInit {
   }
  selectPaymentMethod(method: any) {
   this.selectedPaymentMethod = method;
+  // Actualiza el valor del cod si es cod
+  if(method.pmg_id == 101){
+    this.shippingCost =this.shippingCodPrice;
+    this.total = this.subtotal + this.shippingCost;
+  }else{
+    this.shippingCost =this.shippingCostOrg;
+    this.total = this.subtotal + this.shippingCostOrg;
+  }
 }
   onCityChange(event: Event): void {
+    console.log('cambio');
+     const pmCtrl = this.checkoutForm.get('payment_method');
+      // 1) limpiar valor del form
+      pmCtrl?.setValue(null, { emitEvent: false });
+      pmCtrl?.markAsPristine();
+      pmCtrl?.markAsUntouched();
+      pmCtrl?.updateValueAndValidity({ emitEvent: false });
+
+      // 2) desmarcar radios nativos (por si el navegador dejó el prop.checked pegado)
+      this.pmRadios?.forEach(r => r.nativeElement.checked = false);
+
+      // 3) re-montar el bloque para borrar cualquier “memoria” del DOM
+      this.radiosVisible = false;
+      this.cdr.detectChanges();
+      this.radiosVisible = true;
+      this.shippingCod = 0;
+      this.shippingCost = 0;
+      this.total = this.subtotal + this.shippingCost;
+      this.cdr.detectChanges();
+
     let cityId:any = +(event.target as HTMLSelectElement).value;
     if (cityId) {
+      
       this.checkoutService.getShippingInfo(cityId,this.subtotal,this.cartItems).subscribe(rate => {
+        this.shippingCostOrg = rate.valor; // o rate.valor dependiendo de tu base
         this.shippingCost = rate.valor; // o rate.valor dependiendo de tu base
-         this.shippingCod = rate.contraentrega; // o rate.valor dependiendo de tu base
+        this.shippingCod = rate.contraentrega; // o rate.valor dependiendo de tu base
+        this.shippingCodPrice = rate.codCost; // o rate.valor dependiendo de tu base
         this.total = this.subtotal + this.shippingCost;
       });
 

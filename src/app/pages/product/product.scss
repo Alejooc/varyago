@@ -13,3 +13,34 @@
     color: #fff;
     padding: 5px 10px;
 }
+.product-details-action{
+    margin-bottom: 0px;
+    .btn-cart{
+        max-width:unset;
+        color: #fff;
+        background-color: #015959;
+        ::after{
+            border-color: #015959;
+        }
+        :hover{
+            color: #fff!important;
+            background-color: #015959!important;
+            border-color: #015959!important;
+        }
+        :focus
+        {
+            color: #fff!important;
+        }
+    }
+} 
+.btn-wpp{
+    max-width: 500px;
+    color: #015959;
+    border-color: #015959;
+    margin-top: 10px;
+    :hover{
+        color: #015959!important;
+        border-color: #015959!important;
+        background: none!important;
+    }
+}

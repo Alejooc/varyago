@@ -18,6 +18,8 @@ import { Gtm } from '../../services/gtm';
 
 declare var $: any; // Para usar jQuery
 const uuid = () => crypto.randomUUID();
+const isMobile = () =>
+  window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -51,47 +53,131 @@ export class Product implements OnInit {
     @Inject(DOCUMENT) private doc: Document
   ) {
   }
-  ngAfterViewInit() {
+ ngAfterViewInit() {
+  if (!$.fn) return;
+
+  const $img = $('#product-zoom');                 // IMG principal
+  const $gallery = $('#product-zoom-gallery');     // Contenedor de miniaturas
+
+  const isTouch = () =>
+    window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
+
+  const destroyZoom = () => {
+    const ez = $img.data('elevateZoom');
+    if (ez && ez.destroy) ez.destroy();
+    $('.zoomContainer').remove();
+    $img.removeData('elevateZoom');
+    $img.off('.elevateZoom');
+    $img.css('touch-action', 'pan-y');
+  };
+
+  const initDesktopNoZoom = () => {
+    destroyZoom();
     if ($.fn.elevateZoom) {
-      // Inicializar el zoom
-      $('#product-zoom').elevateZoom({
+      $img.elevateZoom({
+        zoomEnabled: false,
         gallery: 'product-zoom-gallery',
-        galleryActiveClass: 'false',
-        zoomType: 'inner',
-        cursor: 'crosshair',
-        zoomWindowFadeIn: 400,
-        zoomWindowFadeOut: 400,
+        galleryActiveClass: 'active',
         responsive: true,
-      });
-
-      $('.product-gallery-item').on('click', (e: any) => {
-        $('#product-zoom-gallery').find('a').removeClass('active');
-        $(this).addClass('active');
-        e.preventDefault();
-      });
-
-      const ez = $('#product-zoom').data('elevateZoom');
-
-      $('#btn-product-gallery').on('click', function (e: any) {
-        if ($.fn.magnificPopup) {
-          $.magnificPopup.open(
-            {
-              items: ez.getGalleryList(),
-              type: 'image',
-              gallery: {
-                enabled: true,
-              },
-              fixedContentPos: false,
-              removalDelay: 600,
-              closeBtnInside: false,
-            },
-            0
-          );
-          e.preventDefault();
-        }
+        scrollZoom: false
       });
     }
-  }
+  };
+
+  const setup = () => {
+    if (isTouch()) {
+      // Móvil: nada de plugin para no bloquear el scroll
+      destroyZoom();
+    } else {
+      // Desktop: plugin solo para gestionar galería (sin zoom)
+      initDesktopNoZoom();
+    }
+  };
+
+  // ---- SWAP robusto (funciona con y sin plugin) ----
+  const swapImage = (aEl: HTMLElement) => {
+    const $a = $(aEl);
+
+    // Toma las rutas de forma tolerante
+    const medium =
+      $a.attr('data-image') ||
+      $a.find('img').attr('src') ||
+      $a.attr('href') || '';
+    const big =
+      $a.attr('data-zoom-image') ||
+      $a.attr('href') ||
+      medium;
+
+    // Marca activa
+    $gallery.find('a').removeClass('active');
+    $a.addClass('active');
+
+    const ez = $img.data('elevateZoom');
+
+    if (ez && typeof ez.swaptheimage === 'function') {
+      // Desktop con plugin: usa su API
+      ez.swaptheimage(medium, big);
+    } else {
+      // Móvil (o sin plugin): cambia atributos directamente
+      $img.attr('src', medium);
+      $img.attr('data-zoom-image', big);
+
+      // Si tu imagen principal está envuelta en un <a>, actualiza su href
+      const $wrapLink = $img.closest('a');
+      if ($wrapLink.length) $wrapLink.attr('href', big);
+
+      // Si usas <picture>, actualiza sources (opcional)
+      const $picture = $img.closest('picture');
+      if ($picture.length) {
+        $picture.find('source').each((_: any, s: any) => {
+          const $s = $(s);
+          const srcset = $s.attr('data-srcset') || $s.attr('srcset');
+          if (srcset) $s.attr('srcset', srcset.replace(/[^ ,]+/g, medium));
+        });
+      }
+    }
+  };
+
+  // ---- Delegación de eventos (sirve aunque Angular re-renderice) ----
+  $gallery.off('click.vg').on('click.vg', 'a',  (e: any) => {
+    e.preventDefault();
+    swapImage(e.currentTarget);
+  });
+
+  // ---- Popup: arma lista con o sin elevateZoom ----
+  $('#btn-product-gallery').off('click.vg').on('click.vg', (e: any) => {
+    e.preventDefault();
+    if (!$.fn.magnificPopup) return;
+
+    const ez = $img.data('elevateZoom');
+    const items = ez
+      ? ez.getGalleryList()
+      : $gallery.find('a').map( () => {
+          return { src: $(this).attr('href')! };
+        }).get();
+
+    $.magnificPopup.open(
+      {
+        items,
+        type: 'image',
+        gallery: { enabled: true },
+        fixedContentPos: false,
+        removalDelay: 600,
+        closeBtnInside: false
+      },
+      0
+    );
+  });
+
+  // ---- Inicializa y re-evalúa en resize/orientación ----
+  const kick = () => setTimeout(setup, 0); // deja que Angular pinte
+  kick();
+  let t: any;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(setup, 200); });
+  window.addEventListener('orientationchange', () => setTimeout(setup, 200));
+}
+
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const productId = params['id'];

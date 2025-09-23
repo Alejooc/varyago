@@ -105,8 +105,12 @@ radiosVisible = true;
     this.shippingCost =this.shippingCodPrice;
     this.total = this.subtotal + this.shippingCost;
   }else{
-    this.shippingCost =this.shippingCostOrg;
-    this.total = this.subtotal + this.shippingCostOrg;
+    
+    if(this.shippingCostOrg > 0){
+      this.shippingCost =this.shippingCostOrg;
+      this.total = this.subtotal + this.shippingCostOrg;
+    }
+    
   }
 }
   onCityChange(event: Event): void {

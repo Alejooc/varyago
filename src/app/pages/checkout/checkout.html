@@ -124,51 +124,67 @@
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
+<div class="accordion-summary mt-2" id="accordion-payment">
+  <h3 class="summary-title">Metodo de pago</h3>
 
-                                <div class="accordion-summary mt-2" id="accordion-payment">
-                                    <h3 class="summary-title">Metodo de pago</h3><!-- End .summary-title -->
-                                    <ng-container *ngIf="radiosVisible">
-  <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
-    <div class="card" *ngIf="!(pmg.pmg_id == 101 && shippingCod == 0)">
-      <div class="card-header" id="heading-{{pmg.id}}">
-        <h2 class="card-title">
-          <label class="d-flex align-items-center w-100"
-                 [class.active]="checkoutForm.get('payment_method')?.value === pmg.id">
-            <input #pmRadio
-                   class="d-none"
-                   type="radio"
-                   [value]="+pmg.id"                          
-                   [name]="'payment_method_' + formId"         
-                   [checked]="checkoutForm.get('payment_method')?.value === pmg.id" />
+  <ng-container *ngIf="radiosVisible">
+    <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
+      <div class="card">
+        <div class="card-header" id="heading-{{pmg.id}}">
+          <h2 class="card-title">
+            <label class="d-flex align-items-center w-100"
+                   [class.active]="checkoutForm.get('payment_method')?.value === pmg.id"
+                   [class.disabled]="isDisabled(pmg)">
 
-            <a (click)="selectPaymentMethod(pmg)"
-               class="collapsed w-100"
-               role="button"
-               data-toggle="collapse"
-               [attr.href]="'#collapse-' + pmg.id"
-               aria-expanded="false"
-               [attr.aria-controls]="'collapse-' + pmg.id">
-              <span class="d-block">{{ pmg.name }}</span>
-              <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2" />
-            </a>
-          </label>
-        </h2>
-      </div>
+              <!-- Radio ligado al Reactive Form -->
+              <input #pmRadio class="d-none" type="radio"
+                     formControlName="payment_method"
+                     [value]="+pmg.id"
+                     name="payment_method"
+                     [disabled]="isDisabled(pmg)"
+                     (change)="selectPaymentMethod(pmg)" />
 
-      <div [id]="'collapse-' + pmg.id"
-           class="collapse"
-           [attr.aria-labelledby]="'heading-' + pmg.id"
-           data-parent="#accordion-payment">
-        <div class="card-body">
-          {{ pmg.alt }}
+              <!-- Enlace: colapsa solo si está habilitado -->
+              <a class="collapsed w-100"
+                 role="button"
+                 data-toggle="collapse"
+                 [attr.data-target]="isDisabled(pmg) ? null : '#collapse-' + pmg.id"
+                 [attr.href]="'javascript:void(0)'"
+                 aria-expanded="false"
+                 [attr.aria-controls]="isDisabled(pmg) ? null : 'collapse-' + pmg.id"
+                 [attr.aria-disabled]="isDisabled(pmg) ? 'true' : null"
+                 [class.pointer-events-none]="isDisabled(pmg)"
+                 (mousedown)="!isDisabled(pmg) && pmRadio.click()"
+                 (click)="$event.preventDefault()">
+                <span class="d-block">
+                  {{ pmg.name }}
+                  <small *ngIf="isDisabled(pmg)" class="text-danger">( Calcula el envío para habilitar este método.)</small>
+                </span>
+                <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2" />
+              </a>
+            </label>
+          </h2>
+        </div>
+
+        <div [id]="'collapse-' + pmg.id"
+             class="collapse"
+             [attr.aria-labelledby]="'heading-' + pmg.id"
+             data-parent="#accordion-payment">
+          <div class="card-body">
+            {{ pmg.alt }}
+            <div *ngIf="isDisabled(pmg)" class="mt-2 small text-muted">
+              Calcula el envío para habilitar este método.
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>
 
 
-                                </div>
+
+                               
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                     <span class="btn-text">Pagar</span>

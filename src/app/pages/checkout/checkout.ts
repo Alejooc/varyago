@@ -99,6 +99,8 @@ radiosVisible = true;
     }
   }
  selectPaymentMethod(method: any) {
+  console.log('eaaaaaaaa');
+  
   this.selectedPaymentMethod = method;
   // Actualiza el valor del cod si es cod
   if(method.pmg_id == 101){
@@ -220,4 +222,14 @@ radiosVisible = true;
        this.loadingService.hide();
     }
   }
+
+
+  isCOD(pmg: any): boolean {
+  return +pmg?.pmg_id === 101;
+}
+
+isDisabled(pmg: any): boolean {
+  // Deshabilitado si es COD y aún no se ha habilitado (shippingCod == 0)
+  return this.isCOD(pmg) && this.shippingCod == 0;
+}
 }

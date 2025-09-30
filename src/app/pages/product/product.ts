@@ -160,7 +160,7 @@ export class Product implements OnInit {
       {
         items,
         type: 'image',
-        gallery: { enabled: true },
+        gallery: { enabled: false },
         fixedContentPos: false,
         removalDelay: 600,
         closeBtnInside: false

@@ -634,13 +634,13 @@
     <div class="cart-items">
       <div class="d-flex align-items-center mb-0 product-cart-details" *ngFor="let item of cartItems">
         <figure class="product-image-container mb-0 me-2" style="width: 80px; flex-shrink: 0;">
-          <a href="product.html" class="product-image">
+          <a [routerLink]="['/product', item.slug]" class="product-image">
             <img [src]="item.image" alt="product" style="width: 100%; height: auto; display: block;">
           </a>
         </figure>
         <div class="flex-grow-1 py-2 px-3">
           <h4 class="product-title mb-1" style="font-size: 15px;">
-            <a href="product.html">{{ item.name }}</a>
+            <a [routerLink]="['/product', item.slug]">{{ item.name }}</a>
           </h4>
           <span class="cart-product-info d-block" style="font-size: 13px;">
             <span class="d-block">Medida: {{ item.measure }}</span>
@@ -670,7 +670,7 @@
       <span class="text-dark">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
     </div>
     <button class="btn btn-primary btn-block mb-2 w-100" (click)="goToCheckout()">
-      Ir a Pagar <i class="icon-long-arrow-right"></i>
+      Finalizar Compra<i class="icon-long-arrow-right"></i>
     </button>
     <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">
       Ver carrito

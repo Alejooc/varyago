@@ -15,6 +15,7 @@ import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
 import { MetaCapi } from '../../services/meta-capi';
 import { Gtm } from '../../services/gtm';
+import { CarrouselProds } from '../../components/carrousel-prods/carrousel-prods';
 
 declare var $: any; // Para usar jQuery
 const uuid = () => crypto.randomUUID();
@@ -23,7 +24,7 @@ const isMobile = () =>
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule ],
+  imports: [CommonModule, ReactiveFormsModule,RouterModule,CarrouselProds],
   templateUrl: './product.html',
   styleUrls: ['./product.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

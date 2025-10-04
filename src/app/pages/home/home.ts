@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService, HomeData } from '../../services/home';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CarrouselProds } from "../../components/carrousel-prods/carrousel-prods";
 declare var $: any;
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,CarrouselProds],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 
 export class Home implements OnInit {
+  
   data:any= [];
   loading = true;
 

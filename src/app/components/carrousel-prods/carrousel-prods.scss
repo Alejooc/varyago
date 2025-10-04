@@ -1,0 +1,10 @@
+.product-action{
+    background-color: unset;
+    .btn-primary{
+        border-radius: 3px;
+        :hover{
+            background-color: #015959!important;
+            border-color: #015959!important;
+        }
+    }
+}

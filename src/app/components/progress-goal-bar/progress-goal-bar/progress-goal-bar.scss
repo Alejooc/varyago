@@ -1,0 +1,183 @@
+:host {
+  /* Paleta base (puedes ajustar libremente) */
+  --pgb-bg: #eef2f7;                 /* track */
+  --pgb-fill: #16a34a;               /* verde VaryaGo base */
+  --pgb-fill-2: #22c55e;             /* verde claro para degradé */
+  --pgb-fill-complete: #059669;      /* verde éxito */
+  --pgb-text: #0f172a;               /* slate-900 */
+  --pgb-muted: #64748b;              /* slate-500 */
+  --pgb-radius: 999px;
+  --pgb-transition: 360ms;
+  --pgb-shadow: 0 1px 0 rgba(0,0,0,.05), inset 0 0 0 1px rgba(255,255,255,.4);
+
+  display: block;
+  color: var(--pgb-text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+}
+
+.pgb-root { width: 100%; }
+
+/* ====== Tema VaryaGo (aplica al envolver el componente con esta clase) ====== */
+.pgb-theme-varyago {
+  --pgb-bg: #edf7f1;                 /* fondo del track ligeramente verdoso */
+  --pgb-fill: #16a34a;               /* verde principal VaryaGo */
+  --pgb-fill-2: #34d399;             /* acento claro */
+  --pgb-fill-complete: #0ea5a3;      /* toque turquesa al completar */
+  --pgb-text: #0b1428;
+  --pgb-muted: #333333;
+}
+
+/* ====== Header ====== */
+.pgb-title {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--pgb-muted);
+}
+
+/* ====== Track / Fill ====== */
+.pgb-track {
+  width: 100%;
+  background: var(--pgb-bg);
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+}
+
+.pgb-rounded .pgb-track {
+  border-radius: var(--pgb-radius);
+}
+
+.pgb-fill {
+  height: 100%;
+  width: 0%;
+  position: relative;
+  transition: width var(--pgb-transition) cubic-bezier(.2,.8,.2,1);
+  /* Degradé + gloss */
+  background: linear-gradient(90deg, var(--pgb-fill) 0%, var(--pgb-fill-2) 100%);
+  box-shadow: var(--pgb-shadow);
+  border-radius: inherit;
+}
+
+/* Listras sutiles cuando NO se ha completado */
+.pgb-stripes {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255,255,255,.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255,255,255,.15) 50%,
+    rgba(255,255,255,.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 16px 16px;
+  mix-blend-mode: soft-light;
+  animation: stripes 1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes stripes {
+  from { background-position: 0 0; }
+  to   { background-position: 16px 0; }
+}
+
+/* Brillo que recorre (shine) */
+.pgb-shine {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.35) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: shine 2.4s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  filter: blur(.2px);
+}
+
+@keyframes shine {
+  0% { transform: translateX(-120%); }
+  55% { transform: translateX(0%); }
+  100% { transform: translateX(120%); }
+}
+
+/* Badge con el porcentaje flotante */
+.pgb-badge {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: rgba(255,255,255,.85);
+  color: #065f46;
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  backdrop-filter: saturate(1.1) blur(2px);
+}
+
+/* ====== Meta / Textos ====== */
+.pgb-meta {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.pgb-nums {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--pgb-muted);
+  font-size: 0.86rem;
+}
+
+.pgb-amounts {
+  display: inline-flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.pgb-sep { opacity: .6; }
+
+.pgb-message {
+  font-size: 1.2rem;
+  color: var(--pgb-muted);
+  font-weight: 500;
+  letter-spacing: .1px;
+}
+
+/* ====== Estado completado ====== */
+.pgb-message.pgb-complete {
+  color: #065f46;
+  font-weight: 700;
+}
+
+.pgb-message.pgb-complete::before {
+  content: "✔ ";
+}
+
+/* Cambio de color del fill cuando se alcanza la meta */
+:host ::ng-deep .pgb-message.pgb-complete ~ .pgb-track .pgb-fill,
+.pgb-message.pgb-complete + .pgb-track .pgb-fill {
+  background: linear-gradient(90deg, var(--pgb-fill-complete) 0%, #34d399 100%);
+}
+
+/* Pulso sutil cuando se completa */
+.pgb-message.pgb-complete {
+  animation: pulse 1.3s ease-in-out 3;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1);   }
+  50%  { transform: scale(1.01);}
+  100% { transform: scale(1);   }
+}
+
+/* ====== Accesibilidad y micro-interacciones ====== */
+.pgb-animated .pgb-fill { will-change: width; }

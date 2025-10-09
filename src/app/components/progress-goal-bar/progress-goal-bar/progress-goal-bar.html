@@ -1,0 +1,38 @@
+<div class="pgb-root pgb-theme-varyago" [class.pgb-rounded]="rounded">
+  <div class="pgb-header" *ngIf="title">
+    <h4 class="pgb-title">{{ title }}</h4>
+  </div>
+
+  <div
+    class="pgb-track"
+    [style.height]="height"
+    [class.pgb-animated]="animate"
+    role="progressbar"
+    [attr.aria-label]="ariaLabel"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="100"
+    [attr.aria-valuenow]="percent"
+  >
+    <div class="pgb-fill" [style.width.%]="percent">
+      <span class="pgb-badge" *ngIf="showNumbers">{{ percent | number:'1.0-0' }}%</span>
+      <span class="pgb-shine"></span>
+      <span class="pgb-stripes"></span>
+    </div>
+  </div>
+
+  <div class="pgb-meta" >
+    <div class="pgb-nums" *ngIf="showNumbers">
+      <span class="pgb-amounts">
+        <strong>Compra :</strong>
+        <span>{{ clampedCurrent | currency: currencyCode:'symbol':'1.0-0':'es-CO' }}</span>
+        <span class="pgb-sep">/</span>
+        <strong>más y disfruta de:</strong>
+        <span class="badge label-discount">Envio Gratis</span>
+        <span>{{ clampedGoal | currency: currencyCode:'symbol':'1.0-0':'es-CO' }}</span>
+      </span>
+    </div>
+    <div class="pgb-message" [class.pgb-complete]="isReached">
+      {{ message }}
+    </div>
+  </div>
+</div>

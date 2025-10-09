@@ -626,6 +626,20 @@
   <div class="cart-body p-3 flex-grow-1 overflow-auto">
     <!-- Mensaje si está vacío -->
     <p *ngIf="cartItems.length === 0" class="text-center py-4">Tu carrito está vacío.</p>
+    <!-- parent.component.html -->
+<app-progress-goal
+ class="pgb-theme-varyago my-2 mb-2"
+  [title]="'Disfruta de envío gratis por compras desde $99.900. Aplica para ciudades principales.'"
+  [current]="totalPrice" 
+  [goal]="99900"
+  currencyCode="COP"
+  [showNumbers] ="false"
+  [messageWhenIncomplete]="'Compra: {remaining} más y disfurta de Envío Gratis'"
+  [messageWhenComplete]="'¡Ya tienes envío gratis!'"
+  (reached)="onFreeShippingReached()"
+  style="display:block; max-width: 520px;"
+></app-progress-goal>
+
     <a *ngIf="cartItems.length === 0" [routerLink]="['/']" class="btn btn-primary text-center d-block">
       <span>Comprar</span><i class="icon-long-arrow-right"></i>
     </a>

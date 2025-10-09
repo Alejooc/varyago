@@ -8,11 +8,12 @@ import { debounceTime, Subject } from 'rxjs';
 import { SearchService } from '../../services/search';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../services/auth';
+import { ProgressGoalBar } from '../progress-goal-bar/progress-goal-bar/progress-goal-bar';
 
 declare var $: any;
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,ProgressGoalBar],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
@@ -220,5 +221,8 @@ export class Header implements AfterViewInit {
     this.toggleCart(); // Cierra el aside si quieres
     this.router.navigate(['/checkout']);
   }
-
+  onFreeShippingReached() {
+    // Aquí puedes mostrar un mensaje, activar una animación, etc.
+    console.log('¡Meta de envío gratis alcanzada!');
+  }
 }

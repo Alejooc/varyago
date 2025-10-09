@@ -25,46 +25,46 @@
                 <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
                     <div class="row">
                         <div class="col-lg-9">
-                            <h2 class="checkout-title">Informacion de pago</h2><!-- End .checkout-title -->
+                            <h2 class="checkout-title">Informacion de entrega</h2><!-- End .checkout-title -->
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Nombre *</label>
-                                    <input type="text" class="form-control" formControlName="firstName" required>
+                                    <input type="text" class="form-control" placeholder="Nombre" formControlName="firstName" required>
                                 </div><!-- End .col-sm-6 -->
 
                                 <div class="col-sm-6">
                                     <label>Apellidos *</label>
-                                    <input type="text" class="form-control" formControlName="lastName" required>
+                                    <input type="text" class="form-control" placeholder="Apellido" formControlName="lastName" required>
                                 </div><!-- End .col-sm-6 -->
                                 <div class="col-sm-6">
                                     <label>Tipo de Documento *</label>
                                     <select name="doctype" id="doctype" formControlName="doctype" class="form-control"
                                         required>
-                                        <option value="cc">CC</option>
+                                        <option value="cc">Cédula de ciudadania</option>
                                         <option value="cc">NIT</option>
                                     </select>
                                 </div><!-- End .col-sm-6 -->
                                 <div class="col-sm-6">
                                     <label>Documento de Identidad *</label>
-                                    <input type="text" class="form-control" formControlName="document" required>
+                                    <input type="text" placeholder="Cédula ej: 114413987" class="form-control" formControlName="document" required>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label>Telefono *</label>
-                                    <input type="tel" class="form-control" formControlName="phone" required>
+                                    <label>Whatsapp *</label>
+                                    <input type="tel" placeholder="Whatsapp Ej: 3151234567" class="form-control" formControlName="phone" required>
                                 </div><!-- End .col-sm-6 -->
                                 <div class="col-sm-6">
                                     <label>Correo electronico *</label>
-                                    <input type="email" formControlName="email" class="form-control" required>
+                                    <input type="email" placeholder="Correo electronico Ej: pepito@gmail.com" formControlName="email" class="form-control" required>
                                 </div>
                             </div><!-- End .row -->
 
                             <label>Direccion *</label>
                             <input type="text" formControlName="address1" class="form-control"
-                                placeholder="Calle 1#2-3 barrio pepito" required>
+                                placeholder="Direccion Ej: Calle 1#2-3 barrio pepito" required>
                             <input type="text" formControlName="address2" class="form-control"
-                                placeholder="Apartamento, Casa, Unidad etc ...">
+                                placeholder="Complemento Ej: Apartamento, Casa, Torre 205">
 
                             <div class="row">
                                 <div class="col-sm-6">
@@ -78,7 +78,7 @@
 
                                 <div class="col-sm-6">
                                     <label for="city">Ciudad</label>
-                                    <select id="city" class="form-control" formControlName="city"
+                                    <select id="city" class="form-control" formControlName="city" aria-placeholder="Ciudad"
                                         (change)="onCityChange($event)">
                                         <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
                                     </select>
@@ -187,8 +187,8 @@
                                
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    <span class="btn-text">Finalizar Compra</span>
-                                    <span class="btn-hover-text">Finalizar Compra</span>
+                                    <span class="btn-text">Finalizar el pedido</span>
+                                    <span class="btn-hover-text">Finalizar el pedido</span>
                                 </button>
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->

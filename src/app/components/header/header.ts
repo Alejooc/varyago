@@ -24,7 +24,7 @@ export class Header implements AfterViewInit {
   totalPrice: number=0;
   results: any[] = [];
   notifyMessages = [
-    '🚚 Envio gratis en pedidos superiores a $250.000',
+    '🚚 Envio gratis en pedidos superiores a $99.900',
     '🆕 Nuevos productos cada semana',
     '📞 Atencion al cliente 24/7',
     '💸 Garantia de devolucion de dinero',

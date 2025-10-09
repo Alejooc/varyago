@@ -679,11 +679,12 @@
 
   <!-- Footer -->
   <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
-    <div class="d-flex justify-content-between mb-2">
+    <div class="d-flex justify-content-between">
       <span class="text-dark font-weight-bold">Subtotal:</span>
-      <span class="text-dark">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+      <span class="text-dark" style="font-weight: 700;">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
     </div>
-    <button class="btn btn-primary btn-block mb-2 w-100" (click)="goToCheckout()">
+    <span class="w-100 d-block mb-1 text-muted" style="font-size: 12px;font-weight: 400;">Impuestos y envío calculados al finalizar la compra</span>
+    <button class="btn btn-primary btn-block mb-1 w-100" (click)="goToCheckout()">
       Finalizar Compra<i class="icon-long-arrow-right"></i>
     </button>
     <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">

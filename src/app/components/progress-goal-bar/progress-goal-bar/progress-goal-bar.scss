@@ -1,7 +1,7 @@
 :host {
   /* Paleta base (puedes ajustar libremente) */
   --pgb-bg: #eef2f7;                 /* track */
-  --pgb-fill: #16a34a;               /* verde VaryaGo base */
+  --pgb-fill: #015959;               /* verde VaryaGo base */
   --pgb-fill-2: #22c55e;             /* verde claro para degradé */
   --pgb-fill-complete: #059669;      /* verde éxito */
   --pgb-text: #0f172a;               /* slate-900 */
@@ -20,7 +20,7 @@
 /* ====== Tema VaryaGo (aplica al envolver el componente con esta clase) ====== */
 .pgb-theme-varyago {
   --pgb-bg: #edf7f1;                 /* fondo del track ligeramente verdoso */
-  --pgb-fill: #16a34a;               /* verde principal VaryaGo */
+  --pgb-fill: #015959;               /* verde principal VaryaGo */
   --pgb-fill-2: #34d399;             /* acento claro */
   --pgb-fill-complete: #0ea5a3;      /* toque turquesa al completar */
   --pgb-text: #0b1428;

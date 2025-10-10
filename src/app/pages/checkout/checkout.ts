@@ -99,7 +99,6 @@ radiosVisible = true;
     }
   }
  selectPaymentMethod(method: any) {
-  console.log('eaaaaaaaa');
   
   this.selectedPaymentMethod = method;
   // Actualiza el valor del cod si es cod
@@ -116,7 +115,7 @@ radiosVisible = true;
   }
 }
   onCityChange(event: Event): void {
-    console.log('cambio');
+   
      const pmCtrl = this.checkoutForm.get('payment_method');
       // 1) limpiar valor del form
       pmCtrl?.setValue(null, { emitEvent: false });

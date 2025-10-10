@@ -1,19 +1,13 @@
-<div id="notifyCarousel"
-     class="carousel slide notification"
-     data-ride="carousel"
-     data-interval="3500"
-     data-pause="hover"
-     data-wrap="true">
+<div id="notifyCarousel" class="carousel slide notification" data-ride="carousel" data-interval="3500"
+    data-pause="hover" data-wrap="true">
 
-  <div class="carousel-inner">
-    <div class="carousel-item"
-         *ngFor="let msg of notifyMessages; let i = index"
-         [class.active]="i === 0">
-      <div class="notify-content d-flex justify-content-center align-items-center">
-        <h3 class="m-0">{{ msg }}</h3>
-      </div>
+    <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let msg of notifyMessages; let i = index" [class.active]="i === 0">
+            <div class="notify-content d-flex justify-content-center align-items-center">
+                <h3 class="m-0">{{ msg }}</h3>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
@@ -79,7 +73,8 @@
                                         {{ itemSerarch.name }}
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInput.value)">
+                                <a class="dropdown-item text-center text-primary font-weight-bold"
+                                    style="cursor: pointer;" (click)="searchMore(busquedaInput.value)">
                                     Ver todos los resultados
                                 </a>
                             </div>
@@ -137,50 +132,47 @@
                             <span class="cart-txt">Carrito</span>
                         </a>
 
-                        
+
                     </div><!-- End .cart-dropdown -->
                 </div>
             </div><!-- End .header-right -->
-            
+
 
         </div><!-- End .container -->
         <!-- BUSCADOR SOLO EN MÓVIL -->
-            <!-- BUSCADOR SOLO EN MÓVIL -->
-<div class="p-3 d-lg-none">
-    <form (submit)="preventSubmit($event)">
-        <div class="header-search-wrapper position-relative">
-            <label for="q-mobile" class="sr-only">Buscar</label>
-            <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
-                (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
+        <!-- BUSCADOR SOLO EN MÓVIL -->
+        <div class="p-3 d-lg-none">
+            <form (submit)="preventSubmit($event)">
+                <div class="header-search-wrapper position-relative">
+                    <label for="q-mobile" class="sr-only">Buscar</label>
+                    <input #busquedaInputMobile type="search" class="form-control" placeholder="¿Qué buscas hoy?"
+                        (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
 
-            <button class="btn btn-primary position-absolute py-1 px-2" style="top: 4px; right: 4px; height: 32px; min-width: 32px; font-size: 16px;" (click)="searchMore(busquedaInputMobile.value)">
-                <i class="icon-search"></i>
-            </button>
+                    <button class="btn btn-primary position-absolute py-1 px-2"
+                        style="top: 4px; right: 4px; height: 32px; min-width: 32px; font-size: 16px;"
+                        (click)="searchMore(busquedaInputMobile.value)">
+                        <i class="icon-search"></i>
+                    </button>
 
-            <!-- Resultados -->
-            <div
-                class="dropdown-menu show w-100 mt-0 py-4"
-                *ngIf="results.length > 0"
-                style="max-height: 600px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;"
-            >
-                <a 
-                    *ngFor="let itemSerarch of results"
-                    [routerLink]="['product', itemSerarch.slug]"
-                    (click)="onSelectItem(itemSerarch.slug)"
-                    class="dropdown-item text-left text-decoration-none"
-                    style="cursor: pointer;"
-                >
-                    <div class="text-dark mb-1 text-wrap text-break" style="white-space: normal; font-size: 13px;">
-                        {{ itemSerarch.name }}
+                    <!-- Resultados -->
+                    <div class="dropdown-menu show w-100 mt-0 py-4" *ngIf="results.length > 0"
+                        style="max-height: 600px; overflow-y: auto; overflow-x: hidden; border: 1px solid #dee2e6;">
+                        <a *ngFor="let itemSerarch of results" [routerLink]="['product', itemSerarch.slug]"
+                            (click)="onSelectItem(itemSerarch.slug)"
+                            class="dropdown-item text-left text-decoration-none" style="cursor: pointer;">
+                            <div class="text-dark mb-1 text-wrap text-break"
+                                style="white-space: normal; font-size: 13px;">
+                                {{ itemSerarch.name }}
+                            </div>
+                        </a>
+                        <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;"
+                            (click)="searchMore(busquedaInputMobile.value)">
+                            Ver todos los resultados
+                        </a>
                     </div>
-                </a>
-                <a class="dropdown-item text-center text-primary font-weight-bold" style="cursor: pointer;" (click)="searchMore(busquedaInputMobile.value)">
-                    Ver todos los resultados
-                </a>
-            </div>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
     </div><!-- End .header-middle -->
 
     <div class="header-bottom sticky-header">
@@ -614,83 +606,79 @@
 
 <!-- Aside del carrito -->
 <div class="cart-aside d-flex flex-column" [class.open]="isCartOpen">
-  <!-- Header -->
-  <div class="cart-header d-flex justify-content-between align-items-center p-3 border-bottom">
-    <h5 class="mb-0">Carrito de compras</h5>
-    <a (click)="toggleCart()" title="Cerrar carrito">
-          <i class="icon-close"></i>
+    <!-- Header -->
+    <div class="cart-header d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h5 class="mb-0">Carrito de compras</h5>
+        <a (click)="toggleCart()" title="Cerrar carrito">
+            <i class="icon-close"></i>
         </a>
-  </div>
-
-  <!-- Cuerpo -->
-  <div class="cart-body p-3 flex-grow-1 overflow-auto">
-    <!-- Mensaje si está vacío -->
-    <p *ngIf="cartItems.length === 0" class="text-center py-4">Tu carrito está vacío.</p>
-    <!-- parent.component.html -->
-<app-progress-goal
- class="pgb-theme-varyago my-2 mb-2"
-  [title]="'Disfruta de envío gratis por compras desde $99.900. Aplica para ciudades principales.'"
-  [current]="totalPrice" 
-  [goal]="99900"
-  currencyCode="COP"
-  [showNumbers] ="false"
-  [messageWhenIncomplete]="'Compra: {remaining} más y disfurta de Envío Gratis'"
-  [messageWhenComplete]="'¡Ya tienes envío gratis!'"
-  (reached)="onFreeShippingReached()"
-  style="display:block; max-width: 520px;"
-></app-progress-goal>
-
-    <a *ngIf="cartItems.length === 0" [routerLink]="['/']" class="btn btn-primary text-center d-block">
-      <span>Comprar</span><i class="icon-long-arrow-right"></i>
-    </a>
-
-    <!-- Productos -->
-    <div class="cart-items">
-      <div class="d-flex align-items-center mb-0 product-cart-details" *ngFor="let item of cartItems">
-        <figure class="product-image-container mb-0 me-2" style="width: 80px; flex-shrink: 0;">
-          <a [routerLink]="['/product', item.slug]" class="product-image">
-            <img [src]="item.image" alt="product" style="width: 100%; height: auto; display: block;">
-          </a>
-        </figure>
-        <div class="flex-grow-1 py-2 px-3">
-          <h4 class="product-title mb-1" style="font-size: 15px;">
-            <a [routerLink]="['/product', item.slug]">{{ item.name }}</a>
-          </h4>
-          <span class="cart-product-info d-block" style="font-size: 13px;">
-            <span class="d-block">Medida: {{ item.measure }}</span>
-            <b><span class="cart-product-qty">{{ item.quantity }}</span>
-              x {{ item.price | currency: 'COP':'symbol':'1.0-0':'es-CO' }}</b>
-          </span>
-        </div>
-        <a (click)="delItem(item.id, item.variationId)" class="btn-remove ms-2" title="Eliminar producto">
-          <i class="icon-close"></i>
-        </a>
-      </div>
     </div>
 
-    <!-- Total simple (puedes omitir si usas el footer abajo) -->
-    <!--
+    <!-- Cuerpo -->
+    <div class="cart-body p-3 flex-grow-1 overflow-auto">
+        <!-- Mensaje si está vacío -->
+        <p *ngIf="cartItems.length === 0" class="text-center py-4">Tu carrito está vacío.</p>
+        <!-- parent.component.html -->
+        <app-progress-goal *ngIf="cartItems.length > 0" class="pgb-theme-varyago my-2 mb-2"
+            [title]="'Disfruta de envío gratis por compras desde $99.900. Aplica para ciudades principales.'"
+            [current]="totalPrice" [goal]="99900" currencyCode="COP" [showNumbers]="false"
+            [messageWhenIncomplete]="'Compra: {remaining} más y disfurta de Envío Gratis'"
+            [messageWhenComplete]="'¡Ya tienes envío gratis!'" (reached)="onFreeShippingReached()"
+            style="display:block; max-width: 520px;"></app-progress-goal>
+
+        <a *ngIf="cartItems.length === 0" [routerLink]="['/']" class="btn btn-primary text-center d-block">
+            <span>Comprar</span><i class="icon-long-arrow-right"></i>
+        </a>
+
+        <!-- Productos -->
+        <div class="cart-items">
+            <div class="d-flex align-items-center mb-0 product-cart-details" *ngFor="let item of cartItems">
+                <figure class="product-image-container mb-0 me-2" style="width: 80px; flex-shrink: 0;">
+                    <a [routerLink]="['/product', item.slug]" class="product-image">
+                        <img [src]="item.image" alt="product" style="width: 100%; height: auto; display: block;">
+                    </a>
+                </figure>
+                <div class="flex-grow-1 py-2 px-3">
+                    <h4 class="product-title mb-1" style="font-size: 15px;">
+                        <a [routerLink]="['/product', item.slug]">{{ item.name }}</a>
+                    </h4>
+                    <span class="cart-product-info d-block" style="font-size: 13px;">
+                        <span class="d-block">Medida: {{ item.measure }}</span>
+                        <b><span class="cart-product-qty">{{ item.quantity }}</span>
+                            x {{ item.price | currency: 'COP':'symbol':'1.0-0':'es-CO' }}</b>
+                    </span>
+                </div>
+                <a (click)="delItem(item.id, item.variationId)" class="btn-remove ms-2" title="Eliminar producto">
+                    <i class="icon-close"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Total simple (puedes omitir si usas el footer abajo) -->
+        <!--
     <div class="cart-total d-flex justify-content-between align-items-center mt-3">
       <span>Total:</span>
       <span class="total-price">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
     </div>
     -->
-  </div>
-
-  <!-- Footer -->
-  <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
-    <div class="d-flex justify-content-between">
-      <span class="text-dark font-weight-bold">Subtotal:</span>
-      <span class="text-dark" style="font-weight: 700;">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
     </div>
-    <span class="w-100 d-block mb-1 text-muted" style="font-size: 12px;font-weight: 400;">Impuestos y envío calculados al finalizar la compra</span>
-    <button class="btn btn-primary btn-block mb-1 w-100" (click)="goToCheckout()">
-      Finalizar Compra<i class="icon-long-arrow-right"></i>
-    </button>
-    <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">
-      Ver carrito
-    </a>
-  </div>
+
+    <!-- Footer -->
+    <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
+        <div class="d-flex justify-content-between">
+            <span class="text-dark font-weight-bold">Subtotal:</span>
+            <span class="text-dark" style="font-weight: 700;">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO'
+                }}</span>
+        </div>
+        <span class="w-100 d-block mb-1 text-muted" style="font-size: 12px;font-weight: 400;">Impuestos y envío
+            calculados al finalizar la compra</span>
+        <button class="btn btn-primary btn-block mb-1 w-100" (click)="goToCheckout()">
+            Finalizar Compra<i class="icon-long-arrow-right"></i>
+        </button>
+        <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">
+            Ver carrito
+        </a>
+    </div>
 </div>
 
 <!-- Fondo oscurecido -->

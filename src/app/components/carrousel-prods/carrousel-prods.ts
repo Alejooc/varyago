@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule,NgOptimizedImage } from '@angular/common';
 import {
   Component, Input, ChangeDetectionStrategy, OnInit, OnDestroy,
   ViewChild, ElementRef, ChangeDetectorRef, NgZone
@@ -13,7 +13,7 @@ type CarouselVariant = 'hot' | 'cards' | 'thumbs';
 @Component({
   selector: 'app-carrousel-prods',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule,NgOptimizedImage],
   templateUrl: './carrousel-prods.html',
   styleUrl: './carrousel-prods.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

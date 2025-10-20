@@ -43,3 +43,35 @@
         background: none!important;
     }
 }
+/* ===== Trust Bar VaryaGo ===== */
+.vg-trustbar{
+  --vg-border: rgba(0,0,0,.06);
+  --vg-bg: #f9fbfb;
+  --vg-text: #1f2937;
+  --vg-accent: #0f766e; /* ajusta a tu verde principal */
+  --vg-accent-2: #0ea5a4; /* tono auxiliar */
+  border: 1px solid var(--vg-border);
+  border-radius: 14px;
+  padding: .85rem .95rem;
+  background: var(--vg-bg);
+  color: var(--vg-text);
+}
+
+.vg-trustbar__head{
+  display:flex; gap:.5rem; align-items:center; justify-content:space-between;
+  margin-bottom:.35rem;
+}
+
+.vg-trustbar__title{
+  font-weight:700; letter-spacing:.2px;
+}
+
+.vg-trustbar__hint{
+  font-size:.85rem; opacity:.8;
+}
+
+/* Ajuste fino para móvil angosto */
+@media (max-width: 420px){
+  .vg-trustbar__hint{ display:none; }
+  .vg-pill{ font-size:.85rem; padding:.45rem .6rem; }
+}

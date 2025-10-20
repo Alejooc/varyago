@@ -1,0 +1,50 @@
+<section class="trustbar my-3" aria-labelledby="trustbar-title">
+  <div class="tb-header">
+    <h2 id="trustbar-title" class="tb-title">Satisfacción de compradores</h2>
+
+   
+  </div>
+
+  <div class="tb-body">
+    <div class="tb-left">
+      <div class="tb-score">
+        <span class="tb-score-num">{{ avgRating() }}</span>
+        <div class="tb-stars" aria-hidden="true">
+          <ng-container *ngFor="let s of starArray; let i = index">
+            <svg viewBox="0 0 24 24" class="tb-star" [class.filled]="i < roundAvg()">
+              <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+            </svg>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="tb-rev-count">{{ totalReviews() }} reseñas</div>
+
+      <div class="tb-badges" *ngIf="badges?.length">
+        <span class="tb-badge" *ngFor="let b of badges">{{ b }}</span>
+      </div>
+    </div>
+
+    <div class="tb-right" [attr.aria-label]="'Distribución de calificaciones'">
+      <div class="tb-row" *ngFor="let s of [5,4,3,2,1]">
+        <span class="tb-row-label">{{ s }} ★</span>
+        <div class="tb-row-bar" aria-hidden="true">
+          <div class="tb-row-fill" [style.width.%]="bucketPct(s)"></div>
+        </div>
+        <span class="tb-row-pct">{{ bucketPct(s) }}%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tb-footer" role="list" aria-label="Beneficios">
+    <div class="tb-bullet" role="listitem">
+      <span class="dot"></span> Compra protegida
+    </div>
+    <div class="tb-bullet" role="listitem">
+      <span class="dot"></span> Envios Gratis
+    </div>
+    <div class="tb-bullet" role="listitem">
+      <span class="dot"></span> Soporte en línea
+    </div>
+  </div>
+</section>

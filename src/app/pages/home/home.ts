@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService, HomeData } from '../../services/home';
-import { CommonModule } from '@angular/common';
+import { CommonModule,NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarrouselProds } from "../../components/carrousel-prods/carrousel-prods";
 declare var $: any;
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule,CarrouselProds],
+  imports: [CommonModule, RouterModule,CarrouselProds,NgOptimizedImage],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -35,7 +35,7 @@ export class Home implements OnInit {
           }
       }
       });
-    }, 3000); // tiempo suficiente para que el DOM se renderice
+    }, 1000); // tiempo suficiente para que el DOM se renderice
   }
   ngOnInit(): void {
     this.homeService.getHomeData().subscribe({

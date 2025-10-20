@@ -6,33 +6,33 @@ import { environment } from '../config';
 export interface MetaContent {
   id: string;
   quantity: number;
-  item_price?: number; // opcional
+  item_price?: number;
 }
 
 export interface MetaCapiPayload {
-  event_id: string;             // mismo que usas en Pixel para deduplicación
+  event_id: string;
   value?: number;
-  currency?: string;            // 'COP'
+  currency?: string;
   contents?: MetaContent[];
-  client_user_agent: string;    // navigator.userAgent
-  event_source_url?: string;    // window.location.href
-  order_id?: string | number;   // solo en Purchase
-  email?: string;               // opcional, si hay consentimiento
-  phone?: string;               // opcional, si hay consentimiento
-  test_event_code?: string;     // opcional, solo para pruebas
+  client_user_agent: string;
+  event_source_url?: string;
+  order_id?: string;
+  // NUEVO: señales extra
+  fbp?: string;        // _fbp cookie
+  fbc?: string;        // fb.1.<ts>.<fbclid> o _fbc cookie
+  email?: string;      // sin hash (se hashea en el server)
+  phone?: string;      // sin hash (se hashea en el server)
+  external_id?: string; // tu userId/cliente (se hashea en el server)
+  login_id?: string;   // si el usuario inició sesión con FB (poco común)
+  test_event_code?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class MetaCapi {
-  private base = `${environment.API_BASE_URL}/api/meta/capi`; // ajusta si usas otro host
+  private base = `${environment.API_BASE_URL}/api/meta/capi`;
 
   constructor(private http: HttpClient) {}
 
-   /**
-   * Envía cualquier evento de CAPI (Purchase, AddToCart, etc.)
-   * @param eventName Nombre del evento (Purchase, AddToCart, InitiateCheckout, ViewContent, etc.)
-   * @param payload Datos del evento (debe incluir event_id y user_agent al menos)
-   */
   sendEvent(eventName: string, payload: MetaCapiPayload) {
     return this.http.post(`${this.base}/event/${eventName}`, payload);
   }

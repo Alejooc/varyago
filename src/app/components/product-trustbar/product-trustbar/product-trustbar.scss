@@ -1,0 +1,202 @@
+/* === Base responsive, mobile-first === */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.trustbar{
+  --tb-radius: 14px;
+  --tb-gap: clamp(10px, 2vw, 18px);
+  --tb-pad: clamp(12px, 2.5vw, 18px);
+
+  border: 1px solid #eaeaea;
+  border-radius: var(--tb-radius);
+  padding: var(--tb-pad);
+  background: #fff;
+  font-family: normal 300 1.4rem/1.86 "Poppins", sans-serif;
+  color: #1f2328;
+}
+
+/* Títulos y textos fluidos */
+.tb-title{
+  font-size: clamp(1.8rem, 1.2vw + .8rem, 2.1rem);
+  margin: 0 0 8px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tb-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tb-gap);
+  flex-wrap: wrap; /* crucial para móvil */
+}
+
+.tb-satisfaction{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-width: min(220px, 100%);
+}
+
+.tb-sat-bar{
+  flex: 1 1 180px;
+  width: 100%;
+  max-width: 360px;
+  height: 10px;
+  border-radius: 10px;
+  background: #f2f3f5;
+  overflow: hidden;
+  position: relative;
+}
+
+.tb-sat-fill{
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  border-radius: 10px;
+  transition: width .3s ease;
+}
+
+.tb-sat-meta{
+  font-size: clamp(.9rem, .6vw + .7rem, .95rem);
+  color: #333;
+}
+
+/* === Cuerpo: grilla colapsable === */
+.tb-body{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tb-gap);
+  margin-top: 10px;
+}
+
+/* >= 640px: dos columnas */
+@media (min-width: 640px){
+  .tb-body{ grid-template-columns: 1fr 1fr; }
+}
+
+/* >= 1024px: aire extra */
+@media (min-width: 1024px){
+  .tb-body{ gap: calc(var(--tb-gap) + 4px); }
+}
+
+/* Izquierda */
+.tb-left{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tb-score{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tb-score-num{
+  font-size: clamp(1.6rem, 1.3vw + 1rem, 2rem);
+  font-weight: 800;
+}
+
+.tb-stars{
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+
+/* Estrellas responsivas */
+.tb-star{
+  width: clamp(18px, 1.2vw + 12px, 22px);
+  height: clamp(18px, 1.2vw + 12px, 22px);
+  fill: #d7dbe0;
+}
+.tb-star.filled{ fill: #f5a524; }
+
+.tb-rev-count{
+  color: #666;
+  font-size: clamp(.9rem, .4vw + .75rem, .95rem);
+}
+
+/* Badges táctiles */
+.tb-badges{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.tb-badge{
+  font-size: clamp(.90rem, .3vw + .7rem, .95rem);
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eef7ff;
+  color: #1465c0;
+  border: 1px solid #d7ebff;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Derecha: barras de distribución */
+.tb-right{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tb-row{
+  display: grid;
+  grid-template-columns: 48px 1fr 46px;
+  align-items: center;
+  gap: 8px;
+}
+.tb-row-label{
+  font-size: clamp(.85rem, .4vw + .7rem, .95rem);
+  color: #333;
+}
+.tb-row-bar{
+  height: 10px;
+  border-radius: 999px;
+  background: #f0f2f4;
+  overflow: hidden;
+}
+.tb-row-fill{
+  height: 100%;
+  background: #7ed957;
+  transition: width .3s ease;
+}
+.tb-row-pct{
+  font-size: clamp(.8rem, .3vw + .7rem, .9rem);
+  color: #444;
+  text-align: right;
+}
+
+/* Footer */
+.tb-footer{
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  color: #333;
+  font-size: clamp(.9rem, .4vw + .75rem, .95rem);
+  border-top: 1px dashed #eee;
+  padding-top: 12px;
+}
+.tb-bullet{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.dot{
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #27ae60;
+  display: inline-block;
+}
+
+/* === Accesibilidad y “preferencias” === */
+@media (prefers-reduced-motion: reduce){
+  .tb-sat-fill, .tb-row-fill{ transition: none; }
+}
+
+

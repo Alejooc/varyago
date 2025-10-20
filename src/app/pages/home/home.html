@@ -1,273 +1,341 @@
-<main class="main">
+<main class="main" role="main">
+  <ng-container *ngFor="let section of data.layaout; let sIdx = index">
 
-    <ng-container *ngFor="let section of data.layaout">
-        <ng-container *ngIf="section.type === '1'">
-            <div class="intro-slider-container">
-                <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
-                        "nav": true,
-                        "responsive": {
-                        "992": { "nav": true }
-                        }
-                    }'>
+    <!-- TIPO 1: SLIDER -->
+    <section *ngIf="section.type === '1'" class="intro-slider-container" attr.aria-label="Promociones destacadas">
+      <div
+        class="intro-slider owl-carousel owl-simple owl-nav-inside"
+        data-toggle="owl"
+        data-owl-options='{
+          "nav": true,
+          "responsive": { "992": { "nav": true } }
+        }'>
 
-                    <a *ngFor="let section_values of section.data" [routerLink]="section_values.url">
-                        <div class="intro-slide p-0 m-0">
+        <a
+          *ngFor="let section_values of section.data; let i = index"
+          [routerLink]="section_values.url"
+          class="intro-slide p-0 m-0 d-block"
+          [attr.aria-label]="section_values.alt || 'Promoción'">
 
-                            <!-- Imagen escritorio -->
-                            <img [src]="section_values.img" alt="Sección escritorio"
-                                class="img-fluid w-100 d-none d-lg-block"
-                                style="object-fit: cover; max-height: 500px;" />
+          <!-- Escritorio -->
+          <img
+            class="img-fluid w-100 d-none d-lg-block"
+            ngSrc="{{ section_values.img }}"
+            [alt]="section_values.alt || 'Banner principal'"
+            width="1600" height="500"
+            decoding="async"
+            [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+            [priority]="i === 0 ? true : null"
+            [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+            sizes="(min-width: 992px) 100vw, 0"
+            style="object-fit: cover; max-height: 500px;" />
 
-                            <!-- Imagen móvil -->
-                            <img [src]="section_values.img2" alt="Sección móvil"
-                                class="img-fluid w-100 d-block d-lg-none"
-                                style="object-fit: cover; max-height: 500px;" />
+          <!-- Móvil -->
+          <img
+            class="img-fluid w-100 d-block d-lg-none"
+            ngSrc="{{ section_values.img2 }}"
+            [alt]="section_values.alt || 'Banner principal móvil'"
+            width="800" height="500"
+            decoding="async"
+             [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+            [priority]="i === 0 ? true : null"
+             [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+            sizes="(max-width: 991.98px) 100vw, 0"
+            style="object-fit: cover; max-height: 500px;" />
+        </a>
+      </div>
 
-                        </div>
-                    </a>
+      <span class="slider-loader" aria-hidden="true"></span>
+    </section>
+
+    <div class="mb-4" *ngIf="section.type === '1'"></div>
+
+    <!-- TIPO 2: CATEGORÍAS -->
+    <section *ngIf="section.type === '2'" class="container" [attr.aria-labelledby]="'home-cats-' + sIdx">
+      <header class="text-center">
+        <h2 class="title mb-2" [id]="'home-cats-' + sIdx" *ngIf="section.show_title == '1'">
+          {{ section.title }}
+        </h2>
+      </header>
+
+      <div class="cat-blocks-container">
+        <div class="row">
+          <div class="col-6 col-sm-4 col-lg-2" *ngFor="let section_values of section.data">
+            <a [routerLink]="section_values.url" class="cat-block" [attr.aria-label]="section_values.desc">
+              <figure class="m-0">
+                <span class="d-block">
+                  <img
+                    class="img-fluid"
+                    ngSrc="{{ section_values.img }}"
+                    [alt]="section_values.alt || section_values.desc || 'Categoría'"
+                    width="300" height="300"
+                    decoding="async"
+                    loading="lazy"
+                    sizes="(max-width: 575.98px) 50vw, (max-width: 991.98px) 33vw, 16vw" />
+                </span>
+              </figure>
+              <h3 class="cat-block-title mt-2 h6">{{ section_values.desc }}</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="mb-2" *ngIf="section.type === '2'"></div>
+
+    <!-- TIPO 3: BANNERS TRÍPTICO -->
+    <section *ngIf="section.type === '3'" class="container" attr.aria-label="Promociones por colección">
+      <div class="row">
+        <!-- Col 1 -->
+        <div class="col-sm-6 col-lg-3">
+          <article class="banner banner-overlay">
+            <a [routerLink]="section.data[0].url" [attr.aria-label]="section.data[0].title">
+              <img
+                ngSrc="{{ section.data[0].img }}"
+                [alt]="section.data[0].alt || section.data[0].title || 'Promoción'"
+                width="800" height="600"
+                decoding="async"
+                loading="lazy"
+                sizes="(max-width: 991.98px) 50vw, 25vw" />
+            </a>
+            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
+              <h4 class="banner-subtitle text-white">
+                <a [routerLink]="section.data[0].url">{{ section.data[0].title }}</a>
+              </h4>
+              <h3 class="banner-title text-white">
+                <a [routerLink]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
+              </h3>
+              <a
+                [routerLink]="section.data[0].url"
+                class="banner-link"
+                [attr.aria-label]="'Comprar ahora: ' + (section.data[0].title || '')">
+                Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="col-sm-6 col-lg-3 order-lg-last">
+          <article class="banner banner-overlay">
+            <a [routerLink]="section.data[1].url" [attr.aria-label]="section.data[1].title">
+              <img
+                ngSrc="{{ section.data[1].img }}"
+                [alt]="section.data[1].alt || section.data[1].title || 'Promoción'"
+                width="800" height="600"
+                decoding="async"
+                loading="lazy"
+                sizes="(max-width: 991.98px) 50vw, 25vw" />
+            </a>
+            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
+              <h4 class="banner-subtitle text-white">
+                <a [routerLink]="section.data[1].url">{{ section.data[1].title }}</a>
+              </h4>
+              <h3 class="banner-title text-white">
+                <a [routerLink]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
+              </h3>
+              <a
+                [routerLink]="section.data[1].url"
+                class="banner-link"
+                [attr.aria-label]="'Comprar ahora: ' + (section.data[1].title || '')">
+                Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Col 3 (wide) -->
+        <div class="col-lg-6">
+          <article class="banner banner-overlay">
+            <a [routerLink]="section.data[2].url" [attr.aria-label]="section.data[2].title">
+              <img
+                ngSrc="{{ section.data[2].img }}"
+                [alt]="section.data[2].alt || section.data[2].title || 'Promoción'"
+                width="1200" height="600"
+                decoding="async"
+                loading="lazy"
+                sizes="(max-width: 991.98px) 100vw, 50vw" />
+            </a>
+            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
+              <h4 class="banner-subtitle text-white d-none d-sm-block">
+                <a [routerLink]="section.data[2].url">{{ section.data[2].title }}</a>
+              </h4>
+              <h3 class="banner-title text-white">
+                <a [routerLink]="section.data[2].url" [innerHTML]="section.data[2].desc"></a>
+              </h3>
+              <a
+                [routerLink]="section.data[2].url"
+                class="banner-link"
+                [attr.aria-label]="'Comprar ahora: ' + (section.data[2].title || '')">
+                Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="mb-3" *ngIf="section.type === '3'"></div>
+
+    <!-- TIPO 4: CARRUSEL DE PRODUCTOS -->
+    <section *ngIf="section.type === '4'" attr.aria-label="Los más vendidos" class="container">
+      <app-carrousel-prods
+        [title]="'Los más vendidos'"
+        [show_title]="true"
+        [products]="section.data"
+        [variant]="'hot'">
+      </app-carrousel-prods>
+    </section>
+
+    <div class="mb-3" *ngIf="section.type === '4'"></div>
+
+    <!-- TIPO 5: BANNERS DOBLES -->
+    <section *ngIf="section.type === '5'" class="container" attr.aria-label="Ofertas y colecciones">
+      <div class="row">
+        <div class="col-lg-6">
+          <article class="banner banner-overlay banner-overlay-light">
+            <a [routerLink]="section.data[0].url" [attr.aria-label]="section.data[0].title">
+              <img
+                ngSrc="{{ section.data[0].img }}"
+                [alt]="section.data[0].alt || section.data[0].title || 'Promoción'"
+                width="1200" height="600"
+                decoding="async"
+                loading="lazy"
+                sizes="(max-width: 991.98px) 100vw, 50vw" />
+            </a>
+            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
+              <h4 class="banner-subtitle text-white">
+                <a [routerLink]="section.data[0].url">{{ section.data[0].title }}</a>
+              </h4>
+              <h3 class="banner-title text-white">
+                <a [routerLink]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
+              </h3>
+              <a
+                [routerLink]="section.data[0].url"
+                class="banner-link"
+                [attr.aria-label]="'Comprar ahora: ' + (section.data[0].title || '')">
+                Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-lg-6">
+          <article class="banner banner-overlay">
+            <a [routerLink]="section.data[1].url" [attr.aria-label]="section.data[1].title">
+              <img
+                ngSrc="{{ section.data[1].img }}"
+                [alt]="section.data[1].alt || section.data[1].title || 'Promoción'"
+                width="1200" height="600"
+                decoding="async"
+                loading="lazy"
+                sizes="(max-width: 991.98px) 100vw, 50vw" />
+            </a>
+            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
+              <h4 class="banner-subtitle text-white">
+                <a [routerLink]="section.data[1].url">{{ section.data[1].title }}</a>
+              </h4>
+              <h3 class="banner-title text-white">
+                <a [routerLink]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
+              </h3>
+              <a
+                [routerLink]="section.data[1].url"
+                class="banner-link"
+                [attr.aria-label]="'Comprar ahora: ' + (section.data[1].title || '')">
+                Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="mb-1" *ngIf="section.type === '5'"></div>
+
+    <!-- TIPO 6/7/8: (Reservado) -->
+    <ng-container *ngIf="section.type === '6'"></ng-container>
+    <ng-container *ngIf="section.type === '7'"></ng-container>
+    <ng-container *ngIf="section.type === '8'"></ng-container>
+
+    <!-- TIPO 9: MARCAS -->
+    <section *ngIf="section.type === '9'" class="container" [attr.aria-labelledby]="'marcas-aliadas-' + sIdx">
+      <h2 class="title title-border mb-5" [id]="'marcas-aliadas-' + sIdx">Marcas Aliadas</h2>
+      <div
+        class="owl-carousel mb-5 owl-simple"
+        data-toggle="owl"
+        data-owl-options='{
+          "nav": false,
+          "dots": true,
+          "margin": 30,
+          "loop": false,
+          "responsive": {
+            "0":   { "items": 2 },
+            "420": { "items": 3 },
+            "600": { "items": 4 },
+            "900": { "items": 5 },
+            "1024":{ "items": 6 },
+            "1280":{ "items": 6, "nav": true, "dots": false }
+          }
+        }'>
+
+        <a href="#" class="brand" attr.aria-label="Marca 1">
+          <img ngSrc="assets/images/brands/1.png" alt="Marca 1" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 2">
+          <img ngSrc="assets/images/brands/2.png" alt="Marca 2" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 3">
+          <img ngSrc="assets/images/brands/3.png" alt="Marca 3" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 4">
+          <img ngSrc="assets/images/brands/4.png" alt="Marca 4" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 5">
+          <img ngSrc="assets/images/brands/5.png" alt="Marca 5" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 6">
+          <img ngSrc="assets/images/brands/6.png" alt="Marca 6" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+        <a href="#" class="brand" attr.aria-label="Marca 7">
+          <img ngSrc="assets/images/brands/7.png" alt="Marca 7" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
+        </a>
+      </div>
+    </section>
+
+    <div class="mb-3" *ngIf="section.type === '9'"></div>
+
+    <!-- TIPO 10: CTA NEWSLETTER -->
+    <section *ngIf="section.type === '10'" class="cta cta-horizontal cta-horizontal-box bg-primary" [attr.aria-labelledby]="'cta-news-' + sIdx">
+      <div class="container">
+        <div class="row align-items-center">
+          <header class="col-12 col-xl-5" [id]="'cta-news-' + sIdx">
+            <h3 class="cta-title text-white m-0">Recibe las últimas novedades</h3>
+            <p class="cta-desc text-white mb-0">Suscríbete para recibir novedades de productos y cupones.</p>
+          </header>
+
+          <div class="col-12 col-xl-7 mt-3 mt-xl-0">
+            <form action="#" attr.aria-label="Formulario de suscripción">
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control form-control-white"
+                  placeholder="Ingresa tu correo electrónico"
+                  aria-label="Correo electrónico"
+                  required
+                  autocomplete="email" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-white-2" type="submit" attr.aria-label="Suscribirse">
+                    <span>Suscribirse</span>
+                    <i class="icon-long-arrow-right" aria-hidden="true"></i>
+                  </button>
                 </div>
+              </div>
+            </form>
+          </div>
 
+        </div>
+      </div>
+    </section>
 
-                <span class="slider-loader"></span><!-- End .slider-loader -->
-            </div><!-- End .intro-slider-container -->
-        </ng-container>
-        <div class="mb-4"></div><!-- End .mb-2 -->
-        <ng-container *ngIf="section.type === '2'">
-            <div class="container">
-                <h2 class="title text-center mb-2" *ngIf="section.show_title == '1'">{{section.title}}</h2>
-                <!-- End .title -->
-
-                <div class="cat-blocks-container">
-                    <div class="row">
-                        <div class="col-6 col-sm-4 col-lg-2" *ngFor="let section_values of section.data">
-                            <a [routerLink]="section_values.url" class="cat-block">
-                                <figure>
-                                    <span>
-                                        <img [src]="section_values.img" [alt]="section_values.alt">
-                                    </span>
-                                </figure>
-
-                                <h3 class="cat-block-title mt-2">{{section_values.desc}}</h3>
-                                <!-- End .cat-block-title -->
-                            </a>
-                        </div><!-- End .col-sm-4 col-lg-2 -->
-                    </div><!-- End .row -->
-                </div><!-- End .cat-blocks-container -->
-            </div><!-- End .container -->
-        </ng-container>
-        <div class="mb-2"></div><!-- End .mb-2 -->
-        <ng-container *ngIf="section.type === '3'">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="banner banner-overlay">
-                            <a [routerLink]="section.data[0].url">
-                                <img [src]="section.data[0].img" [alt]="section.data[0].alt">
-                            </a>
-
-                            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
-                                <h4 class="banner-subtitle text-white"><a
-                                        [routerLink]="section.data[0].url">{{section.data[0].title}} </a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a [routerLink]="section.data[0].url"
-                                        [innerHTML]="section.data[0].desc"></a></h3><!-- End .banner-title -->
-                                <a [routerLink]="section.data[0].url" class="banner-link">Comprar Ahora <i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-3 -->
-
-                    <div class="col-sm-6 col-lg-3 order-lg-last">
-                        <div class="banner banner-overlay">
-                            <a [routerLink]="section.data[1].url">
-                                <img [src]="section.data[1].img" [alt]="section.data[1].alt">
-                            </a>
-
-                            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
-                                <h4 class="banner-subtitle text-white"><a
-                                        [routerLink]="section.data[1].url">{{section.data[1].title}}</a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a [routerLink]="section.data[1].url"
-                                        [innerHTML]="section.data[1].desc"></a></h3><!-- End .banner-title -->
-                                <a [routerLink]="section.data[1].url" class="banner-link">Comprar Ahora <i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-3 -->
-
-                    <div class="col-lg-6">
-                        <div class="banner banner-overlay">
-                            <a [routerLink]="section.data[2].url">
-                                <img [src]="section.data[2].img" [alt]="section.data[2].alt">
-                            </a>
-
-                            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
-                                <h4 class="banner-subtitle text-white d-none d-sm-block"><a
-                                        [routerLink]="section.data[2].url">{{section.data[2].title}}</a>
-                                </h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a [routerLink]="section.data[2].url"
-                                        [innerHTML]="section.data[2].desc"></a></h3><!-- End .banner-title -->
-                                <a [routerLink]="section.data[2].url" class="banner-link">Comprar Ahora <i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </ng-container>
-        <div class="mb-3"></div><!-- End .mb-3 -->
-        
-        <ng-container *ngIf="section.type === '4'">
-            
-           <app-carrousel-prods [title]="'Los más vendidos'" [show_title]="true"
-                [products]="section.data" [variant]="'hot'"></app-carrousel-prods>
-        </ng-container>
-        <div class="mb-3"></div><!-- End .mb-3 -->
-        <ng-container *ngIf="section.type === '5'">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        
-                        <div class="banner banner-overlay banner-overlay-light">
-                            <a [routerLink]="section.data[0].url">
-                                <img [src]="section.data[0].img" [alt]="section.data[0].alt">
-                            </a>
-
-                            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
-                                <h4 class="banner-subtitle text-white"><a
-                                        [routerLink]="section.data[0].url">{{section.data[0].title}} </a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a [routerLink]="section.data[0].url"
-                                        [innerHTML]="section.data[0].desc"></a></h3><!-- End .banner-title -->
-                                <a [routerLink]="section.data[0].url" class="banner-link">Comprar Ahora <i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-6 -->
-
-                    <div class="col-lg-6">
-                        <div class="banner banner-overlay">
-                           <a [routerLink]="section.data[1].url">
-                                <img [src]="section.data[1].img" [alt]="section.data[1].alt">
-                            </a>
-
-                            <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
-                                <h4 class="banner-subtitle text-white"><a
-                                        [routerLink]="section.data[1].url">{{section.data[1].title}} </a></h4>
-                                <!-- End .banner-subtitle -->
-                                <h3 class="banner-title text-white"><a [routerLink]="section.data[1].url"
-                                        [innerHTML]="section.data[1].desc"></a></h3><!-- End .banner-title -->
-                                <a [routerLink]="section.data[1].url" class="banner-link">Comprar Ahora <i
-                                        class="icon-long-arrow-right"></i></a>
-                            </div><!-- End .banner-content -->
-                        </div><!-- End .banner -->
-                    </div><!-- End .col-lg-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </ng-container>
-        <div class="mb-1"></div><!-- End .mb-1 -->
-        <ng-container *ngIf="section.type === '6'">
-
-        </ng-container>
-        <ng-container *ngIf="section.type === '7'">
-
-        </ng-container>
-        <ng-container *ngIf="section.type === '8'">
-
-        </ng-container>
-        <ng-container *ngIf="section.type === '9'">
-            <div class="container">
-                <h2 class="title title-border mb-5">Marcas Aliadas</h2><!-- End .title -->
-                <div class="owl-carousel mb-5 owl-simple" data-toggle="owl" data-owl-options='{
-                        "nav": false, 
-                        "dots": true,
-                        "margin": 30,
-                        "loop": false,
-                        "responsive": {
-                            "0": {
-                                "items":2
-                            },
-                            "420": {
-                                "items":3
-                            },
-                            "600": {
-                                "items":4
-                            },
-                            "900": {
-                                "items":5
-                            },
-                            "1024": {
-                                "items":6
-                            },
-                            "1280": {
-                                "items":6,
-                                "nav": true,
-                                "dots": false
-                            }
-                        }
-                    }'>
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/1.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/2.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/3.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/4.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/5.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/6.png" alt="Brand Name">
-                    </a>
-
-                    <a href="#" class="brand">
-                        <img src="assets/images/brands/7.png" alt="Brand Name">
-                    </a>
-                </div><!-- End .owl-carousel -->
-            </div><!-- End .container -->
-        </ng-container>
-        <div class="mb-3"></div><!-- End .mb-3 -->
-        <ng-container *ngIf="section.type === '10'">
-            <div class="cta cta-horizontal cta-horizontal-box bg-primary">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-2xl-5col">
-                            <h3 class="cta-title text-white">Recibe las ultimas novedades</h3><!-- End .cta-title -->
-                            <p class="cta-desc text-white">Suscribete para recibir novedades de productos y cupones</p>
-                            <!-- End .cta-desc -->
-                        </div><!-- End .col-lg-5 -->
-
-                        <div class="col-3xl-5col">
-                            <form action="#">
-                                <div class="input-group">
-                                    <input type="email" class="form-control form-control-white"
-                                        placeholder="Ingresa tu correo electronico" aria-label="Email Adress" required>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-white-2" type="submit"><span>Suscribirse</span><i
-                                                class="icon-long-arrow-right"></i></button>
-                                    </div><!-- .End .input-group-append -->
-                                </div><!-- .End .input-group -->
-                            </form>
-                        </div><!-- End .col-lg-7 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .cta -->
-        </ng-container>
-    </ng-container>
-
-
-
-
-
-</main><!-- End .main -->
+  </ng-container>
+</main>

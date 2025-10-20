@@ -16,6 +16,9 @@ import { MetaPixel } from '../../services/meta-pixel';
 import { MetaCapi } from '../../services/meta-capi';
 import { Gtm } from '../../services/gtm';
 import { CarrouselProds } from '../../components/carrousel-prods/carrousel-prods';
+import { getFbp, getFbc } from '../../helpers/facebook-ids';
+import { ProductTrustbar } from '../../components/product-trustbar/product-trustbar/product-trustbar';
+
 
 declare var $: any; // Para usar jQuery
 const uuid = () => crypto.randomUUID();
@@ -24,7 +27,7 @@ const isMobile = () =>
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule,CarrouselProds],
+  imports: [CommonModule, ReactiveFormsModule,RouterModule,CarrouselProds,ProductTrustbar],
   templateUrl: './product.html',
   styleUrls: ['./product.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -379,7 +382,26 @@ export class Product implements OnInit {
       },
       eventId
     );
-    this.capi
+    this.capi.sendEvent('AddToCart', {
+      event_id: eventId,
+      value: Number(this.selectedVariation.price2) * this.product.qty,
+      currency: 'COP',
+      contents: [{ id: this.selectedVariation.sku, quantity: this.product.qty, item_price: Number(this.selectedVariation.price2) }],
+      client_user_agent: navigator.userAgent,
+      event_source_url: window.location.href,
+
+      // señales extra
+      fbp: getFbp(),
+      fbc: getFbc(),
+      // Si tienes consentimiento y datos del cliente:
+       //email: this.session?.user?.email,
+      //phone: this.session?.user?.phone,
+        //external_id: String(this.session?.user?.id)
+    }).subscribe({
+        next: (res) => console.log('CAPI AddToCart enviado', res),
+        error: (err) => console.error('Error CAPI AddToCart', err),
+      });
+    /*this.capi
       .sendEvent('AddToCart', {
         event_id: eventId, // genera un ID único
         value: Number(this.selectedVariation.price2) * this.product.qty,
@@ -397,7 +419,7 @@ export class Product implements OnInit {
       .subscribe({
         next: (res) => console.log('CAPI AddToCart enviado', res),
         error: (err) => console.error('Error CAPI AddToCart', err),
-      });
+      });*/
   }
   toNumber(v: any): number {
     return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));

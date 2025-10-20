@@ -42,6 +42,7 @@
                     <div class="col-md-6">
                         <div class="product-details">
                             <h1 class="product-title">{{product?.name}}</h1><!-- End .product-title -->
+                           
                              <p>Ref: {{selectedVariation?.sku}}</p>
                             <div class="product-price product-price-antes d-flex align-items-end mt-3"
                                 *ngIf="selectedVariation">
@@ -134,22 +135,32 @@
                             <!-- End .product-details-action -->
 
                             <div class="product-details-footer">
+                                <!-- TRUST BAR (pegar justo debajo del botón de comprar) -->
+                                <div class="vg-trustbar col-12 mb-2" role="region" aria-label="Métodos de pago y facilidades">
+                                    <div class="vg-trustbar__head">
+                                        <span class="vg-trustbar__title">💳 Paga fácil</span>
+                                        <span class="vg-trustbar__hint">Sin papeleo. Compra segura.</span>
+                                    </div>
+
+                                    <div class=" mx-auto">
+                                     <img src="/assets/images/metodosdepago.png" class="img-fluid d-block mx-auto" alt="varyago logo">
+                                    </div>
+                                </div>
+
+                                
+
                                 <a [href]="'https://wa.me/573151197065?text=¡Hola!%20Necesito%20ayuda%20con%20el%20producto%20o%20quiero%20comprarlo:%20' +'https://varyago.com/product/'+product?.slug" class="btn btn-wpp w-100 mb-2 d-flex align-items-center justify-content-center" target="_blank" rel="noopener noreferrer">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width: 24px; height: 24px; margin-right: 8px;">
                                     ¿Listo para comprar? Escríbenos aquí
                                 </a>
                                 <div class="ratings-container">
-                                    <!-- <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div>
-                                    </div>
-                                   <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>-->
                                 </div>
                             </div>
                         </div><!-- End .product-details -->
                     </div><!-- End .col-md-6 -->
                 </div><!-- End .row -->
             </div><!-- End .product-details-top -->
-
+            
             <div class="product-details-tab">
                 <ul class="nav nav-pills justify-content-center" role="tablist">
                     <li class="nav-item">
@@ -261,6 +272,7 @@
                     </div><!-- .End .tab-pane -->
                 </div><!-- End .tab-content -->
             </div><!-- End .product-details-tab -->
+            <app-product-trustbar></app-product-trustbar>
             <app-carrousel-prods [title]="'Más opciones similares'" [show_title]="true"
                 [products]="product.related" [variant]="'hot'"></app-carrousel-prods>
 

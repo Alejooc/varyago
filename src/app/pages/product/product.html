@@ -55,8 +55,8 @@
                                 {{ selectedVariation.price2 | currency:'COP':'symbol':'1.0-0':'es-CO'}}
                                 <span style="font-size: 13px; margin-left: 6px; align-self: flex-end;"><b>Hoy</b></span>
                                 <span *ngIf="selectedVariation.discount>0" class="badge label-discount"
-                                    style="margin-left: 8px; font-size: 13px;align-self: flex-start;">{{
-                                    selectedVariation.discount }}% OFF</span>
+                                    style="margin-left: 8px; font-size: 13px;align-self: flex-start;">-{{
+                                    selectedVariation.discount }}%</span>
                             </div>
                             <form *ngIf="productForm" [formGroup]="productForm">
                                 <!-- COLOR -->

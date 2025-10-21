@@ -1,4 +1,4 @@
-<main class="main" role="main">
+<main class="main v-home" role="main">
   <ng-container *ngFor="let section of data.layaout; let sIdx = index">
 
     <!-- TIPO 1: SLIDER -->
@@ -14,6 +14,7 @@
         <a
           *ngFor="let section_values of section.data; let i = index"
           [routerLink]="section_values.url"
+           [attr.href]="section_values.url"
           class="intro-slide p-0 m-0 d-block"
           [attr.aria-label]="section_values.alt || 'Promoción'">
 
@@ -26,7 +27,7 @@
             decoding="async"
             [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
             [priority]="i === 0 ? true : null"
-            [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+            [attr.loading]="i === 0 ? 'lazy' : 'lazy'"
             sizes="(min-width: 992px) 100vw, 0"
             style="object-fit: cover; max-height: 500px;" />
 
@@ -39,7 +40,7 @@
             decoding="async"
              [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
             [priority]="i === 0 ? true : null"
-             [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+             [attr.loading]="i === 0 ? 'lazy' : 'lazy'"
             sizes="(max-width: 991.98px) 100vw, 0"
             style="object-fit: cover; max-height: 500px;" />
         </a>
@@ -61,7 +62,7 @@
       <div class="cat-blocks-container">
         <div class="row">
           <div class="col-6 col-sm-4 col-lg-2" *ngFor="let section_values of section.data">
-            <a [routerLink]="section_values.url" class="cat-block" [attr.aria-label]="section_values.desc">
+            <a [routerLink]="section_values.url"  [attr.href]="section_values.url" class="cat-block" [attr.aria-label]="section_values.desc">
               <figure class="m-0">
                 <span class="d-block">
                   <img
@@ -89,7 +90,7 @@
         <!-- Col 1 -->
         <div class="col-sm-6 col-lg-3">
           <article class="banner banner-overlay">
-            <a [routerLink]="section.data[0].url" [attr.aria-label]="section.data[0].title">
+            <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url" [attr.aria-label]="section.data[0].title">
               <img
                 ngSrc="{{ section.data[0].img }}"
                 [alt]="section.data[0].alt || section.data[0].title || 'Promoción'"
@@ -100,13 +101,13 @@
             </a>
             <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
               <h4 class="banner-subtitle text-white">
-                <a [routerLink]="section.data[0].url">{{ section.data[0].title }}</a>
+                <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url">{{ section.data[0].title }}</a>
               </h4>
               <h3 class="banner-title text-white">
-                <a [routerLink]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
+                <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
               </h3>
               <a
-                [routerLink]="section.data[0].url"
+                [routerLink]="section.data[0].url" [attr.href]="section.data[0].url"
                 class="banner-link"
                 [attr.aria-label]="'Comprar ahora: ' + (section.data[0].title || '')">
                 Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
@@ -118,7 +119,7 @@
         <!-- Col 2 -->
         <div class="col-sm-6 col-lg-3 order-lg-last">
           <article class="banner banner-overlay">
-            <a [routerLink]="section.data[1].url" [attr.aria-label]="section.data[1].title">
+            <a [routerLink]="section.data[1].url"  [attr.href]="section.data[1].url" [attr.aria-label]="section.data[1].title">
               <img
                 ngSrc="{{ section.data[1].img }}"
                 [alt]="section.data[1].alt || section.data[1].title || 'Promoción'"
@@ -129,13 +130,13 @@
             </a>
             <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
               <h4 class="banner-subtitle text-white">
-                <a [routerLink]="section.data[1].url">{{ section.data[1].title }}</a>
+                <a [routerLink]="section.data[1].url" [attr.href]="section.data[1].url">{{ section.data[1].title }}</a>
               </h4>
               <h3 class="banner-title text-white">
-                <a [routerLink]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
+                <a [routerLink]="section.data[1].url" [attr.href]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
               </h3>
               <a
-                [routerLink]="section.data[1].url"
+                [routerLink]="section.data[1].url" [attr.href]="section.data[1].url"
                 class="banner-link"
                 [attr.aria-label]="'Comprar ahora: ' + (section.data[1].title || '')">
                 Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
@@ -147,7 +148,7 @@
         <!-- Col 3 (wide) -->
         <div class="col-lg-6">
           <article class="banner banner-overlay">
-            <a [routerLink]="section.data[2].url" [attr.aria-label]="section.data[2].title">
+            <a [routerLink]="section.data[2].url" [attr.href]="section.data[2].url" [attr.aria-label]="section.data[2].title">
               <img
                 ngSrc="{{ section.data[2].img }}"
                 [alt]="section.data[2].alt || section.data[2].title || 'Promoción'"
@@ -158,13 +159,13 @@
             </a>
             <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
               <h4 class="banner-subtitle text-white d-none d-sm-block">
-                <a [routerLink]="section.data[2].url">{{ section.data[2].title }}</a>
+                <a [routerLink]="section.data[2].url" [attr.href]="section.data[2].url">{{ section.data[2].title }}</a>
               </h4>
               <h3 class="banner-title text-white">
-                <a [routerLink]="section.data[2].url" [innerHTML]="section.data[2].desc"></a>
+                <a [routerLink]="section.data[2].url" [attr.href]="section.data[2].url" [innerHTML]="section.data[2].desc"></a>
               </h3>
               <a
-                [routerLink]="section.data[2].url"
+                [routerLink]="section.data[2].url" [attr.href]="section.data[2].url"
                 class="banner-link"
                 [attr.aria-label]="'Comprar ahora: ' + (section.data[2].title || '')">
                 Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
@@ -194,7 +195,7 @@
       <div class="row">
         <div class="col-lg-6">
           <article class="banner banner-overlay banner-overlay-light">
-            <a [routerLink]="section.data[0].url" [attr.aria-label]="section.data[0].title">
+            <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url" [attr.aria-label]="section.data[0].title">
               <img
                 ngSrc="{{ section.data[0].img }}"
                 [alt]="section.data[0].alt || section.data[0].title || 'Promoción'"
@@ -205,13 +206,13 @@
             </a>
             <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
               <h4 class="banner-subtitle text-white">
-                <a [routerLink]="section.data[0].url">{{ section.data[0].title }}</a>
+                <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url">{{ section.data[0].title }}</a>
               </h4>
               <h3 class="banner-title text-white">
-                <a [routerLink]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
+                <a [routerLink]="section.data[0].url" [attr.href]="section.data[0].url" [innerHTML]="section.data[0].desc"></a>
               </h3>
               <a
-                [routerLink]="section.data[0].url"
+                [routerLink]="section.data[0].url" [attr.href]="section.data[0].url"
                 class="banner-link"
                 [attr.aria-label]="'Comprar ahora: ' + (section.data[0].title || '')">
                 Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>
@@ -222,7 +223,7 @@
 
         <div class="col-lg-6">
           <article class="banner banner-overlay">
-            <a [routerLink]="section.data[1].url" [attr.aria-label]="section.data[1].title">
+            <a [routerLink]="section.data[1].url" [attr.href]="section.data[1].url" [attr.aria-label]="section.data[1].title">
               <img
                 ngSrc="{{ section.data[1].img }}"
                 [alt]="section.data[1].alt || section.data[1].title || 'Promoción'"
@@ -233,13 +234,13 @@
             </a>
             <div class="banner-content" *ngIf="section.data[0].show_texts === '1'">
               <h4 class="banner-subtitle text-white">
-                <a [routerLink]="section.data[1].url">{{ section.data[1].title }}</a>
+                <a [routerLink]="section.data[1].url" [attr.href]="section.data[1].url">{{ section.data[1].title }}</a>
               </h4>
               <h3 class="banner-title text-white">
-                <a [routerLink]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
+                <a [routerLink]="section.data[1].url" [attr.href]="section.data[1].url" [innerHTML]="section.data[1].desc"></a>
               </h3>
               <a
-                [routerLink]="section.data[1].url"
+                [routerLink]="section.data[1].url" [attr.href]="section.data[1].url"
                 class="banner-link"
                 [attr.aria-label]="'Comprar ahora: ' + (section.data[1].title || '')">
                 Comprar Ahora <i class="icon-long-arrow-right" aria-hidden="true"></i>

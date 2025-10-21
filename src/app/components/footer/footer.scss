@@ -15,3 +15,69 @@
     50%  { transform: rotate(0deg); }
     100% { transform: rotate(0deg); }
   }
+ /* ===== Footer Anti-CLS (scoped) ===== */
+.footer.footer-2.v-footer-stable { contain: layout paint style; }
+
+/* 1) Caja fija para iconos (evita salto al cargar icon-font) */
+.footer.footer-2.v-footer-stable i[class^="icon-"]::before,
+.footer.footer-2.v-footer-stable i[class*=" icon-"]::before{
+  display:inline-block;
+  width:1em; height:1em; line-height:1;
+  text-rendering:auto;
+}
+
+/* 2) Alturas mínimas predecibles en bloques grandes */
+.footer.footer-2.v-footer-stable .icon-boxes-container { min-height: 110px; }
+.footer.footer-2.v-footer-stable .footer-middle        { min-height: 300px; }
+.footer.footer-2.v-footer-stable .footer-bottom        { min-height: 80px; }
+
+/* 3) Tarjetas de ventajas: no cambian de alto al pintar fuentes */
+.footer.footer-2.v-footer-stable .icon-box.icon-box-side{
+  display:flex; align-items:center; min-height:96px;
+}
+.footer.footer-2.v-footer-stable .icon-box-icon{
+  width:48px; min-width:48px; height:48px;
+  display:flex; align-items:center; justify-content:center;
+}
+.footer.footer-2.v-footer-stable .icon-box-title{
+  line-height:1.2;
+}
+
+/* 4) Imágenes con caja estable y sin inline-gap */
+.footer.footer-2.v-footer-stable .footer-logo{ width:105px; height:25px; display:block; }
+.footer.footer-2.v-footer-stable .footer-payments img{ width:380px; height:38px; display:block; }
+
+/* 5) (Opcional) Acelera el primer pintado cuando el footer está fuera de vista.
+   Uso responsable: solo si no hay contenido crítico dentro del footer. */
+@supports (content-visibility: auto){
+  .footer.footer-2.v-footer-stable{
+    content-visibility:auto;
+    contain-intrinsic-size: 600px; /* “reserva” tamaño sin medir; ajusta a tu footer real */
+  }
+}
+/* === Botón WhatsApp flotante (sin layout shift) === */
+.varyago-whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 48px;
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+  display: block;
+  will-change: transform;
+  transition: transform .2s ease, opacity .2s ease;
+  opacity: .95;
+}
+
+.varyago-whatsapp-btn:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.varyago-whatsapp-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
+}

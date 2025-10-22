@@ -62,16 +62,19 @@
             <img src="/assets/images/logos/logoweb.png" class="footer-logo" alt="VaryaGo" width="105" height="25" loading="lazy" decoding="async">
             <p>En VaryaGo encuentras variedad, calidad y confianza. Todo lo que necesitas para tu hogar, en un solo lugar y con envío rápido.</p>
 
-            <div class="widget-about-info">
-              <div class="row">
-                <div class="col-sm-6 col-md-8">
-                  <span class="widget-about-title">Compra segura</span>
-                  <figure class="footer-payments">
-                    <img src="assets/images/payments.webp" alt="Métodos de pago" width="380" height="38" loading="lazy" decoding="async" />
-                  </figure>
+            <div class="widget-call">
+              <div>
+                <h4>¿Necesitas ayuda?</h4>
+                <div class="contact-links">
+                    <a class="d-block" style="display:block;" href="tel:{{gralData.whatsapp}}" aria-label="Llamar a VaryaGo" title="Llamar a VaryaGo">
+                        Teléfono: {{gralData.whatsapp}}
+                    </a>
+                    <a class="d-block" style="display:block;" href="mailto:{{gralData.email || 'info@varyago.com'}}" aria-label="Enviar correo a VaryaGo" title="Enviar correo a VaryaGo">
+                        Email: {{gralData.email || 'info@varyago.com'}}
+                    </a>
+                </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
 

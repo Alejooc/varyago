@@ -194,6 +194,9 @@ radiosVisible = true;
             form.submit();
             return;
           }
+          if (res.payment?.method === 'addi' && res.payment?.redirect_url) {
+            window.location.href = res.payment.redirect_url;
+          }
           this.router.navigate(['/confirm', res.order_id]);
           const eventId = uuid(); // o genera un string único
           this.pixel.purchase({

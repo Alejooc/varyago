@@ -23,7 +23,7 @@ export class CarrouselProds implements OnInit, OnDestroy {
   @Input() show_title: boolean = true;
   @Input() products: any[] = [];     // ids o payload que tu service usa
   @Input() variant: CarouselVariant = 'cards';
-  @Input() autoplay = false;
+  @Input() autoplay = true;
   @Input() perView = 1;
 
   elements: any[] = [];
@@ -81,7 +81,7 @@ export class CarrouselProds implements OnInit, OnDestroy {
       // Fallbacks suaves sin pisar tus data-attrs
       opts = Object.assign(
         {
-          loop: false,
+          loop: true,
           margin: 20,
           nav: false,
           dots: true,

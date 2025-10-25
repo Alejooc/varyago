@@ -34,22 +34,37 @@
     color: #015959 !important;
 }
 
-
+/* ==== CART ASIDE (ajustado) ==== */
 .cart-aside {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;            /* no se sale en pantallas pequeñas */
   height: 100%;
   background: white;
   box-shadow: -2px 0 10px rgba(0,0,0,0.2);
   transition: right 0.3s ease-in-out;
   z-index: 1055;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cart-aside.open {
   right: 0;
+}
+
+/* En móviles ocupa todo el ancho y se oculta fuera del viewport exacto */
+@media (max-width: 480px) {
+  .cart-aside {
+    width: 100vw;
+    max-width: none;
+    right: -100vw;             /* se oculta exactamente un viewport */
+    box-shadow: none;          /* opcional: más limpio en móvil */
+  }
+  .cart-aside.open {
+    right: 0;
+  }
 }
 
 .cart-overlay {
@@ -61,8 +76,9 @@
   background: rgba(0,0,0,0.4);
   z-index: 1050;
 }
+
 .cart-itemss{
-    overflow-y: scroll;
-    max-height: 450px;
-    overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 450px;
+  overflow-x: hidden;
 }

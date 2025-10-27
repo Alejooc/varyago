@@ -1,2 +1,228 @@
 .pointer-events-none { pointer-events: none; }
 .pointer-events-none { pointer-events: none; }
+.table.table-summary .summary-total td {
+  font-weight: 600!important;
+}
+.table.table-summary .summary-subtotal2 td {
+  font-weight: 400!important;
+  color: #555!important;
+}
+.payment-method {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 13px 13px;
+    //margin-bottom: 1px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+.btn-primary-2 {
+    background-color: #015959;
+    border-color: #015959;
+    color: #fff;
+    padding: 12px 24px;
+}
+
+/* === Campos del formulario === */
+form .form-control {
+  border-radius: 8px;
+  border: 1px solid #dfe3e8;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+form .form-control:focus {
+  border-color: #015959;
+  box-shadow: 0 0 0 2px rgba(1, 89, 89, 0.15);
+}
+
+/* Textos de error */
+.text-danger {
+  font-size: 0.82rem;
+  margin-top: 4px;
+}
+
+/* === Método de pago === */
+.payment-method {
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  margin-bottom: 0.8rem;
+  background-color: #fff;
+}
+
+.payment-method label {
+  cursor: pointer;
+  padding: 1rem;
+}
+
+.payment-method:hover {
+  border-color: #015959;
+  box-shadow: 0 0 0 3px rgba(1, 89, 89, 0.1);
+}
+
+.payment-method input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  accent-color: #015959;
+}
+
+/* Estado activo */
+.payment-method label.active {
+  border: 2px solid #015959;
+  border-radius: 10px;
+  background-color: #f5fafa;
+  box-shadow: 0 0 8px rgba(1, 89, 89, 0.1);
+}
+
+.payment-method .payment-logo {
+  max-height: 22px;
+  object-fit: contain;
+}
+
+/* Deshabilitados */
+.payment-method.opacity-50 {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* === Botón de finalizar === */
+.btn-order {
+  background-color: #015959;
+  border: none;
+  font-weight: 600;
+  letter-spacing: .5px;
+  transition: all .25s ease;
+}
+
+.btn-order:hover:enabled {
+  background-color: #004d4d;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(1, 89, 89, 0.25);
+}
+
+.btn-order:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed;
+}
+
+
+
+/* ===== Trust Block – limpio, moderno, responsive ===== */
+:root {
+  --brand: #015959;            /* color de marca */
+  --ink: #222;                 /* texto principal */
+  --muted: #6b7280;            /* texto secundario */
+  --surface: #ffffff;
+  --surface-alt: #f5fafa;      /* sutil tono acorde a la marca */
+  --border: 1px solid #e6eaee;
+  --radius: 14px;
+  --soft-shadow: 0 6px 24px rgba(0,0,0,.06), 0 2px 6px rgba(0,0,0,.05);
+}
+
+.trust-block {
+  background: linear-gradient(180deg, var(--surface), var(--surface-alt));
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--soft-shadow);
+ // padding: 1rem;
+}
+
+.trust-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .8rem;
+}
+
+@media (min-width: 576px) {
+  .trust-list { grid-template-columns: 1fr; }
+}
+@media (min-width: 768px) {
+  .trust-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .8rem .9rem;
+  border: 1px solid rgba(1,89,89,.08);
+  border-radius: 12px;
+  background: #fff;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.trust-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(1,89,89,.08);
+  border-color: rgba(1,89,89,.18);
+}
+
+.trust-icon {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: radial-gradient(85% 85% at 30% 30%, rgba(1,89,89,.18), rgba(1,89,89,.06));
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 1px rgba(1,89,89,.12);
+}
+
+.trust-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: var(--brand);
+}
+
+.trust-text {
+  line-height: 1.25;
+}
+
+.trust-text strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: .1px;
+}
+
+.trust-text span {
+  display: block;
+  color: var(--muted);
+  font-size: .86rem;
+  margin-top: 2px;
+}
+
+/* Integración suave con el aside de resumen */
+.summary .trust-block { margin-top: .8rem; }
+
+/* Barra superior de confianza */
+.checkout-topbar {
+  position: sticky; top: 0; z-index: 1020;
+  background: linear-gradient(180deg, #ffffff, #f5fafa);
+  border-bottom: 1px solid #e6eaee;
+  padding: .55rem 0;
+}
+
+.checkout-topbar .tb-item {
+  color: #1f2937;            /* texto principal */
+  font-size: .92rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+  white-space: nowrap;
+}
+
+.checkout-topbar .tb-dot {
+  color: rgba(1,89,89,.55);
+  margin: 0 .5rem;
+}
+
+@media (max-width: 576px) {
+  .checkout-topbar .container {
+    gap: .5rem; flex-wrap: wrap; justify-content: center;
+  }
+  .checkout-topbar .tb-dot { display: none; }
+  .checkout-topbar .tb-item { font-size: .88rem; }
+}

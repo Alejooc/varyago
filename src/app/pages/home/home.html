@@ -2,7 +2,7 @@
   <ng-container *ngFor="let section of data.layaout; let sIdx = index">
 
     <!-- TIPO 1: SLIDER -->
-    <section *ngIf="section.type === '1'" class="intro-slider-container" attr.aria-label="Promociones destacadas">
+    <section *ngIf="section.type === '1'" class="intro-slider-container" >
       <div
         class="intro-slider owl-carousel owl-simple owl-nav-inside"
         data-toggle="owl"
@@ -85,7 +85,7 @@
     <div class="mb-2" *ngIf="section.type === '2'"></div>
 
     <!-- TIPO 3: BANNERS TRÍPTICO -->
-    <section *ngIf="section.type === '3'" class="container" attr.aria-label="Promociones por colección">
+    <section *ngIf="section.type === '3'" class="container">
       <div class="row">
         <!-- Col 1 -->
         <div class="col-sm-6 col-lg-3">
@@ -179,7 +179,7 @@
     <div class="mb-3" *ngIf="section.type === '3'"></div>
 
     <!-- TIPO 4: CARRUSEL DE PRODUCTOS -->
-    <section *ngIf="section.type === '4'" attr.aria-label="Los más vendidos" class="container">
+    <section *ngIf="section.type === '4'" class="container">
       <app-carrousel-prods
         [title]="'Los más vendidos'"
         [show_title]="true"
@@ -191,7 +191,7 @@
     <div class="mb-3" *ngIf="section.type === '4'"></div>
 
     <!-- TIPO 5: BANNERS DOBLES -->
-    <section *ngIf="section.type === '5'" class="container" attr.aria-label="Ofertas y colecciones">
+    <section *ngIf="section.type === '5'" class="container" >
       <div class="row">
         <div class="col-lg-6">
           <article class="banner banner-overlay banner-overlay-light">
@@ -279,25 +279,25 @@
           }
         }'>
 
-        <a href="#" class="brand" attr.aria-label="Marca 1">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/1.png" alt="Marca 1" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 2">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/2.png" alt="Marca 2" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 3">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/3.png" alt="Marca 3" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 4">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/4.png" alt="Marca 4" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 5">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/5.png" alt="Marca 5" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 6">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/6.png" alt="Marca 6" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
-        <a href="#" class="brand" attr.aria-label="Marca 7">
+        <a href="#" class="brand" >
           <img ngSrc="assets/images/brands/7.png" alt="Marca 7" width="180" height="90" decoding="async" loading="lazy" sizes="(max-width: 575.98px) 45vw, 15vw" />
         </a>
       </div>
@@ -315,7 +315,7 @@
           </header>
 
           <div class="col-12 col-xl-7 mt-3 mt-xl-0">
-            <form action="#" attr.aria-label="Formulario de suscripción">
+            <form action="#" >
               <div class="input-group">
                 <input
                   type="email"
@@ -325,7 +325,7 @@
                   required
                   autocomplete="email" />
                 <div class="input-group-append">
-                  <button class="btn btn-outline-white-2" type="submit" attr.aria-label="Suscribirse">
+                  <button class="btn btn-outline-white-2" type="submit" >
                     <span>Suscribirse</span>
                     <i class="icon-long-arrow-right" aria-hidden="true"></i>
                   </button>

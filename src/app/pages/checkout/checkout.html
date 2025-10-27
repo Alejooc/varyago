@@ -1,4 +1,14 @@
 <app-loader></app-loader>
+<div class="checkout-topbar" role="status" aria-live="polite">
+  <div class="container d-flex align-items-center justify-content-center gap-3">
+    <span class="tb-item">🚚 Envíos rápidos 2–5 días</span>
+    <span class="tb-dot" aria-hidden="true">•</span>
+    <span class="tb-item">🔒 Pago 100% seguro</span>
+    <span class="tb-dot" aria-hidden="true">•</span>
+    <span class="tb-item">👩‍💻 Soporte humano</span>
+  </div>
+</div>
+
 <main class="main">
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
@@ -29,60 +39,110 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>Nombre *</label>
-                                    <input type="text" class="form-control" placeholder="Nombre" formControlName="firstName" required>
-                                </div><!-- End .col-sm-6 -->
+                                    <input type="text" class="form-control" placeholder="Nombre"
+                                        formControlName="firstName" autocomplete="given-name" required>
+                                    <small class="text-danger"
+                                        *ngIf="checkoutForm.get('firstName')?.touched && checkoutForm.get('firstName')?.invalid">
+                                        Ingresa tu nombre.
+                                    </small>
+                                </div>
+
 
                                 <div class="col-sm-6">
                                     <label>Apellidos *</label>
-                                    <input type="text" class="form-control" placeholder="Apellido" formControlName="lastName" required>
-                                </div><!-- End .col-sm-6 -->
+                                    <input type="text" class="form-control" placeholder="Apellido"
+                                        formControlName="lastName" autocomplete="family-name" required>
+                                    <small class="text-danger"
+                                        *ngIf="checkoutForm.get('lastName')?.touched && checkoutForm.get('lastName')?.invalid">
+                                        Ingresa tus apellidos.
+                                    </small>
+                                </div>
                                 <div class="col-sm-6">
                                     <label>Tipo de Documento *</label>
-                                    <select name="doctype" id="doctype" formControlName="doctype" class="form-control"
-                                        required>
-                                        <option value="cc">Cédula de ciudadania</option>
-                                        <option value="cc">NIT</option>
+                                    <select id="doctype" formControlName="doctype" class="form-control" required
+                                        autocomplete="off">
+                                        <option value="" disabled selected>Seleccione…</option>
+                                        <option value="cc">Cédula de ciudadanía</option>
+                                        <option value="nit">NIT</option>
                                     </select>
-                                </div><!-- End .col-sm-6 -->
+                                    <small class="text-danger"
+                                        *ngIf="checkoutForm.get('doctype')?.touched && checkoutForm.get('doctype')?.invalid">
+                                        Selecciona el tipo de documento.
+                                    </small>
+                                </div>
                                 <div class="col-sm-6">
                                     <label>Documento de Identidad *</label>
-                                    <input type="text" placeholder="Cédula ej: 114413987" class="form-control" formControlName="document" required>
-                                </div><!-- End .col-sm-6 -->
-                            </div><!-- End .row -->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Whatsapp *</label>
-                                    <input type="tel" placeholder="Whatsapp Ej: 3151234567" class="form-control" formControlName="phone" required>
-                                </div><!-- End .col-sm-6 -->
-                                <div class="col-sm-6">
-                                    <label>Correo electronico *</label>
-                                    <input type="email" placeholder="Correo electronico Ej: pepito@gmail.com" formControlName="email" class="form-control" required>
+                                    <input type="text" class="form-control" placeholder="Cédula ej: 114413987"
+                                        formControlName="document" required inputmode="numeric" autocomplete="off"
+                                        pattern="[0-9]{6,12}">
+                                    <small class="text-danger"
+                                        *ngIf="checkoutForm.get('document')?.touched && checkoutForm.get('document')?.invalid">
+                                        Ingresa un número válido (solo dígitos).
+                                    </small>
                                 </div>
                             </div><!-- End .row -->
+                            <div class="row">
+                               <div class="col-sm-6">
+    <label>Whatsapp *</label>
+    <input type="tel" class="form-control"
+           placeholder="Whatsapp Ej: 3151234567"
+           formControlName="phone" required
+           inputmode="tel" autocomplete="tel-national" pattern="[0-9]{10}">
+    <small class="text-danger" *ngIf="checkoutForm.get('phone')?.touched && checkoutForm.get('phone')?.invalid">
+      Ingresa un celular válido de 10 dígitos.
+    </small>
+  </div>
+                                 <div class="col-sm-6">
+    <label>Correo electrónico *</label>
+    <input type="email" class="form-control"
+           placeholder="Correo electrónico Ej: pepito@gmail.com"
+           formControlName="email" required autocomplete="email">
+    <small class="text-danger" *ngIf="checkoutForm.get('email')?.touched && checkoutForm.get('email')?.invalid">
+      Ingresa un correo válido.
+    </small>
+  </div>
+                            </div><!-- End .row -->
 
-                            <label>Direccion *</label>
-                            <input type="text" formControlName="address1" class="form-control"
-                                placeholder="Direccion Ej: Calle 1#2-3 barrio pepito" required>
-                            <input type="text" formControlName="address2" class="form-control"
-                                placeholder="Complemento Ej: Apartamento, Casa, Torre 205">
+                            <label>Dirección *</label>
+<input type="text" class="form-control"
+       placeholder="Calle 1 #2-3, Barrio Pepito"
+       formControlName="address1" required autocomplete="address-line1">
+<small class="text-danger" *ngIf="checkoutForm.get('address1')?.touched && checkoutForm.get('address1')?.invalid">
+  Ingresa tu dirección.
+</small>
+
+                            <input type="text" class="form-control"
+       placeholder="Complemento: Apto/Torre/Piso"
+       formControlName="address2" autocomplete="address-line2">
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label for="department">Departamento</label>
-                                    <select id="department" class="form-control" formControlName="department"
-                                        (change)="onDepartmentChange($event)">
-                                        <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}
-                                        </option>
-                                    </select>
-                                </div><!-- End .col-sm-6 -->
+    <label for="department">Departamento *</label>
+    <select id="department" class="form-control"
+            formControlName="department"
+            (change)="onDepartmentChange($event)"
+            autocomplete="address-level1" required>
+      <option value="" disabled selected>Seleccione…</option>
+      <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+    </select>
+    <small class="text-danger" *ngIf="checkoutForm.get('department')?.touched && checkoutForm.get('department')?.invalid">
+      Selecciona tu departamento.
+    </small>
+  </div>
 
                                 <div class="col-sm-6">
-                                    <label for="city">Ciudad</label>
-                                    <select id="city" class="form-control" formControlName="city" aria-placeholder="Ciudad"
-                                        (change)="onCityChange($event)">
-                                        <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
-                                    </select>
-                                </div><!-- End .col-sm-6 -->
+    <label for="city">Ciudad *</label>
+    <select id="city" class="form-control"
+            formControlName="city"
+            (change)="onCityChange($event)"
+            autocomplete="address-level2" required>
+      <option value="" disabled selected>Seleccione…</option>
+      <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+    </select>
+    <small class="text-danger" *ngIf="checkoutForm.get('city')?.touched && checkoutForm.get('city')?.invalid">
+      Selecciona tu ciudad.
+    </small>
+  </div>
                             </div><!-- End .row -->
 
                             <label>Notas (opcional)</label>
@@ -90,7 +150,7 @@
                                 placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
-                            <div class="summary">
+                            <div class="summary" style="position: sticky; top: 1rem;">
                                 <h3 class="summary-title">Resumen de tu compra</h3><!-- End .summary-title -->
 
                                 <table class="table table-summary">
@@ -109,7 +169,7 @@
                                                 }}</td>
                                         </tr>
 
-                                        <tr class="summary-subtotal">
+                                        <tr class="summary-subtotal2">
                                             <td>Subtotal:</td>
                                             <td>{{ subtotal |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
                                         </tr><!-- End .summary-subtotal -->
@@ -117,65 +177,82 @@
                                             <td>Envio:</td>
                                             <td>{{shippingCost |currency:'COP':'symbol':'1.0-0':'es-CO'}}</td>
                                         </tr>
-                                       
+
                                         <tr class="summary-total">
                                             <td>Total:</td>
                                             <td>{{ total |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
+                                            
                                         </tr><!-- End .summary-total -->
+                                        
                                     </tbody>
+                                    
                                 </table><!-- End .table table-summary -->
+<div class="trust-block">
+  <ul class="trust-list">
+    <li class="trust-item">
+      <span class="trust-icon">
+        <!-- Truck -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h11v7h2.5l2-3H21V9l-3-3h-4V4H3v2zm3 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm11 0a2 2 0 1 0 .001 4.001A2 2 0 0 0 17 17zM6 19h11m-3-4V9h4l3 3v3h-2"/>
+        </svg>
+      </span>
+      <div class="trust-text">
+        <strong>Envíos rápidos</strong>
+        <span>A todo Colombia · 2–5 días</span>
+      </div>
+    </li>
 
-<div class="accordion-summary mt-2" id="accordion-payment">
-  <h3 class="summary-title">Metodo de pago</h3>
+    <li class="trust-item">
+      <span class="trust-icon">
+        <!-- Lock -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 10V8a6 6 0 1 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 1 0-8 0v2z"/>
+        </svg>
+      </span>
+      <div class="trust-text">
+        <strong>Pago 100% seguro</strong>
+        <span>Wompi · Addi · Contra Entrega</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+                               <div class="accordion-summary mt-2" id="accordion-payment">
+  <h3 class="summary-title">Método de pago</h3>
+  <p class="small text-muted mb-2">Selecciona un método para finalizar la compra.</p>
 
   <ng-container *ngIf="radiosVisible">
     <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
-      <div class="card">
+      <div class="card payment-method">
         <div class="card-header" id="heading-{{pmg.id}}">
-          <h2 class="card-title">
-            <label class="d-flex align-items-center w-100"
+          <h2 class="card-title mb-0">
+            <label class="d-flex align-items-center w-100 mb-0"
                    [class.active]="checkoutForm.get('payment_method')?.value === pmg.id"
-                   [class.disabled]="isDisabled(pmg)">
-
-              <!-- Radio ligado al Reactive Form -->
-              <input #pmRadio class="d-none" type="radio"
+                   [class.opacity-50]="isDisabled(pmg)">
+              <input type="radio"
+                     class="mr-2"
                      formControlName="payment_method"
                      [value]="+pmg.id"
                      name="payment_method"
                      [disabled]="isDisabled(pmg)"
-                     (change)="selectPaymentMethod(pmg)" />
-
-              <!-- Enlace: colapsa solo si está habilitado -->
-              <a class="collapsed w-100"
-                 role="button"
-                 data-toggle="collapse"
-                 [attr.data-target]="isDisabled(pmg) ? null : '#collapse-' + pmg.id"
-                 [attr.href]="'javascript:void(0)'"
-                 aria-expanded="false"
-                 [attr.aria-controls]="isDisabled(pmg) ? null : 'collapse-' + pmg.id"
-                 [attr.aria-disabled]="isDisabled(pmg) ? 'true' : null"
-                 [class.pointer-events-none]="isDisabled(pmg)"
-                 (mousedown)="!isDisabled(pmg) && pmRadio.click()"
-                 (click)="$event.preventDefault()">
-                <span class="d-block">
+                     (change)="selectPaymentMethod(pmg)">
+              <span class="d-flex align-items-center justify-content-between w-100">
+                <span>
                   {{ pmg.name }}
-                  <small *ngIf="isDisabled(pmg)" class="text-danger">( Calcula el envío para habilitar este método.)</small>
+                  
                 </span>
-                <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2" />
-              </a>
+                <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2">
+              </span>
             </label>
           </h2>
         </div>
 
-        <div [id]="'collapse-' + pmg.id"
-             class="collapse"
+        <div [id]="'collapse-' + pmg.id" class="collapse"
              [attr.aria-labelledby]="'heading-' + pmg.id"
-             data-parent="#accordion-payment">
+             data-parent="#accordion-payment"
+             [class.show]="checkoutForm.get('payment_method')?.value === pmg.id">
           <div class="card-body">
             {{ pmg.alt }}
-            <div *ngIf="isDisabled(pmg)" class="mt-2 small text-muted">
-              Calcula el envío para habilitar este método.
-            </div>
           </div>
         </div>
       </div>
@@ -185,12 +262,15 @@
 
 
 
-                               
 
-                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    <span class="btn-text">Finalizar el pedido</span>
-                                    <span class="btn-hover-text">Finalizar el pedido</span>
-                                </button>
+
+
+                                <button type="submit"
+        class="btn btn-primary-2 btn-order btn-block"
+        [disabled]="checkoutForm.invalid || !checkoutForm.get('payment_method')?.value">
+  <span class="btn-text">Finalizar el pedido</span>
+  <span class="btn-hover-text">Finalizar el pedido</span>
+</button>
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->

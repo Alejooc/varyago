@@ -198,31 +198,3 @@ form .form-control:focus {
 /* Integración suave con el aside de resumen */
 .summary .trust-block { margin-top: .8rem; }
 
-/* Barra superior de confianza */
-.checkout-topbar {
-  position: sticky; top: 0; z-index: 1020;
-  background: linear-gradient(180deg, #ffffff, #f5fafa);
-  border-bottom: 1px solid #e6eaee;
-  padding: .55rem 0;
-}
-
-.checkout-topbar .tb-item {
-  color: #1f2937;            /* texto principal */
-  font-size: .92rem;
-  font-weight: 600;
-  letter-spacing: .2px;
-  white-space: nowrap;
-}
-
-.checkout-topbar .tb-dot {
-  color: rgba(1,89,89,.55);
-  margin: 0 .5rem;
-}
-
-@media (max-width: 576px) {
-  .checkout-topbar .container {
-    gap: .5rem; flex-wrap: wrap; justify-content: center;
-  }
-  .checkout-topbar .tb-dot { display: none; }
-  .checkout-topbar .tb-item { font-size: .88rem; }
-}

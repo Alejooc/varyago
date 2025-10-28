@@ -73,15 +73,32 @@
                                 </div>
 
                                 <!-- MEDIDA -->
-                                <div class="details-filter-row details-row-size">
-                                    <label>Talla:</label>
+                                <!--<div class="details-filter-row details-row-size">
+                                    <label>Medida:</label>
                                     <div class="select-custom">
                                         <select id="size" class="form-control" formControlName="measure">
                                             <option value="" disabled>Selecciona una medida</option>
                                             <option *ngFor="let m of measures" [value]="m">{{ m }}</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>-->
+                                <div class="variant-wrapper">
+  <label class="variant-label">Medida:</label>
+
+  <div class="variant-pills" role="group" aria-label="Seleccionar medida">
+    <ng-container *ngFor="let m of measures; let i = index">
+      <input
+        type="radio"
+        class="variant-input"
+        [id]="'variant-'+i"
+        [value]="m"
+        formControlName="measure"
+      />
+      <label class="variant-pill" [for]="'variant-'+i">{{ m }}</label>
+    </ng-container>
+  </div>
+</div>
+
                             </form>
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Cantidad:</label>

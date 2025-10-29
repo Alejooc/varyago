@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, DOCUMENT, HostListener, Inject, Renderer2  } from '@angular/core';
 import { ActivatedRoute,Router,RouterModule,NavigationEnd  } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
@@ -19,6 +19,7 @@ declare var $: any;
 })
 export class Header implements AfterViewInit {
   cartCount = 0;
+    isSearchOpen = false;
   cartItems: any[] = [];
   menu: any ;
   totalPrice: number=0;
@@ -39,6 +40,8 @@ export class Header implements AfterViewInit {
 
   private searchSubject = new Subject<string>();
   constructor(
+      @Inject(DOCUMENT) private document: Document,
+      private renderer: Renderer2,
       private route: ActivatedRoute,
       private cartService: CartService,
       private headerService: HeaderService,
@@ -48,6 +51,7 @@ export class Header implements AfterViewInit {
        private router: Router,
       
     ) {
+      
       this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
       if (query.length > 2) {
         this.fetchResults(query);
@@ -56,6 +60,30 @@ export class Header implements AfterViewInit {
       }
     });
   }
+  
+
+  openSearch(e?: Event) {
+    if (e) e.preventDefault();
+    if (this.isSearchOpen) return;
+    this.isSearchOpen = true;
+
+    // bloquea scroll del body para lograr full-modal vibes
+    this.renderer.addClass(this.document.body, 'overflow-hidden');
+    // Opcional: auto-focus al input
+    setTimeout(() => {
+      const el = this.document.getElementById('q') as HTMLInputElement | null;
+      el?.focus();
+      el?.select();
+    }, 0);
+  }
+
+  closeSearch() {
+    if (!this.isSearchOpen) return;
+    this.isSearchOpen = false;
+    this.renderer.removeClass(this.document.body, 'overflow-hidden');
+  }
+
+  
   onSearch(query: string): void {
     this.searchSubject.next(query);
   }
@@ -69,6 +97,7 @@ export class Header implements AfterViewInit {
 
  onSelectItem(slug: string): void {
   this.results = []; // limpia la lista
+  this.closeSearch();
   //this.router.navigate(['/product', slug]); // redirección a la página de producto
 }
   preventSubmit(event: Event): void {
@@ -81,6 +110,7 @@ export class Header implements AfterViewInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isCartOpen = false;
+        this.closeSearch();
       }
     });
   }
@@ -156,6 +186,7 @@ export class Header implements AfterViewInit {
       this.cartItems = this.getCartItems();
       this.totalPrice = this.cartService.getTotalPrice();
       this.toggleCart();
+      
   }
   ngOnDestroy(): void {
     // Aquí podrías limpiar recursos si es necesario
@@ -191,6 +222,7 @@ export class Header implements AfterViewInit {
   }
   searchMore(query: string): void {
     if (query.length > 2) {
+      this.closeSearch();
       this.results = []; // limpia la lista
       this.router.navigate(['search', query]);
       

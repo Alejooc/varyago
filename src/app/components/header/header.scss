@@ -82,3 +82,127 @@
   max-height: 450px;
   overflow-x: hidden;
 }
+/* ---------- Overlay oscuro con blur ---------- */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1040;
+  opacity: 0;
+  animation: overlayIn .18s ease-out forwards;
+}
+
+@keyframes overlayIn { to { opacity: 1; } }
+
+/* ---------- Shell del buscador (modo normal) ---------- */
+.search-shell {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, width .18s ease;
+  transform-origin: center top;
+  z-index: 1050; /* por encima del overlay */
+}
+
+/* Input con “elevación” agradable */
+.search-input-elevated {
+  border-radius: 12px !important;
+  height: 48px;
+  padding-left: 44px;
+  transition: box-shadow .18s ease, border-color .18s ease;
+}
+.search-input-elevated:focus {
+  box-shadow: 0 0 0 3px rgba(13,110,253,.15);
+  border-color: #86b7fe;
+  outline: none;
+}
+
+/* ---------- Spotlight (centra y expande el buscador) ---------- */
+.search-active .search-shell {
+  position: fixed;
+  left: 50%;
+  top: 5vh; /* respiración arriba */
+  transform: translateX(-50%) scale(1.02);
+  width: min(920px, calc(100vw - 48px));
+  box-shadow: 0 18px 48px rgba(16,24,40,.22), 0 4px 12px rgba(16,24,40,.12);
+  border-radius: 16px;
+  padding: 14px; /* un poco de aire al rededor del input */
+}
+
+/* ---------- Panel de resultados amplio y alineado al input ---------- */
+.search-results-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 140px;
+  max-height: min(60vh, 560px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(16,24,40,.12) !important;
+  background-color: #fff;
+  box-shadow: 0 16px 36px rgba(16,24,40,.18), 0 4px 10px rgba(16,24,40,.10);
+  z-index: 1060;
+  animation: panelIn .18s ease-out forwards;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Items cómodos, bien alineados */
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-radius: 10px;
+  transition: background-color .15s ease, transform .15s ease;
+}
+.search-item:hover { background-color: #f5f8fa; transform: translateX(3px); }
+.search-item div {
+  white-space: normal !important;
+  font-size: 14px;
+  color: #212529;
+  flex: 1;
+}
+
+/* CTA inferior */
+.search-viewall {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0d6efd !important;
+  text-align: center;
+  border-top: 1px solid rgba(16,24,40,.08);
+  padding-top: 10px;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 991.98px) {
+  .search-active .search-shell {
+    top: -100px;
+    width: calc(100vw - 24px);
+    padding: 12px;
+  }
+  .search-results-panel {
+    max-height: min(64vh, 520px);
+  }
+}
+
+/* (Opcional) ocultar scroll del body cuando hay spotlight */
+body.overflow-hidden { overflow: hidden; }
+ /* Sube el menú sin tocar su POSITION original (respetamos animación del theme) */
+  .mobile-menu-container { z-index: 4000 !important; }
+  .mobile-menu-wrapper   { z-index: 4001 !important; }
+  .mobile-menu-container .mobile-menu-close { z-index: 4002 !important; }
+
+  /* Niveles del buscador (debajo del menú) */
+  .search-overlay { z-index: 1040; }
+  .search-shell   { z-index: 1050; }

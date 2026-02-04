@@ -1,4 +1,6 @@
 <main class="main">
+
+
     <!--<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
             <h1 class="page-title">Grid 4 Columns<span>Shop</span></h1>
@@ -8,7 +10,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a>Busqueda</a></li>
+                <li class="breadcrumb-item"><a>Búsqueda</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{categoryId}}</li>
             </ol>
         </div><!-- End .container -->
@@ -18,24 +20,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="toolbox">
+                    <div class="toolbox" style="flex-direction: unset;">
+
                         <div class="toolbox-left">
-                            <!--<div class="toolbox-info">
-                                Resultados
-                            </div>--><!-- End .toolbox-info -->
+                            <div class="toolbox-info">
+                                <p class="d-lg-none text-black" data-bs-toggle="collapse"
+                                    data-bs-target="#filtersAside">
+                                    <i class="icon-bars" style="font-size: 18px;"></i> Filtros
+                                </p>
+                            </div><!-- End .toolbox-info -->
+                            <!-- Solo visible en pantallas pequeñas -->
+                            <!-- Botón solo en móvil -->
+
+                            <div *ngIf="showFiltersMobile" class="filter-backdrop d-lg-none" (click)="closeFilters()">
+                            </div>
                         </div><!-- End .toolbox-left -->
 
                         <div class="toolbox-right">
                             <div class="toolbox-sort">
-                                <label for="sortby">Ordenar por:</label>
+                                <label for="sortby">Ordenar:</label>
                                 <div class="select-custom">
-                                    <select name="sortby" id="sortby" class="form-control">
-                                        <option value="price" selected="selected">Precio de menor a mayor</option>
-                                        <option value="rating">Precio de mayor a menor</option>
-                                        <option value="date">Nuevo</option>
+                                    <select name="sortby" id="sortby" class="form-control"
+                                        (change)="onFilterChange('order_By', getOrderValue($event), true)">
+                                        <option value="desc" selected="selected">Precio de menor a mayor</option>
+                                        <option value="asc">Precio de mayor a menor</option>
+
                                     </select>
                                 </div>
                             </div>
+
                         </div><!-- End .toolbox-right -->
                     </div><!-- End .toolbox -->
 
@@ -44,14 +57,15 @@
                             <div class="col-6 col-md-4 col-lg-4 col-xl-3" *ngFor="let product of products">
                                 <div class="product product-7 text-center">
                                     <figure class="product-media">
-                                        <span class="product-label label-new">Nuevo</span>
+                                        <span class="product-label label-sale">Promoción</span>
+                                        <!--<span class="product-label label-sale">Promoción</span>-->
                                         <a [routerLink]="['/product', product.slug]">
                                             <img [src]="product.url" alt="Product image" class="product-image">
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Lista
-                                                    de deseos</span></a>
+                                            <!-- <a class="btn-product-icon btn-wishlist btn-expandable"><span>Lista
+                                                    de deseos</span></a>-->
                                             <!--<a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
                                             <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Comparar</span></a>-->
                                         </div><!-- End .product-action-vertical -->
@@ -60,164 +74,182 @@
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
-                                        <div class="product-cat">
+                                        <!--<div class="product-cat">
                                             <a [routerLink]="['/product', product.slug]">{{product.provider_name}}</a>
-                                        </div><!-- End .product-cat -->
+                                        </div>--><!-- End .product-cat -->
                                         <h3 class="product-title"><a
-                                                [routerLink]="['/product', product.slug]">{{truncateText(product.name,50)}}</a></h3>
+                                                [routerLink]="['/product', product.slug]">{{truncateText(product.name,50)}}</a>
+                                        </h3>
                                         <!-- End .product-title -->
                                         <div class="product-price">
-                                            <span class="new-price">Desde {{product.pricemostrar | currency:'COP':'symbol':'1.0-0':'es-CO'}}</span>
+                                            <span class="new-price">Desde {{ product.pricemostrar |
+                                                currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+                                            <span class="old-price">
+                                                <s>{{ product.pricemostrartachado |
+                                                    currency:'COP':'symbol':'1.0-0':'es-CO' }}</s>
+                                            </span>
+
 
                                         </div><!-- End .product-price -->
-                                        <div class="product-action" style="position:relative;left: 0;">
-                                            <a [routerLink]="['/product', product.slug]"
-                                                class="btn btn-primary" style="color:white!important">
+                                        <div class="product-action d-none d-lg-block"
+                                            style="position:relative;left: 0;">
+                                            <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
+                                                style="color:white!important">
                                                 <p class="text-white">Comprar</p>
                                             </a>
                                         </div><!-- End .product-action -->
-
+                                        <div class="d-lg-none" style="position:relative;left: 0;">
+                                            <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
+                                                style="color:white!important">
+                                                <p class="text-white">Comprar <i class="icon-shopping-bag"></i></p>
+                                            </a>
+                                        </div>
                                     </div><!-- End .product-body -->
                                 </div><!-- End .product -->
                             </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
                         </div><!-- End .row -->
                     </div><!-- End .products -->
-                    <div class="text-center mt-3" *ngIf="hasMore && !loading">
-                        <button class="btn btn-primary" (click)="loadMore()">Mostrar Más Productos</button>
-                    </div>
+
+                    <!-- "sentinela" invisible al final -->
+                    <div #infiniteScrollTrigger></div>
                     <div *ngIf="loading" class="text-center mt-3">
-                        Cargando...
+                        Cargando mas productos...
                     </div>
-
-                    <!--<nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                    <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
-                                </a>
-                            </li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item-total">of 6</li>
-                            <li class="page-item">
-                                <a class="page-link page-link-next" href="#" aria-label="Next">
-                                    Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>-->
                 </div><!-- End .col-lg-9 -->
-                <aside class="col-lg-3 order-lg-first">
-    <div class="sidebar sidebar-shop">
-        <div class="widget widget-clean">
-            <label>Filtros:</label>
-            <a (click)="applyFilters({})" role="link" class="sidebar-filter-clear">Limpiar Filtros</a>
-        </div>
 
-        <!-- Category Filter -->
-        <div class="widget widget-collapsible" *ngIf="availableFilters?.category">
-            <h3 class="widget-title">
-                <a role="button" data-toggle="collapse" href="#widget-category" role="button" aria-expanded="true">Category</a>
-            </h3>
-            <div class="collapse show" id="widget-category">
-                <div class="widget-body">
-                    <div class="filter-items filter-items-count">
-                        <div class="filter-item" *ngFor="let cat of availableFilters.category">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input"
-                                    [id]="'cat-' + cat.id"
-                                    (change)="onFilterChange('category', cat.id, getCheckedValue($event))">
-                                <label class="custom-control-label" [for]="'cat-' + cat.id">{{ cat.name }}</label>
-                            </div>
-                            <span class="item-count">{{ cat.count }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Measure Filter -->
-        <div class="widget widget-collapsible" *ngIf="availableFilters">
-            <h3 class="widget-title">
-                <a data-toggle="collapse" href="#widget-measure" role="button" aria-expanded="true">Medida</a>
-            </h3>
-            <div class="collapse show" id="widget-measure">
-                <div class="widget-body">
-                    <div class="filter-items">
-                        <div class="filter-item" *ngFor="let m of availableFilters.measures">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input"
-                                    [id]="'measure-' + m"
-                                    (change)="onFilterChange('measure', m, getCheckedValue($event))">
-                                <label class="custom-control-label" [for]="'measure-' + m">{{ m }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Color Filter -->
-        <div class="widget widget-collapsible" *ngIf="availableFilters?.colors">
-            <h3 class="widget-title">
-                <a data-toggle="collapse" href="#widget-color" role="button" aria-expanded="true">Color</a>
-            </h3>
-            <div class="collapse show" id="widget-color">
-                <div class="widget-body">
-                    <div class="filter-colors">
-                        <a *ngFor="let c of availableFilters.colors" 
-                            [ngStyle]="{ background: c }"
-                            [class.selected]="filters.color?.includes(c)"
-                            (click)="toggleColor(c)">
-                            <span class="sr-only">{{ c }}</span>
+                <aside id="filtersAside" class="col-lg-3 order-lg-first collapse d-lg-block">
+                    <!-- Botón cerrar solo en móviles -->
+                    <div class="d-lg-none text-right mb-2">
+                        <a class="p-3" (click)="closeFilters()">
+                            <b>✕</b>
                         </a>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="sidebar sidebar-shop">
+                        <div class="widget widget-clean">
+                            <label>Filtros:</label>
+                            <a (click)="applyFilters({})" role="link" class="sidebar-filter-clear">Limpiar Filtros</a>
+                        </div>
 
-        <!-- Brand Filter -->
-        <div class="widget widget-collapsible" *ngIf="availableFilters?.brands">
-            <h3 class="widget-title">
-                <a data-toggle="collapse" href="#widget-brand" role="button" aria-expanded="true">Marca</a>
-            </h3>
-            <div class="collapse show" id="widget-brand">
-                <div class="widget-body">
-                    <div class="filter-items">
-                        <div class="filter-item" *ngFor="let b of availableFilters.brands">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input"
-                                    [id]="'brand-' + b"
-                                    (change)="onFilterChange('brand', b, getCheckedValue($event))">
-                                <label class="custom-control-label" [for]="'brand-' + b">{{ b }}</label>
+                        <!-- Category Filter -->
+                        <div class="widget widget-collapsible" *ngIf="availableFilters?.category">
+                            <h3 class="widget-title">
+                                <a role="button" data-bs-toggle="collapse" data-bs-target="#widget-category"
+                                    role="button" aria-expanded="true">Categoria</a>
+                            </h3>
+                            <div class="collapse show" id="widget-category">
+                                <div class="widget-body">
+                                    <div class="filter-items filter-items-count">
+                                        <div class="filter-item" *ngFor="let cat of availableFilters.category">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    [id]="'cat-' + cat.id"
+                                                    (change)="onFilterChange('category', cat.id, getCheckedValue($event))">
+                                                <label class="custom-control-label" [for]="'cat-' + cat.id">{{ cat.name
+                                                    }}</label>
+                                            </div>
+                                            <span class="item-count">{{ cat.count }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Measure Filter -->
+                        <div class="widget widget-collapsible" *ngIf="availableFilters">
+                            <h3 class="widget-title">
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-measure" role="button"
+                                    aria-expanded="true">Medida</a>
+                            </h3>
+                            <div class="collapse show" id="widget-measure">
+                                <div class="widget-body">
+                                    <div class="filter-items">
+                                        <div class="filter-item" *ngFor="let m of availableFilters.measures">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    [id]="'measure-' + m"
+                                                    (change)="onFilterChange('measure', m, getCheckedValue($event))">
+                                                <label class="custom-control-label" [for]="'measure-' + m">{{ m
+                                                    }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Color Filter -->
+                        <div class="widget widget-collapsible" *ngIf="availableFilters?.colors?.length > 0">
+                            <h3 class="widget-title">
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-color" role="button"
+                                    aria-expanded="true">Color</a>
+                            </h3>
+                            <div class="collapse show" id="widget-color">
+                                <div class="widget-body">
+                                    <div class="filter-colors">
+                                        <a *ngFor="let c of availableFilters.colors" [ngStyle]="{ background: c }"
+                                            [class.selected]="filters.color?.includes(c)" (click)="toggleColor(c)">
+                                            <span class="sr-only">{{ c }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Brand Filter -->
+                        <div class="widget widget-collapsible" *ngIf="availableFilters?.brands">
+                            <h3 class="widget-title">
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-brand" role="button"
+                                    aria-expanded="true">Marca</a>
+                            </h3>
+                            <div class="collapse show" id="widget-brand">
+                                <div class="widget-body">
+                                    <div class="filter-items">
+                                        <div class="filter-item" *ngFor="let b of availableFilters.brands">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" [id]="'brand-' + b"
+                                                    (change)="onFilterChange('brand', b, getCheckedValue($event))">
+                                                <label class="custom-control-label" [for]="'brand-' + b">{{ b }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="widget widget-collapsible" *ngIf="availableFilters.price">
+                            <h3 class="widget-title">
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-price" role="button"
+                                    aria-expanded="true">Rango
+                                    de precios</a>
+                            </h3>
+                            <div class="collapse show" id="widget-5">
+                                <!--<div class="widget-body">
+                                    <div class="filter-price-text">
+                                        <span>{{ filters.min_price || availableFilters.price.max | currency:'COP':'symbol':'1.0-0':'es-CO'}} - {{
+                                            filters.max_price || availableFilters.price.min |currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+                                    </div>
+                                    <input type="range" [min]="availableFilters.price.max"
+                                        [max]="availableFilters.price.min"
+                                        (change)="onPriceChange(getRangeValue($event))" />.
+
+                                        
+                                </div>-->
+                                <div class="widget-body">
+                                    <div class="filter-price">
+                                        <div class="filter-price-text">
+                                            Price Range:
+                                            <span id="filter-price-range"></span>
+                                        </div><!-- End .filter-price-text -->
+
+                                        <div id="price-slider"></div><!-- End #price-slider -->
+                                    </div><!-- End .filter-price -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Price Range -->
-        <div class="widget widget-collapsible" *ngIf="availableFilters.price">
-            <h3 class="widget-title">
-                <a data-toggle="collapse" href="#widget-price" role="button" aria-expanded="true">Price</a>
-            </h3>
-            <div class="collapse show" id="widget-price">
-                <div class="widget-body">
-                    <div class="filter-price-text">
-                        Price Range:
-                        <span>{{ filters.min_price || availableFilters.price.min }} - {{ filters.max_price || availableFilters.price.max }}</span>
-                    </div>
-                    <input type="range"
-                        [min]="availableFilters.price.min"
-                        [max]="availableFilters.price.max"
-                        (change)="onPriceChange(getRangeValue($event))" />
-                </div>
-            </div>
-        </div>
-    </div>
-</aside>
+                </aside>
 
 
             </div><!-- End .row -->

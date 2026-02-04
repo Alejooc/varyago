@@ -4,7 +4,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Tienda</a></li>
                 <li class="breadcrumb-item"><a>Productos</a></li>
-                <li class="breadcrumb-item active"  aria-current="page">
+                <li class="breadcrumb-item active" aria-current="page">
                     <a [routerLink]="['/category', product?.cat_ref]">{{product?.category_name}}</a>
                 </li>
             </ol>
@@ -21,7 +21,9 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" [src]="product.images?.[0]?.url" alt="product image">
+                                    <img id="product-zoom"
+                                        [src]="product?.images?.[0]?.url || '/assets/images/placeholder.jpg'"
+                                        alt="product image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -29,8 +31,8 @@
                                 </figure>
 
                                 <div id="product-zoom-gallery" class="product-image-gallery">
-                                    <a *ngFor="let image of product.images" class="product-gallery-item"
-                                        [attr.data-image]="image.url">
+                                    <a *ngFor="let image of product?.images" class="product-gallery-item" href="#"
+                                        [attr.data-image]="image.url" (click)="$event.preventDefault()">
                                         <img [src]="image.url" alt="product side">
                                     </a>
                                 </div>
@@ -42,8 +44,8 @@
                     <div class="col-md-6">
                         <div class="product-details">
                             <h1 class="product-title">{{product?.name}}</h1><!-- End .product-title -->
-                           
-                             <p>Ref: {{selectedVariation?.sku}}</p>
+
+                            <p>Ref: {{selectedVariation?.sku}}</p>
                             <div class="product-price product-price-antes d-flex align-items-end mt-3"
                                 *ngIf="selectedVariation">
                                 <span class="product-price-antesSpan"> {{ selectedVariation.price |
@@ -83,32 +85,27 @@
                                     </div>
                                 </div>-->
                                 <div class="variant-wrapper">
-  <label class="variant-label">Medida:</label>
+                                    <label class="variant-label">Medida:</label>
 
-  <div class="variant-pills" role="group" aria-label="Seleccionar medida">
-    <ng-container *ngFor="let m of measures; let i = index">
-      <input
-        type="radio"
-        class="variant-input"
-        [id]="'variant-'+i"
-        [value]="m"
-        formControlName="measure"
-      />
-      <label class="variant-pill" [for]="'variant-'+i">{{ m }}</label>
-    </ng-container>
-  </div>
-</div>
+                                    <div class="variant-pills" role="group" aria-label="Seleccionar medida">
+                                        <ng-container *ngFor="let m of measures; let i = index">
+                                            <input type="radio" class="variant-input" [id]="'variant-'+i" [value]="m"
+                                                formControlName="measure" />
+                                            <label class="variant-pill" [for]="'variant-'+i">{{ m }}</label>
+                                        </ng-container>
+                                    </div>
+                                </div>
 
                             </form>
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Cantidad:</label>
                                 <div class="product-details-quantity ml-3">
-                                        <input type="number" id="qty" class="form-control" value="1" min="1"
-                                            max="{{selectedVariation?.cant}}" step="1" data-decimals="0" required
-                                            (input)="onQuantityChange($event)">
-                                    </div><!-- End .product-details-quantity --><!-- End .product-details-quantity -->
+                                    <input type="number" id="qty" class="form-control" value="1" min="1"
+                                        max="{{selectedVariation?.cant}}" step="1" data-decimals="0" required
+                                        (input)="onQuantityChange($event)">
+                                </div><!-- End .product-details-quantity --><!-- End .product-details-quantity -->
                             </div>
-                            
+
                             <div class="product-stock" *ngIf="selectedVariation">
                                 {{ selectedVariation?.cant }} disponibles
                             </div><!-- End .product-price -->
@@ -145,29 +142,34 @@
                                  }'></addi-widget>
                             </div>
                             <div class="product-details-action">
-                                    <button (click)="addToCart()" [disabled]="!selectedVariation"
-                                        class="btn-product btn-cart d-block w-100"><span>Agregar al carrito</span></button>
+                                <button (click)="addToCart()" [disabled]="!selectedVariation"
+                                    class="btn-product btn-cart d-block w-100"><span>Agregar al carrito</span></button>
                             </div>
-                            
+
                             <!-- End .product-details-action -->
 
                             <div class="product-details-footer">
                                 <!-- TRUST BAR (pegar justo debajo del botón de comprar) -->
-                                <div class="vg-trustbar col-12 mb-2" role="region" aria-label="Métodos de pago y facilidades">
+                                <div class="vg-trustbar col-12 mb-2" role="region"
+                                    aria-label="Métodos de pago y facilidades">
                                     <div class="vg-trustbar__head">
                                         <span class="vg-trustbar__title">💳 Paga fácil</span>
                                         <span class="vg-trustbar__hint">Sin papeleo. Compra segura.</span>
                                     </div>
 
                                     <div class=" mx-auto">
-                                     <img src="/assets/images/metodosdepago.png" class="img-fluid d-block mx-auto" alt="varyago logo">
+                                        <img src="/assets/images/metodosdepago.png" class="img-fluid d-block mx-auto"
+                                            alt="varyago logo">
                                     </div>
                                 </div>
 
-                                
 
-                                <a [href]="'https://wa.me/573151197065?text=¡Hola!%20Necesito%20ayuda%20con%20el%20producto%20o%20quiero%20comprarlo:%20' +'https://varyago.com/product/'+product?.slug" class="btn btn-wpp w-100 mb-2 d-flex align-items-center justify-content-center" target="_blank" rel="noopener noreferrer">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width: 24px; height: 24px; margin-right: 8px;">
+
+                                <a [href]="'https://wa.me/573151197065?text=¡Hola!%20Necesito%20ayuda%20con%20el%20producto%20o%20quiero%20comprarlo:%20' +'https://varyago.com/product/'+product?.slug"
+                                    class="btn btn-wpp w-100 mb-2 d-flex align-items-center justify-content-center"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                                        alt="WhatsApp" style="width: 24px; height: 24px; margin-right: 8px;">
                                     ¿Listo para comprar? Escríbenos aquí
                                 </a>
                                 <div class="ratings-container">
@@ -177,24 +179,27 @@
                     </div><!-- End .col-md-6 -->
                 </div><!-- End .row -->
             </div><!-- End .product-details-top -->
-            
+
             <div class="product-details-tab">
                 <ul class="nav nav-pills justify-content-center" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
-                            role="tab" aria-controls="product-desc-tab" aria-selected="true">Descripcion</a>
+                        <a class="nav-link active" id="product-desc-link" data-bs-toggle="tab"
+                            data-bs-target="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
+                            aria-selected="true">Descripcion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab"
-                            aria-controls="product-info-tab" aria-selected="false">Informacion Adicional</a>
+                        <a class="nav-link" id="product-info-link" data-bs-toggle="tab"
+                            data-bs-target="#product-info-tab" role="tab" aria-controls="product-info-tab"
+                            aria-selected="false">Informacion Adicional</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab"
-                            role="tab" aria-controls="product-shipping-tab" aria-selected="false">Envios y
+                        <a class="nav-link" id="product-shipping-link" data-bs-toggle="tab"
+                            data-bs-target="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
+                            aria-selected="false">Envios y
                             devoluciones</a>
                     </li>
                     <!--<li class="nav-item">
-                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Comentarios (2)</a>
+                        <a class="nav-link" id="product-review-link" data-bs-toggle="tab" data-bs-target="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false" (click)="$event.preventDefault()">Comentarios (2)</a>
                     </li>-->
                 </ul>
                 <div class="tab-content">
@@ -290,7 +295,7 @@
                 </div><!-- End .tab-content -->
             </div><!-- End .product-details-tab -->
             <app-product-trustbar></app-product-trustbar>
-            <app-carrousel-prods [title]="'Más opciones similares'" [show_title]="true"
+            <app-carrousel-prods *ngIf="product?.related" [title]="'Más opciones similares'" [show_title]="true"
                 [products]="product.related" [variant]="'hot'"></app-carrousel-prods>
 
         </div><!-- End .container -->

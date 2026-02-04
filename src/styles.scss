@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'styles/variables';
+@import 'styles/mixins';
+@import 'styles/swiper';
+
 ::-moz-selection {
     background-color: #015959
 }
@@ -1073,13 +1077,16 @@ a:focus {
 .header-10 .menu-vertical .menu-title {
     color: #015959
 }
+
 .header-10 .header-bottom {
     background-color: #015959;
 }
 
-.header.header-10.header-intro-clearance .header-bottom .menu>li>a:hover, .header.header-10.header-intro-clearance .header-bottom .menu>li>a:focus {
-    color: #ffffff!important;
+.header.header-10.header-intro-clearance .header-bottom .menu>li>a:hover,
+.header.header-10.header-intro-clearance .header-bottom .menu>li>a:focus {
+    color: #ffffff !important;
 }
+
 .header-12 .dropdown.category-dropdown .dropdown-toggle {
     background-color: #015959
 }

@@ -13,111 +13,88 @@
           <!-- 🚦 Solo renderiza el carrusel cuando hay datos -->
           <ng-container *ngIf="elements?.length; else skeleton">
 
-            <!-- Lista semántica del carrusel -->
-            <div
-              #owlEl
-              class="owl-carousel owlprod owl-simple carousel-equal-height carousel-with-shadow"
-              role="list"
-              data-owl-options='{
-                "nav": false,
-                "dots": true,
-                "margin": 20,
-                "loop": false,
-                "responsive": {
-                  "0":   { "items": 2 },
-                  "480": { "items": 2 },
-                  "768": { "items": 3 },
-                  "992": { "items": 4 },
-                  "1280":{ "items": 5, "nav": true }
-                }
+            <!-- Swiper carousel -->
+            <swiper-container class="products-carousel carousel-equal-height carousel-with-shadow" role="list"
+              navigation="false" pagination="true" space-between="20" loop="false" breakpoints='{
+                "0": {"slidesPerView": 2},
+                "480": {"slidesPerView": 2},
+                "768": {"slidesPerView": 3},
+                "992": {"slidesPerView": 4},
+                "1280": {"slidesPerView": 5, "navigation": true}
               }'>
 
               <!-- Producto -->
-              <article
-                class="product"
-                *ngFor="let product of elements; trackBy: trackById"
-                role="listitem"
-                itemscope
-                itemtype="https://schema.org/Product">
+              <swiper-slide *ngFor="let product of elements; trackBy: trackById">
+                <article class="product" role="listitem" itemscope itemtype="https://schema.org/Product">
 
-                <figure class="product-media">
-                  <span class="product-label label-sale" >Promoción</span>
+                  <figure class="product-media">
+                    <span class="product-label label-sale">Promoción</span>
 
-                  <a [routerLink]="['/product', product.slug]" [attr.aria-label]="product.alt || product.name">
-                    <!-- Usa dimensiones reales si las conoces para evitar CLS -->
-                    <img
-                      class="product-image"
-                      ngSrc="{{ product.url }}"
-                      [alt]="product.alt || product.name"
-                      width="600" height="600"
-                      decoding="async"
-                      loading="lazy"
-                      sizes="(max-width: 575.98px) 50vw, (max-width: 991.98px) 33vw, 20vw"
-                      itemprop="image">
-                  </a>
-
-                  <div class="product-action">
-                    <a
-                      [routerLink]="['/product', product.slug]"
-                      class="btn btn-primary w-100 btnverprod"
-                      [attr.title]="'Ver producto: ' + product.name"
-                      [attr.aria-label]="'Ver producto: ' + product.name">
-                      <span>Ver producto</span>
+                    <a [routerLink]="['/product', product.slug]" [attr.aria-label]="product.alt || product.name">
+                      <img class="product-image" ngSrc="{{ product.url }}" [alt]="product.alt || product.name"
+                        width="600" height="600" decoding="async" loading="lazy"
+                        sizes="(max-width: 575.98px) 50vw, (max-width: 991.98px) 33vw, 20vw" itemprop="image">
                     </a>
-                  </div>
-                </figure>
 
-                <div class="product-body">
-                  <div class="product-cat" *ngIf="product.category_name">
-                    <a
-                      [routerLink]="['/category', product.cat_ref]"
-                      [attr.aria-label]="'Ver categoría: ' + product.category_name">
-                      {{ product.category_name }}
-                    </a>
-                  </div>
-
-                  <h3 class="product-title" itemprop="name">
-                    <a [routerLink]="['/product', product.slug]">
-                      {{ truncateText(product.name, 75) }}
-                    </a>
-                  </h3>
-
-                  <!-- Precios + Offer microdata -->
-                  <div class="product-price mt-1" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                    <meta itemprop="priceCurrency" content="COP">
-                    <link itemprop="availability" href="https://schema.org/InStock" *ngIf="product.inStock">
-                    <span class="new-price" itemprop="price"
-                          [attr.content]="product.pricemostrar">
-                      {{ product.pricemostrar | currency:'COP':'symbol':'1.0-0':'es-CO' }}
-                    </span>
-                    <span class="old-price" *ngIf="product.pricemostrartachado">
-                      {{ product.pricemostrartachado | currency:'COP':'symbol':'1.0-0':'es-CO' }}
-                    </span>
-                  </div>
-
-                  <!-- Ratings accesibles -->
-                  <div class="ratings-container" *ngIf="product.rating">
-                    <div class="ratings" [attr.aria-label]="'Valoración: ' + product.rating + ' de 5'">
-                      <div class="ratings-val" [style.width.%]="(product.rating / 5) * 100"></div>
+                    <div class="product-action">
+                      <a [routerLink]="['/product', product.slug]" class="btn btn-primary w-100 btnverprod"
+                        [attr.title]="'Ver producto: ' + product.name"
+                        [attr.aria-label]="'Ver producto: ' + product.name">
+                        <span>Ver producto</span>
+                      </a>
                     </div>
-                    <span class="ratings-text" *ngIf="product.reviewsCount">
-                      ({{ product.reviewsCount }} reseñas)
-                    </span>
-                  </div>
+                  </figure>
 
-                  <!-- Descripción corta para SEO (opcional) -->
-                  <meta itemprop="description" [content]="product.shortDescription || product.name">
-                  <meta itemprop="sku" [content]="product.sku">
-                </div>
-              </article><!-- .product -->
-            </div><!-- .owl-carousel -->
+                  <div class="product-body">
+                    <div class="product-cat" *ngIf="product.category_name">
+                      <a [routerLink]="['/category', product.cat_ref]"
+                        [attr.aria-label]="'Ver categoría: ' + product.category_name">
+                        {{ product.category_name }}
+                      </a>
+                    </div>
+
+                    <h3 class="product-title" itemprop="name">
+                      <a [routerLink]="['/product', product.slug]">
+                        {{ truncateText(product.name, 75) }}
+                      </a>
+                    </h3>
+
+                    <!-- Precios + Offer microdata -->
+                    <div class="product-price mt-1" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                      <meta itemprop="priceCurrency" content="COP">
+                      <link itemprop="availability" href="https://schema.org/InStock" *ngIf="product.inStock">
+                      <span class="new-price" itemprop="price" [attr.content]="product.pricemostrar">
+                        {{ product.pricemostrar | currency:'COP':'symbol':'1.0-0':'es-CO' }}
+                      </span>
+                      <span class="old-price" *ngIf="product.pricemostrartachado">
+                        {{ product.pricemostrartachado | currency:'COP':'symbol':'1.0-0':'es-CO' }}
+                      </span>
+                    </div>
+
+                    <!-- Ratings accesibles -->
+                    <div class="ratings-container" *ngIf="product.rating">
+                      <div class="ratings" [attr.aria-label]="'Valoración: ' + product.rating + ' de 5'">
+                        <div class="ratings-val" [style.width.%]="(product.rating / 5) * 100"></div>
+                      </div>
+                      <span class="ratings-text" *ngIf="product.reviewsCount">
+                        ({{ product.reviewsCount }} reseñas)
+                      </span>
+                    </div>
+
+                    <!-- Descripción corta para SEO (opcional) -->
+                    <meta itemprop="description" [content]="product.shortDescription || product.name">
+                    <meta itemprop="sku" [content]="product.sku">
+                  </div>
+                </article><!-- .product -->
+              </swiper-slide>
+            </swiper-container><!-- .swiper-container -->
           </ng-container>
 
           <!-- Skeleton mientras carga -->
           <ng-template #skeleton>
             <div class="d-flex gap-3" role="status" aria-live="polite" aria-busy="true">
               <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5]"
-                   style="width:200px;height:300px;background:#eee;border-radius:8px;"></div>
+                style="width:200px;height:300px;background:#eee;border-radius:8px;"></div>
             </div>
           </ng-template>
 

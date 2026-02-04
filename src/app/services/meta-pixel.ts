@@ -16,7 +16,7 @@ export class MetaPixel {
   private initializing?: Promise<void>;
   private pixelId?: string;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
   /** Inicializa leyendo el ID del environment (una sola vez). */
   init(): Promise<void> {
@@ -25,7 +25,7 @@ export class MetaPixel {
 
     const id = environment?.metaPixelId;
     if (!id) {
-      console.warn('[MetaPixel] metaPixelId vacío/undefined en este build.');
+      // metaPixelId empty/undefined in this build
       return Promise.resolve();
     }
     return this.bootstrap(id);
@@ -35,7 +35,7 @@ export class MetaPixel {
   forceInit(id: string): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return Promise.resolve();
     if (!id) {
-      console.warn('[MetaPixel] forceInit llamado sin id.');
+      // forceInit called without id
       return Promise.resolve();
     }
     return this.bootstrap(id);
@@ -58,7 +58,7 @@ export class MetaPixel {
       // Stub oficial de FB (con cola) + carga del script:
       ((f: any, b: Document, e: string) => {
         if (!f.fbq) {
-          const n: any = function() {
+          const n: any = function () {
             if (n.callMethod) {
               n.callMethod.apply(n, arguments);
             } else {
@@ -83,7 +83,7 @@ export class MetaPixel {
             try {
               window.fbq!('init', id);
               window.fbq!('track', 'PageView');
-              console.log('[MetaPixel] cargado + PageView');
+              // [MetaPixel] loaded + PageView
             } catch (err) {
               console.error('[MetaPixel] Error tras onload:', err);
             } finally {
@@ -97,7 +97,7 @@ export class MetaPixel {
           try {
             window.fbq!('init', id);
             window.fbq!('track', 'PageView');
-            console.log('[MetaPixel] ya estaba; PageView enviado.');
+            // [MetaPixel] already loaded; PageView sent
           } catch (err) {
             console.error('[MetaPixel] Error init con script presente:', err);
           } finally {
@@ -114,7 +114,7 @@ export class MetaPixel {
   /** PageView manual (útil en cambios de ruta SPA) */
   pageView(): Promise<void> {
     return this.ready().then(() => {
-      try { window.fbq?.('track', 'PageView'); } catch {}
+      try { window.fbq?.('track', 'PageView'); } catch { }
     });
   }
 
@@ -143,7 +143,7 @@ export class MetaPixel {
 
 // Tipos
 export type MetaItem = { id: string; quantity?: number; item_price?: number; };
-export type MetaViewContent = { content_ids: string[]; content_type: 'product'|'product_group'; value?: number; currency?: string; };
+export type MetaViewContent = { content_ids: string[]; content_type: 'product' | 'product_group'; value?: number; currency?: string; };
 export type MetaAddToCart = MetaViewContent & { contents?: MetaItem[] };
 export type MetaInitiateCheckout = { contents?: MetaItem[]; num_items?: number; value?: number; currency?: string; };
 export type MetaPurchase = { contents?: MetaItem[]; value: number; currency: string; order_id?: string; event_id?: string; };

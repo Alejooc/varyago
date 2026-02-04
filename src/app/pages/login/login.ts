@@ -20,7 +20,7 @@ export class Login implements OnInit {
 
   activeTab: 'login' | 'register' = 'login'; // por defecto
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -50,13 +50,9 @@ export class Login implements OnInit {
             this.error = 'No auth token found after login.';
             return;
           }
-          console.log('✅ Login correcto');
           this.router.navigate(['/']);
         },
         error: (err) => {
-          console.warn('❌ Login inválido', err);
-          console.log(err);
-          
           this.error = err.error.messages.error;
         }
       });
@@ -65,23 +61,19 @@ export class Login implements OnInit {
 
   onRegister(): void {
     if (this.registerForm.valid) {
-        const { name,email, password } = this.registerForm.value;
+      const { name, email, password } = this.registerForm.value;
 
-        this.auth.register(name,email, password).subscribe({
-          next: (res) => {
-            //this.auth.storeToken(res.token);
-            this.router.navigate(['login']);
-          },
-          error: (err) => {
-            console.warn('❌ Login inválido', err);
-            console.log(err);
-            
-            this.error = err.error.messages.error;
-          }
-        });
-      
-    }else{
-      console.warn('❌ Formulario de registro inválido');
+      this.auth.register(name, email, password).subscribe({
+        next: (res) => {
+          //this.auth.storeToken(res.token);
+          this.router.navigate(['login']);
+        },
+        error: (err) => {
+          this.error = err.error.messages.error;
+        }
+      });
+
+    } else {
       this.error = 'Formulario de registro inválido';
     }
   }

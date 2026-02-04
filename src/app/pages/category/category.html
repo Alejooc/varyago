@@ -1,5 +1,5 @@
 <main class="main">
-   
+
 
     <!--<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -21,31 +21,34 @@
             <div class="row">
                 <div class="col-lg-9">
                     <div class="toolbox" style="flex-direction: unset;">
-                        
+
                         <div class="toolbox-left">
                             <div class="toolbox-info">
-                               <p class="d-lg-none text-black" data-toggle="collapse" data-target="#filtersAside">
-                                    <i  class="icon-bars" style="font-size: 18px;"></i> Filtros
-                               </p>
+                                <p class="d-lg-none text-black" data-bs-toggle="collapse"
+                                    data-bs-target="#filtersAside">
+                                    <i class="icon-bars" style="font-size: 18px;"></i> Filtros
+                                </p>
                             </div><!-- End .toolbox-info -->
                             <!-- Solo visible en pantallas pequeñas -->
-                        <!-- Botón solo en móvil -->
-                        
-<div *ngIf="showFiltersMobile" class="filter-backdrop d-lg-none" (click)="closeFilters()"></div>
+                            <!-- Botón solo en móvil -->
+
+                            <div *ngIf="showFiltersMobile" class="filter-backdrop d-lg-none" (click)="closeFilters()">
+                            </div>
                         </div><!-- End .toolbox-left -->
 
                         <div class="toolbox-right">
                             <div class="toolbox-sort">
                                 <label for="sortby">Ordenar:</label>
                                 <div class="select-custom">
-                                    <select name="sortby" id="sortby" class="form-control" (change)="onFilterChange('order_By', getOrderValue($event), true)">
+                                    <select name="sortby" id="sortby" class="form-control"
+                                        (change)="onFilterChange('order_By', getOrderValue($event), true)">
                                         <option value="desc" selected="selected">Precio de menor a mayor</option>
                                         <option value="asc">Precio de mayor a menor</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
-                            
+
                         </div><!-- End .toolbox-right -->
                     </div><!-- End .toolbox -->
 
@@ -61,7 +64,7 @@
                                         </a>
 
                                         <div class="product-action-vertical">
-                                           <!-- <a class="btn-product-icon btn-wishlist btn-expandable"><span>Lista
+                                            <!-- <a class="btn-product-icon btn-wishlist btn-expandable"><span>Lista
                                                     de deseos</span></a>-->
                                             <!--<a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
                                             <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Comparar</span></a>-->
@@ -79,14 +82,17 @@
                                         </h3>
                                         <!-- End .product-title -->
                                         <div class="product-price">
-                                             <span class="new-price">Desde {{ product.pricemostrar | currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
+                                            <span class="new-price">Desde {{ product.pricemostrar |
+                                                currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
                                             <span class="old-price">
-                                                <s>{{ product.pricemostrartachado | currency:'COP':'symbol':'1.0-0':'es-CO' }}</s>
+                                                <s>{{ product.pricemostrartachado |
+                                                    currency:'COP':'symbol':'1.0-0':'es-CO' }}</s>
                                             </span>
-                                           
+
 
                                         </div><!-- End .product-price -->
-                                        <div class="product-action d-none d-lg-block" style="position:relative;left: 0;">
+                                        <div class="product-action d-none d-lg-block"
+                                            style="position:relative;left: 0;">
                                             <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
                                                 style="color:white!important">
                                                 <p class="text-white">Comprar</p>
@@ -103,20 +109,20 @@
                             </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
                         </div><!-- End .row -->
                     </div><!-- End .products -->
-                    
+
                     <!-- "sentinela" invisible al final -->
-                    <div #infiniteScrollTrigger ></div>
+                    <div #infiniteScrollTrigger></div>
                     <div *ngIf="loading" class="text-center mt-3">
                         Cargando mas productos...
                     </div>
                 </div><!-- End .col-lg-9 -->
-                 
+
 
                 <aside id="filtersAside" class="col-lg-3 order-lg-first collapse d-lg-block">
                     <!-- Botón cerrar solo en móviles -->
                     <div class="d-lg-none text-right mb-2">
                         <a class="p-3" (click)="closeFilters()">
-                               <b>✕</b>
+                            <b>✕</b>
                         </a>
                     </div>
                     <div class="sidebar sidebar-shop">
@@ -128,8 +134,8 @@
                         <!-- Category Filter -->
                         <div class="widget widget-collapsible" *ngIf="availableFilters?.category">
                             <h3 class="widget-title">
-                                <a role="button" data-toggle="collapse" href="#widget-category" role="button"
-                                    aria-expanded="true">Categoria</a>
+                                <a role="button" data-bs-toggle="collapse" data-bs-target="#widget-category"
+                                    role="button" aria-expanded="true">Categoria</a>
                             </h3>
                             <div class="collapse show" id="widget-category">
                                 <div class="widget-body">
@@ -152,7 +158,7 @@
                         <!-- Measure Filter -->
                         <div class="widget widget-collapsible" *ngIf="availableFilters">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-measure" role="button"
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-measure" role="button"
                                     aria-expanded="true">Medida</a>
                             </h3>
                             <div class="collapse show" id="widget-measure">
@@ -175,7 +181,7 @@
                         <!-- Color Filter -->
                         <div class="widget widget-collapsible" *ngIf="availableFilters?.colors?.length > 0">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-color" role="button"
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-color" role="button"
                                     aria-expanded="true">Color</a>
                             </h3>
                             <div class="collapse show" id="widget-color">
@@ -193,7 +199,7 @@
                         <!-- Brand Filter -->
                         <div class="widget widget-collapsible" *ngIf="availableFilters?.brands">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-brand" role="button"
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-brand" role="button"
                                     aria-expanded="true">Marca</a>
                             </h3>
                             <div class="collapse show" id="widget-brand">
@@ -214,7 +220,7 @@
                         <!-- Price Range -->
                         <div class="widget widget-collapsible" *ngIf="availableFilters.price">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-price" role="button"
+                                <a data-bs-toggle="collapse" data-bs-target="#widget-price" role="button"
                                     aria-expanded="true">Rango de precios</a>
                             </h3>
                             <div class="collapse show" id="widget-5">
@@ -230,15 +236,15 @@
                                         
                                 </div>-->
                                 <div class="widget-body">
-                                            <div class="filter-price">
-                                                <div class="filter-price-text">
-                                                    Price Range:
-                                                    <span id="filter-price-range"></span>
-                                                </div><!-- End .filter-price-text -->
+                                    <div class="filter-price">
+                                        <div class="filter-price-text">
+                                            Price Range:
+                                            <span id="filter-price-range"></span>
+                                        </div><!-- End .filter-price-text -->
 
-                                                <div id="price-slider"></div><!-- End #price-slider -->
-                                            </div><!-- End .filter-price -->
-										</div>
+                                        <div id="price-slider"></div><!-- End #price-slider -->
+                                    </div><!-- End .filter-price -->
+                                </div>
                             </div>
                         </div>
                     </div>

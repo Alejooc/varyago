@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product';
 import { FiltersService } from '../../services/filter-service';
 import { CommonModule } from '@angular/common';
 import { ZoomCleanerService } from '../../services/zoom-cleaner';
+import { SeoService } from '../../services/seo';
 
 @Component({
   selector: 'app-category',
@@ -15,9 +16,10 @@ import { ZoomCleanerService } from '../../services/zoom-cleaner';
 export class Category implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('infiniteScrollTrigger', { static: false }) trigger!: ElementRef;
 
-  private io?: IntersectionObserver; // <-- referencia del observer
+  private io?: IntersectionObserver;
 
   categoryId!: string;
+  categoryName: string = '';
   products: any[] = [];
   filters: any = {};
   availableFilters: any = {};
@@ -30,15 +32,19 @@ export class Category implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private productService: ProductService,
     private filtersService: FiltersService,
-    private zoomCleaner: ZoomCleanerService
-  ) {}
+    private zoomCleaner: ZoomCleanerService,
+    private seoService: SeoService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.categoryId = params['id'];
       this.fetchAvailableFilters();
       this.filters = {};
-      this.resetAndLoad(); // carga inicial
+      this.resetAndLoad();
+
+      // Set SEO for category page
+      this.updateSEO();
     });
   }
 
@@ -212,4 +218,21 @@ export class Category implements OnInit, AfterViewInit, OnDestroy {
     this.filters.min_price = value;
     this.applyFilters(this.filters);
   }
+
+  private updateSEO(): void {
+    // Format category name from ID (e.g., 'muebles-sala' -> 'Muebles Sala')
+    this.categoryName = this.categoryId
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    this.seoService.updateTags({
+      title: `${this.categoryName} | VaryaGO`,
+      description: `Descubre nuestra colección de ${this.categoryName.toLowerCase()}. Productos de calidad con envío a todo Colombia. Compra online en VaryaGO.`,
+      keywords: `${this.categoryName.toLowerCase()}, varyago, tienda online, colombia, comprar ${this.categoryName.toLowerCase()}`,
+      url: `https://varyago.com/category/${this.categoryId}`,
+      type: 'website'
+    });
+  }
 }
+

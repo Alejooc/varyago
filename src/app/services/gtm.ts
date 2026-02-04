@@ -103,7 +103,7 @@ export class Gtm {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() private router?: Router,
-  ) {}
+  ) { }
 
   /** Inicializa el servicio. */
   init(cfg: GTMConfig = {}): void {
@@ -159,7 +159,7 @@ export class Gtm {
       return;
     }
     w[this.dataLayerName].push(obj);
-    if (this.debug) console.log('[GTM] push', obj);
+    // if (this.debug) console.log('[GTM] push', obj);
   }
 
   /** Evento genérico (GA4): eventName con params. */
@@ -235,7 +235,7 @@ export class Gtm {
     });
   }
 
-  setConsent(ad_storage: 'granted'|'denied', analytics_storage: 'granted'|'denied', region?: string[]): void {
+  setConsent(ad_storage: 'granted' | 'denied', analytics_storage: 'granted' | 'denied', region?: string[]): void {
     // Consent Mode v2 básico
     const update: any = {
       'ad_storage': ad_storage,

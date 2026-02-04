@@ -1,29 +1,54 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/home/home'; // ← ajusta según tu ruta real
-import { Login } from './pages/login/login';
-import { Checkout } from './pages/checkout/checkout'; // Asegúrate de importar correctamente el componente Checkout
-import { authGuard } from './guards/auth.guard'; // Asegúrate de importar correctamente el guardia de autenticación
-import { Cart } from './pages/cart/cart';
-import { Category } from './pages/category/category';
-import { Product } from './pages/product/product';
-import { Account } from './pages/account/account';
-import { Page } from './pages/page/page';
-import { Search } from './pages/search/search';
-import { Confirm } from './pages/confirm/confirm';
-import { NotFound } from './pages/not-found/not-found';
-export const routes: Routes = [
+import { authGuard } from './guards/auth.guard';
 
-    { path: '', component: Home },
-    { path: 'login', component: Login },
-    { path: 'account', component: Account, canActivate: [authGuard] }, // Asegúrate de importar correctamente el componente Account
-    { path: 'cart', component: Cart },
-    { path: 'category/:id', component: Category }, // ✅ Ruta dinámica
-    { path: 'product/:id', component: Product }, // ✅ Ruta dinámica
-    { path: 'checkout', component: Checkout},
-    { path: 'pages/:id', component: Page},
-    { path: 'search/:id', component: Search },
-    { path: 'confirm', component: Confirm },
-    { path: 'confirm/:ref', component: Confirm }, // Asegúrate de importar correctamente el componente confirm
-    //{ path: 'checkout', component: Checkout, canActivate: [authGuard] }
-    { path: '**', component: NotFound }, // 👈 SIEMPRE al final
+export const routes: Routes = [
+    {
+        path: '',
+        loadComponent: () => import('./pages/home/home').then(m => m.Home)
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login').then(m => m.Login)
+    },
+    {
+        path: 'account',
+        loadComponent: () => import('./pages/account/account').then(m => m.Account),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'cart',
+        loadComponent: () => import('./pages/cart/cart').then(m => m.Cart)
+    },
+    {
+        path: 'category/:id',
+        loadComponent: () => import('./pages/category/category').then(m => m.Category)
+    },
+    {
+        path: 'product/:id',
+        loadComponent: () => import('./pages/product/product').then(m => m.Product)
+    },
+    {
+        path: 'checkout',
+        loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout)
+    },
+    {
+        path: 'pages/:id',
+        loadComponent: () => import('./pages/page/page').then(m => m.Page)
+    },
+    {
+        path: 'search/:id',
+        loadComponent: () => import('./pages/search/search').then(m => m.Search)
+    },
+    {
+        path: 'confirm',
+        loadComponent: () => import('./pages/confirm/confirm').then(m => m.Confirm)
+    },
+    {
+        path: 'confirm/:ref',
+        loadComponent: () => import('./pages/confirm/confirm').then(m => m.Confirm)
+    },
+    {
+        path: '**',
+        loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFound)
+    }
 ];

@@ -1,14 +1,15 @@
-import { Component, OnInit,ViewChildren, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { CheckoutService } from '../../services/checkout';
 import { LoadingService } from '../../services/loader';
 import { LoadingComponent } from '../loader/loader';
-import { ActivatedRoute,Router,RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { SharedService } from '../../services/shared';
 import { MetaPixel } from '../../services/meta-pixel';
 import { MetaCapi } from '../../services/meta-capi';
+import { SeoService } from '../../services/seo';
 
 const uuid = () => crypto.randomUUID();
 @Component({
@@ -21,8 +22,8 @@ export class Checkout implements OnInit {
   @ViewChildren('pmRadio') pmRadios!: QueryList<ElementRef<HTMLInputElement>>;
   trackById = (_: number, x: any) => x.id;
   formId = Date.now();                       // asegura name único
-radiosVisible = true;
- checkoutForm!: FormGroup;
+  radiosVisible = true;
+  checkoutForm!: FormGroup;
   cartItems: any[] = [];
   subtotal: number = 0;
   total: number = 0;
@@ -32,8 +33,8 @@ radiosVisible = true;
   paymentMethods: any[] = [];
   selectedPaymentMethod: any = null;
   showError = false;
-  shippingCod:any= 0;
-  cantITems: any= 0;
+  shippingCod: any = 0;
+  cantITems: any = 0;
   shippingCodPrice: any;
   shippingCostOrg: any;
   constructor(
@@ -45,12 +46,13 @@ radiosVisible = true;
     private sharedService: SharedService,
     private pixel: MetaPixel,
     private capi: MetaCapi,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private seoService: SeoService
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-     
+
     this.checkoutForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -67,8 +69,8 @@ radiosVisible = true;
     });
 
     this.cartItems = this.cartService.getCart();
-  
-    
+
+
     this.subtotal = this.cartService.getTotalPrice();
     this.cantITems = this.cartService.getTotalItems();
     this.total = this.subtotal;
@@ -76,9 +78,9 @@ radiosVisible = true;
     this.checkoutService.getDepartments().subscribe(data => {
       this.departments = data;
     });
-     this.checkoutService.getPaymentMethods().subscribe(methods => {
-        this.paymentMethods = methods;
-      });
+    this.checkoutService.getPaymentMethods().subscribe(methods => {
+      this.paymentMethods = methods;
+    });
     const items = this.cartItems.map(p => ({ id: p.variationSku, quantity: p.quantity }));
     const eventId = uuid(); // o genera un string único
     this.pixel.initiateCheckout({
@@ -86,11 +88,20 @@ radiosVisible = true;
       num_items: this.cantITems,
       value: Number(this.total),
       currency: 'COP'
-    },eventId);
+    }, eventId);
+
+    // Set SEO for checkout page
+    this.seoService.updateTags({
+      title: 'Finalizar Compra | VaryaGO',
+      description: 'Completa tu compra de forma segura. Envío a todo Colombia. Múltiples métodos de pago disponibles.',
+      keywords: 'checkout, pago, compra segura, varyago',
+      url: 'https://varyago.com/checkout',
+      type: 'website'
+    });
   }
-   
+
   onDepartmentChange(event: Event): void {
-    let departmentId:any = +(event.target as HTMLSelectElement).value;
+    let departmentId: any = +(event.target as HTMLSelectElement).value;
     if (departmentId) {
       this.checkoutService.getCities(departmentId).subscribe(res => {
         this.cities = res;
@@ -98,47 +109,47 @@ radiosVisible = true;
       });
     }
   }
- selectPaymentMethod(method: any) {
-  
-  this.selectedPaymentMethod = method;
-  // Actualiza el valor del cod si es cod
-  if(method.pmg_id == 101){
-    this.shippingCost =this.shippingCodPrice;
-    this.total = this.subtotal + this.shippingCost;
-  }else{
-    
-    if(this.shippingCostOrg > 0){
-      this.shippingCost =this.shippingCostOrg;
-      this.total = this.subtotal + this.shippingCostOrg;
-    }
-    
-  }
-}
-  onCityChange(event: Event): void {
-   
-     const pmCtrl = this.checkoutForm.get('payment_method');
-      // 1) limpiar valor del form
-      pmCtrl?.setValue(null, { emitEvent: false });
-      pmCtrl?.markAsPristine();
-      pmCtrl?.markAsUntouched();
-      pmCtrl?.updateValueAndValidity({ emitEvent: false });
+  selectPaymentMethod(method: any) {
 
-      // 2) desmarcar radios nativos (por si el navegador dejó el prop.checked pegado)
-      this.pmRadios?.forEach(r => r.nativeElement.checked = false);
-
-      // 3) re-montar el bloque para borrar cualquier “memoria” del DOM
-      this.radiosVisible = false;
-      this.cdr.detectChanges();
-      this.radiosVisible = true;
-      this.shippingCod = 0;
-      this.shippingCost = 0;
+    this.selectedPaymentMethod = method;
+    // Actualiza el valor del cod si es cod
+    if (method.pmg_id == 101) {
+      this.shippingCost = this.shippingCodPrice;
       this.total = this.subtotal + this.shippingCost;
-      this.cdr.detectChanges();
+    } else {
 
-    let cityId:any = +(event.target as HTMLSelectElement).value;
+      if (this.shippingCostOrg > 0) {
+        this.shippingCost = this.shippingCostOrg;
+        this.total = this.subtotal + this.shippingCostOrg;
+      }
+
+    }
+  }
+  onCityChange(event: Event): void {
+
+    const pmCtrl = this.checkoutForm.get('payment_method');
+    // 1) limpiar valor del form
+    pmCtrl?.setValue(null, { emitEvent: false });
+    pmCtrl?.markAsPristine();
+    pmCtrl?.markAsUntouched();
+    pmCtrl?.updateValueAndValidity({ emitEvent: false });
+
+    // 2) desmarcar radios nativos (por si el navegador dejó el prop.checked pegado)
+    this.pmRadios?.forEach(r => r.nativeElement.checked = false);
+
+    // 3) re-montar el bloque para borrar cualquier “memoria” del DOM
+    this.radiosVisible = false;
+    this.cdr.detectChanges();
+    this.radiosVisible = true;
+    this.shippingCod = 0;
+    this.shippingCost = 0;
+    this.total = this.subtotal + this.shippingCost;
+    this.cdr.detectChanges();
+
+    let cityId: any = +(event.target as HTMLSelectElement).value;
     if (cityId) {
-      
-      this.checkoutService.getShippingInfo(cityId,this.subtotal,this.cartItems).subscribe(rate => {
+
+      this.checkoutService.getShippingInfo(cityId, this.subtotal, this.cartItems).subscribe(rate => {
         this.shippingCostOrg = rate.valor; // o rate.valor dependiendo de tu base
         this.shippingCost = rate.valor; // o rate.valor dependiendo de tu base
         this.shippingCod = rate.contraentrega; // o rate.valor dependiendo de tu base
@@ -158,8 +169,8 @@ radiosVisible = true;
   }
 
   submitOrder(): void {
-    //console.log('Enviando orden con los siguientes datos:', this.checkoutForm.value);
-    
+    // Sending order with data
+
     if (this.checkoutForm.valid) {
       const payload = {
         ...this.checkoutForm.value,
@@ -168,15 +179,15 @@ radiosVisible = true;
         shippingCost: this.shippingCost,
         paymentMethod: this.selectedPaymentMethod.pmg_id
       };
-      
-       this.loadingService.show();
+
+      this.loadingService.show();
       this.checkoutService.submitOrder(payload).subscribe(res => {
-         this.loadingService.hide();
-        
-        if(res.type == 1){
+        this.loadingService.hide();
+
+        if (res.type == 1) {
           this.cartService.clearCart();
           this.sharedService.notifyCartUpdated();
-          
+
           if (res.payment?.method === 'wompi_webcheckout') {
             const { endpoint, params } = res.payment;
             const form = document.createElement('form');
@@ -205,7 +216,7 @@ radiosVisible = true;
             currency: 'COP',
             order_id: res.order_id,
             event_id: eventId
-          },eventId);
+          }, eventId);
           this.capi.sendEvent('Purchase', {
             event_id: eventId,
             order_id: res.order.id,
@@ -218,20 +229,20 @@ radiosVisible = true;
         }
       });
       this.showError = false;
-    }else {
+    } else {
       console.error('Formulario inválido');
       this.showError = true;
-       this.loadingService.hide();
+      this.loadingService.hide();
     }
   }
 
 
   isCOD(pmg: any): boolean {
-  return +pmg?.pmg_id === 101;
-}
+    return +pmg?.pmg_id === 101;
+  }
 
-isDisabled(pmg: any): boolean {
-  // Deshabilitado si es COD y aún no se ha habilitado (shippingCod == 0)
-  return this.isCOD(pmg) && this.shippingCod == 0;
-}
+  isDisabled(pmg: any): boolean {
+    // Deshabilitado si es COD y aún no se ha habilitado (shippingCod == 0)
+    return this.isCOD(pmg) && this.shippingCod == 0;
+  }
 }

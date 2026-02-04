@@ -6,7 +6,7 @@ import {
   Inject,
 } from '@angular/core';
 import { ProductService } from '../../services/product';
-import { ActivatedRoute,RouterModule  } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
@@ -18,16 +18,16 @@ import { Gtm } from '../../services/gtm';
 import { CarrouselProds } from '../../components/carrousel-prods/carrousel-prods';
 import { getFbp, getFbc } from '../../helpers/facebook-ids';
 import { ProductTrustbar } from '../../components/product-trustbar/product-trustbar/product-trustbar';
+import { SeoService } from '../../services/seo';
 
 
-declare var $: any; // Para usar jQuery
 const uuid = () => crypto.randomUUID();
 const isMobile = () =>
   window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule,CarrouselProds,ProductTrustbar],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, CarrouselProds, ProductTrustbar],
   templateUrl: './product.html',
   styleUrls: ['./product.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -54,132 +54,136 @@ export class Product implements OnInit {
     private gtm: Gtm,
     private title: Title,
     private meta: Meta,
+    private seoService: SeoService,
     @Inject(DOCUMENT) private doc: Document
   ) {
   }
- ngAfterViewInit() {
-  if (!$.fn) return;
+  ngAfterViewInit() {
+    // Simple native image gallery without heavy jQuery plugins
+    this.initImageGallery();
 
-  const $img = $('#product-zoom');                 // IMG principal
-  const $gallery = $('#product-zoom-gallery');     // Contenedor de miniaturas
+    // Initialize Bootstrap tabs manually after a short delay to ensure Bootstrap is loaded
+    setTimeout(() => {
+      this.initBootstrapTabs();
+    }, 100);
+  }
 
-  const isTouch = () =>
-    window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
+  private initBootstrapTabs() {
+    // Try to initialize Bootstrap 5 tabs manually
+    const tabElements = document.querySelectorAll('[data-bs-toggle="tab"]');
 
-  const destroyZoom = () => {
-    const ez = $img.data('elevateZoom');
-    if (ez && ez.destroy) ez.destroy();
-    $('.zoomContainer').remove();
-    $img.removeData('elevateZoom');
-    $img.off('.elevateZoom');
-    $img.css('touch-action', 'pan-y');
-  };
-
-  const initDesktopNoZoom = () => {
-    destroyZoom();
-    if ($.fn.elevateZoom) {
-      $img.elevateZoom({
-        zoomEnabled: false,
-        gallery: 'product-zoom-gallery',
-        galleryActiveClass: 'active',
-        responsive: true,
-        scrollZoom: false
-      });
+    if (tabElements.length === 0) {
+      return;
     }
-  };
 
-  const setup = () => {
-    if (isTouch()) {
-      // Móvil: nada de plugin para no bloquear el scroll
-      destroyZoom();
-    } else {
-      // Desktop: plugin solo para gestionar galería (sin zoom)
-      initDesktopNoZoom();
+    // Check if Bootstrap is available
+    if (typeof (window as any).bootstrap === 'undefined') {
+      this.initFallbackTabs();
+      return;
     }
-  };
 
-  // ---- SWAP robusto (funciona con y sin plugin) ----
-  const swapImage = (aEl: HTMLElement) => {
-    const $a = $(aEl);
+    // Initialize each tab with Bootstrap
+    tabElements.forEach((tabEl) => {
+      tabEl.addEventListener('click', (e) => {
+        e.preventDefault();
 
-    // Toma las rutas de forma tolerante
-    const medium =
-      $a.attr('data-image') ||
-      $a.find('img').attr('src') ||
-      $a.attr('href') || '';
-    const big =
-      $a.attr('data-zoom-image') ||
-      $a.attr('href') ||
-      medium;
+        // Get the target tab pane
+        const target = tabEl.getAttribute('data-bs-target');
+        if (!target) return;
 
-    // Marca activa
-    $gallery.find('a').removeClass('active');
-    $a.addClass('active');
-
-    const ez = $img.data('elevateZoom');
-
-    if (ez && typeof ez.swaptheimage === 'function') {
-      // Desktop con plugin: usa su API
-      ez.swaptheimage(medium, big);
-    } else {
-      // Móvil (o sin plugin): cambia atributos directamente
-      $img.attr('src', medium);
-      $img.attr('data-zoom-image', big);
-
-      // Si tu imagen principal está envuelta en un <a>, actualiza su href
-      const $wrapLink = $img.closest('a');
-      if ($wrapLink.length) $wrapLink.attr('href', big);
-
-      // Si usas <picture>, actualiza sources (opcional)
-      const $picture = $img.closest('picture');
-      if ($picture.length) {
-        $picture.find('source').each((_: any, s: any) => {
-          const $s = $(s);
-          const srcset = $s.attr('data-srcset') || $s.attr('srcset');
-          if (srcset) $s.attr('srcset', srcset.replace(/[^ ,]+/g, medium));
+        // Remove active from all tabs and panes
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+          pane.classList.remove('show', 'active');
         });
+
+        // Add active to clicked tab
+        tabEl.classList.add('active');
+
+        // Show target pane
+        const targetPane = document.querySelector(target);
+        if (targetPane) {
+          targetPane.classList.add('show', 'active');
+        }
+      });
+    });
+  }
+
+  private initFallbackTabs() {
+    // Fallback tab handling if Bootstrap is not available
+    const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
+
+    tabLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const target = link.getAttribute('data-bs-target');
+        if (!target) return;
+
+        // Remove active from all
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => {
+          p.classList.remove('show', 'active');
+        });
+
+        // Add active to current
+        link.classList.add('active');
+        const pane = document.querySelector(target);
+        if (pane) {
+          pane.classList.add('show', 'active');
+        }
+      });
+    });
+  }
+
+  private initImageGallery() {
+    // Wait for Angular to render the gallery
+    setTimeout(() => {
+      const galleryThumbs = document.querySelectorAll('.product-gallery-item');
+      const mainImage = document.querySelector('#product-zoom') as HTMLImageElement;
+
+      if (!mainImage || !galleryThumbs.length) {
+        return;
       }
-    }
-  };
 
-  // ---- Delegación de eventos (sirve aunque Angular re-renderice) ----
-  $gallery.off('click.vg').on('click.vg', 'a',  (e: any) => {
-    e.preventDefault();
-    swapImage(e.currentTarget);
-  });
+      galleryThumbs.forEach((thumb, index) => {
+        thumb.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-  // ---- Popup: arma lista con o sin elevateZoom ----
-  $('#btn-product-gallery').off('click.vg').on('click.vg', (e: any) => {
-    e.preventDefault();
-    if (!$.fn.magnificPopup) return;
+          const link = thumb as HTMLAnchorElement;
+          const newSrc = link.getAttribute('data-image') || '';
 
-    const ez = $img.data('elevateZoom');
-    const items = ez
-      ? ez.getGalleryList()
-      : $gallery.find('a').map( () => {
-          return { src: $(this).attr('href')! };
-        }).get();
+          if (newSrc && mainImage) {
+            mainImage.src = newSrc;
 
-    $.magnificPopup.open(
-      {
-        items,
-        type: 'image',
-        gallery: { enabled: false },
-        fixedContentPos: false,
-        removalDelay: 600,
-        closeBtnInside: false
-      },
-      0
-    );
-  });
+            // Update active state
+            galleryThumbs.forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+          }
+        });
+      });
+    }, 300);
+  }
 
-  // ---- Inicializa y re-evalúa en resize/orientación ----
-  const kick = () => setTimeout(setup, 0); // deja que Angular pinte
-  kick();
-  let t: any;
-  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(setup, 200); });
-  window.addEventListener('orientationchange', () => setTimeout(setup, 200));
-}
+  // Simple zoom on hover for desktop
+  onImageMouseMove(event: MouseEvent, img: HTMLImageElement) {
+    if (window.matchMedia('(pointer: coarse)').matches) return; // Skip on touch devices
+
+    const rect = img.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = 'scale(1.5)';
+    img.style.cursor = 'zoom-in';
+  }
+
+  onImageMouseLeave(img: HTMLImageElement) {
+    img.style.transform = 'scale(1)';
+    img.style.cursor = 'default';
+  }
+
 
 
   ngOnInit(): void {
@@ -249,6 +253,32 @@ export class Product implements OnInit {
     </table>
   </div>
 `;
+
+      // Update SEO meta tags
+      this.seoService.updateTags({
+        title: this.product.name,
+        description: this.truncateDesc(this.product.description, 160),
+        keywords: this.product.keywords || `${this.product.name}, comprar online, varyago`,
+        image: this.product.images?.[0]?.url || '',
+        url: `https://varyago.com/product/${this.product.slug}`,
+        type: 'product',
+        price: variations[0]?.price2 || this.product.price,
+        currency: 'COP',
+        availability: this.product.stock > 0 ? 'in stock' : 'out of stock'
+      });
+
+      // Add Product Schema.org markup
+      this.seoService.addProductSchema({
+        name: this.product.name,
+        description: this.product.description,
+        images: this.product.images,
+        sku: variations[0]?.sku || this.product.id,
+        price: variations[0]?.price2 || this.product.price,
+        stock: this.product.stock,
+        slug: this.product.slug,
+        brand: this.product.brand
+      });
+
 
       // Detectar si hay colores reales
       this.colors = [
@@ -327,10 +357,7 @@ export class Product implements OnInit {
   selectColor(color: string): void {
     this.productForm.patchValue({ color });
   }
-  truncateDesc(text: string, limit: number): string {
-    if (!text) return '';
-    return text.length > limit ? text.substring(0, limit) + '...' : text;
-  }
+
   onQuantityChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const qty = Number(input.value);
@@ -394,13 +421,13 @@ export class Product implements OnInit {
       fbp: getFbp(),
       fbc: getFbc(),
       // Si tienes consentimiento y datos del cliente:
-       //email: this.session?.user?.email,
+      //email: this.session?.user?.email,
       //phone: this.session?.user?.phone,
-        //external_id: String(this.session?.user?.id)
+      //external_id: String(this.session?.user?.id)
     }).subscribe({
-        next: (res) => console.log('CAPI AddToCart enviado', res),
-        error: (err) => console.error('Error CAPI AddToCart', err),
-      });
+      next: (res) => console.log('CAPI AddToCart enviado', res),
+      error: (err) => console.error('Error CAPI AddToCart', err),
+    });
     /*this.capi
       .sendEvent('AddToCart', {
         event_id: eventId, // genera un ID único
@@ -421,7 +448,17 @@ export class Product implements OnInit {
         error: (err) => console.error('Error CAPI AddToCart', err),
       });*/
   }
+
+  truncateDesc(text: string, maxLength: number): string {
+    if (!text) return '';
+    const stripped = text.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    return stripped.length > maxLength
+      ? stripped.substring(0, maxLength) + '...'
+      : stripped;
+  }
+
   toNumber(v: any): number {
     return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));
   }
 }
+

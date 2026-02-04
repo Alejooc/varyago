@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, DOCUMENT, HostListener, Inject, Renderer2  } from '@angular/core';
-import { ActivatedRoute,Router,RouterModule,NavigationEnd  } from '@angular/router';
+import { AfterViewInit, Component, DOCUMENT, HostListener, Inject, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { HeaderService } from "../../services/header";
@@ -10,19 +10,18 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../../services/auth';
 import { ProgressGoalBar } from '../progress-goal-bar/progress-goal-bar/progress-goal-bar';
 
-declare var $: any;
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,RouterModule,ProgressGoalBar],
+  imports: [CommonModule, RouterModule, ProgressGoalBar],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class Header implements AfterViewInit {
   cartCount = 0;
-    isSearchOpen = false;
+  isSearchOpen = false;
   cartItems: any[] = [];
-  menu: any ;
-  totalPrice: number=0;
+  menu: any;
+  totalPrice: number = 0;
   results: any[] = [];
   notifyMessages = [
     '🚚 Envio gratis en pedidos superiores a $99.900',
@@ -40,19 +39,19 @@ export class Header implements AfterViewInit {
 
   private searchSubject = new Subject<string>();
   constructor(
-      @Inject(DOCUMENT) private document: Document,
-      private renderer: Renderer2,
-      private route: ActivatedRoute,
-      private cartService: CartService,
-      private headerService: HeaderService,
-      private sharedService: SharedService,
-      private searchService: SearchService,
-      private authService: AuthService,
-       private router: Router,
-      
-    ) {
-      
-      this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private headerService: HeaderService,
+    private sharedService: SharedService,
+    private searchService: SearchService,
+    private authService: AuthService,
+    private router: Router,
+
+  ) {
+
+    this.searchSubject.pipe(debounceTime(300)).subscribe(query => {
       if (query.length > 2) {
         this.fetchResults(query);
       } else {
@@ -60,7 +59,7 @@ export class Header implements AfterViewInit {
       }
     });
   }
-  
+
 
   openSearch(e?: Event) {
     if (e) e.preventDefault();
@@ -83,30 +82,30 @@ export class Header implements AfterViewInit {
     this.renderer.removeClass(this.document.body, 'overflow-hidden');
   }
 
-  
+
   onSearch(query: string): void {
     this.searchSubject.next(query);
   }
 
   fetchResults(query: string): void {
     this.searchService.buscarProductos(query).subscribe(data => {
-     
+
       this.results = data;
     });
   }
 
- onSelectItem(slug: string): void {
-  this.results = []; // limpia la lista
-  this.closeSearch();
-  //this.router.navigate(['/product', slug]); // redirección a la página de producto
-}
+  onSelectItem(slug: string): void {
+    this.results = []; // limpia la lista
+    this.closeSearch();
+    //this.router.navigate(['/product', slug]); // redirección a la página de producto
+  }
   preventSubmit(event: Event): void {
     event.preventDefault();
   }
   ngAfterViewInit(): void {
     this.results = [];
     this.getMenu(); // Carga el menú y luego ejecuta reinicio con delay
-     // Cierra el carrito cuando cambia de ruta
+    // Cierra el carrito cuando cambia de ruta
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isCartOpen = false;
@@ -114,79 +113,155 @@ export class Header implements AfterViewInit {
       }
     });
   }
-  
- reiniciarMenuMolla(): void {
-  const $menu = $('.mobile-menu');
-  const $body = $('body');
 
-  $('.mobile-menu-toggler').off('click').on('click', function (this: any, e: Event) {
-    $body.toggleClass('mmenu-active');
-    $(this).toggleClass('active');
-    e.preventDefault();
-  });
+  reiniciarMenuMolla(): void {
+    const menu = document.querySelector('.mobile-menu');
+    const body = document.body;
+    const toggler = document.querySelector('.mobile-menu-toggler');
 
-  // 1. Añadir flechas .mmenu-btn a items con submenú
-  $menu.find('li').each(function (this: any) {
-    const $this = $(this);
-    if ($this.children('ul').length && $this.children('span.mmenu-btn').length === 0) {
-      $('<span class="mmenu-btn"></span>').insertAfter($this.children('a'));
-    }
-  });
+    if (!menu || !toggler) return;
 
-  // 2. Controlar apertura/cierre de submenús
-  $(document).off('click', '.mmenu-btn').on('click', '.mmenu-btn', function (this: any,e: Event) {
-    const $parent = $(this).closest('li');
-    const $submenu = $parent.children('ul');
+    // Toggle mobile menu
+    toggler.removeEventListener('click', this.toggleMobileMenu);
+    toggler.addEventListener('click', this.toggleMobileMenu.bind(this));
 
-    if (!$parent.hasClass('open')) {
-      $submenu.stop(true, true).slideDown(300, () => $parent.addClass('open'));
-    } else {
-      $submenu.stop(true, true).slideUp(300, () => $parent.removeClass('open'));
-    }
+    // 1. Add mmenu-btn to items with submenu
+    const menuItems = menu.querySelectorAll('li');
+    menuItems.forEach((li) => {
+      const hasSubmenu = li.querySelector('ul');
+      const hasButton = li.querySelector('span.mmenu-btn');
 
-    e.preventDefault();
-    e.stopPropagation();
-  });
+      if (hasSubmenu && !hasButton) {
+        const btn = document.createElement('span');
+        btn.className = 'mmenu-btn';
+        const link = li.querySelector('a');
+        if (link) {
+          link.insertAdjacentElement('afterend', btn);
+        }
+      }
+    });
 
-  $(document).off('click', '.mobile-menu li a').on('click', '.mobile-menu li a', function (this: any, e:Event) {
-  const $li = $(this).closest('li');
+    // 2. Handle submenu toggle
+    document.removeEventListener('click', this.handleSubmenuClick);
+    document.addEventListener('click', this.handleSubmenuClick.bind(this));
 
-  // Si NO es un menú con submenú (type !== '4'), cerrar menú
-  if (!$li.hasClass('has-submenu')) {
-    $('body').removeClass('mmenu-active');
-    $('.mobile-menu-toggler').removeClass('active');
-  } else {
-    // Solo evita que el enlace navegue, pero NO cierres el menú móvil
-    const $parent = $(this).closest('li');
-    const $submenu = $parent.children('ul');
-
-    if (!$parent.hasClass('open')) {
-      $submenu.stop(true, true).slideDown(300, () => $parent.addClass('open'));
-    } else {
-      $submenu.stop(true, true).slideUp(300, () => $parent.removeClass('open'));
-    }
-    e.stopPropagation();
-    e.preventDefault();
+    // 3. Handle menu link clicks
+    document.removeEventListener('click', this.handleMenuLinkClick);
+    document.addEventListener('click', this.handleMenuLinkClick.bind(this));
   }
-});
-}
+
+  private toggleMobileMenu = (e: Event) => {
+    e.preventDefault();
+    document.body.classList.toggle('mmenu-active');
+    const toggler = e.currentTarget as HTMLElement;
+    toggler.classList.toggle('active');
+  }
+
+  private handleSubmenuClick = (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (!target.classList.contains('mmenu-btn')) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const parent = target.closest('li');
+    if (!parent) return;
+
+    const submenu = parent.querySelector('ul') as HTMLElement;
+    if (!submenu) return;
+
+    if (!parent.classList.contains('open')) {
+      this.slideDown(submenu, 300, () => parent.classList.add('open'));
+    } else {
+      this.slideUp(submenu, 300, () => parent.classList.remove('open'));
+    }
+  }
+
+  private handleMenuLinkClick = (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (!target.matches('.mobile-menu li a')) return;
+
+    const li = target.closest('li');
+    if (!li) return;
+
+    // If NOT a submenu item, close mobile menu
+    if (!li.classList.contains('has-submenu')) {
+      document.body.classList.remove('mmenu-active');
+      const toggler = document.querySelector('.mobile-menu-toggler');
+      toggler?.classList.remove('active');
+    } else {
+      // Toggle submenu
+      const submenu = li.querySelector('ul') as HTMLElement;
+      if (!submenu) return;
+
+      if (!li.classList.contains('open')) {
+        this.slideDown(submenu, 300, () => li.classList.add('open'));
+      } else {
+        this.slideUp(submenu, 300, () => li.classList.remove('open'));
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }
+
+  // Vanilla JS slide animations
+  private slideDown(element: HTMLElement, duration: number, callback?: () => void) {
+    element.style.removeProperty('display');
+    let display = window.getComputedStyle(element).display;
+    if (display === 'none') display = 'block';
+    element.style.display = display;
+
+    const height = element.scrollHeight;
+    element.style.overflow = 'hidden';
+    element.style.height = '0';
+    element.style.transition = `height ${duration}ms ease`;
+
+    setTimeout(() => {
+      element.style.height = height + 'px';
+    }, 0);
+
+    setTimeout(() => {
+      element.style.removeProperty('height');
+      element.style.removeProperty('overflow');
+      element.style.removeProperty('transition');
+      if (callback) callback();
+    }, duration);
+  }
+
+  private slideUp(element: HTMLElement, duration: number, callback?: () => void) {
+    element.style.overflow = 'hidden';
+    element.style.height = element.scrollHeight + 'px';
+    element.style.transition = `height ${duration}ms ease`;
+
+    setTimeout(() => {
+      element.style.height = '0';
+    }, 0);
+
+    setTimeout(() => {
+      element.style.display = 'none';
+      element.style.removeProperty('height');
+      element.style.removeProperty('overflow');
+      element.style.removeProperty('transition');
+      if (callback) callback();
+    }, duration);
+  }
   ngOnInit(): void {
     this.cartCount = this.cartService.getTotalItems();
     this.cartItems = this.getCartItems();
     this.totalPrice = this.cartService.getTotalPrice();
     //this.getMenu();
-     this.sharedService.cartUpdated$.subscribe(() => {
+    this.sharedService.cartUpdated$.subscribe(() => {
       this.refreshCart(); // actualiza totales o vuelve a consultar el carrito
     });
-    
+
   }
   refreshCart() {
     // lógica para actualizar el ícono o contenido del carrito
-     this.cartCount = this.cartService.getTotalItems();
-      this.cartItems = this.getCartItems();
-      this.totalPrice = this.cartService.getTotalPrice();
-      this.toggleCart();
-      
+    this.cartCount = this.cartService.getTotalItems();
+    this.cartItems = this.getCartItems();
+    this.totalPrice = this.cartService.getTotalPrice();
+    this.toggleCart();
+
   }
   ngOnDestroy(): void {
     // Aquí podrías limpiar recursos si es necesario
@@ -199,18 +274,18 @@ export class Header implements AfterViewInit {
     return this.cartService.getCart();
   }
   getMenu() {
-  this.headerService.getDepartments().subscribe(data => {
-    this.menu = data.map((item: any) => {
-     
-      return {
-        ...item,
-        submenuColumns: this.splitIntoColumns(item.submenu, 5)
-      };
+    this.headerService.getDepartments().subscribe(data => {
+      this.menu = data.map((item: any) => {
+
+        return {
+          ...item,
+          submenuColumns: this.splitIntoColumns(item.submenu, 5)
+        };
+      });
+      // Una vez cargado el menú, aplicar lógica jQuery
+      setTimeout(() => this.reiniciarMenuMolla(), 100);
     });
-    // Una vez cargado el menú, aplicar lógica jQuery
-    setTimeout(() => this.reiniciarMenuMolla(), 100);
-  });
-}
+  }
 
   // Función para dividir en columnas
   splitIntoColumns(items: any[], itemsPerColumn: number = 5): any[][] {
@@ -225,21 +300,21 @@ export class Header implements AfterViewInit {
       this.closeSearch();
       this.results = []; // limpia la lista
       this.router.navigate(['search', query]);
-      
+
     }
   }
-  account(){
+  account() {
     const token = localStorage.getItem('auth_token');
     if (token) {
       const user: any = jwtDecode(token);
-     // console.log(user);
+      // console.log(user);
       this.router.navigate(['account']);
-    }else{
-      
+    } else {
+
       this.router.navigate(['login']); // redirige a login si no hay token
       return;
     }
-    
+
   }
   onLogout(): void {
     this.cartService.clearCart(); // Limpia el carrito al cerrar sesión
@@ -255,6 +330,5 @@ export class Header implements AfterViewInit {
   }
   onFreeShippingReached() {
     // Aquí puedes mostrar un mensaje, activar una animación, etc.
-    console.log('¡Meta de envío gratis alcanzada!');
   }
 }

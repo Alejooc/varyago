@@ -1,48 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeService, HomeData } from '../../services/home';
-import { CommonModule,NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarrouselProds } from "../../components/carrousel-prods/carrousel-prods";
-declare var $: any;
+import { register } from 'swiper/element/bundle';
+import { SeoService } from '../../services/seo';
+
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterModule,CarrouselProds,NgOptimizedImage],
+  imports: [CommonModule, RouterModule, CarrouselProds, NgOptimizedImage],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-
 export class Home implements OnInit {
-  
-  data:any= [];
+
+  data: any = [];
+  banners: any[] = [];
   loading = true;
 
-  constructor(private homeService: HomeService) {}
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        dots: true,
-        items: 1,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-          "992": {
-              "nav": true
-          }
-      }
-      });
-    }, 1000); // tiempo suficiente para que el DOM se renderice
+  constructor(
+    private homeService: HomeService,
+    private seoService: SeoService
+  ) {
+    // Register Swiper web components
+    register();
   }
+
   ngOnInit(): void {
+    // Set SEO for home page
+    this.seoService.updateTags({
+      title: 'VaryaGO: Variedad que llega contigo',
+      description: 'Descubre una amplia gama de productos para el hogar. Muebles, decoración, electrodomésticos y más. Envío a todo Colombia.',
+      keywords: 'varyago, tienda online, productos hogar, muebles, decoración, electrodomésticos, colombia',
+      url: 'https://varyago.com',
+      type: 'website'
+    });
+
     this.homeService.getHomeData().subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.data = res;
-        console.log(res);
-        
         this.loading = false;
       },
       error: (err) => {

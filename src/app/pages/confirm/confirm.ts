@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmService } from '../../services/confirm';
-import { ActivatedRoute,RouterModule,Router } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 @Component({
   selector: 'app-confirm',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './confirm.html',
   styleUrl: './confirm.scss'
 })
@@ -13,18 +13,18 @@ export class Confirm implements OnInit {
   orderId: string | null = null;
   error = '';
 
-  constructor(private confirmService: ConfirmService,private route: ActivatedRoute, private router: Router) {}
+  constructor(private confirmService: ConfirmService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     // 1) Lee id de param o de query (?id=...)
-     const ref = this.route.snapshot.paramMap.get('ref');   // referencia en la ruta
+    const ref = this.route.snapshot.paramMap.get('ref');   // referencia en la ruta
     const txId = this.route.snapshot.queryParamMap.get('id'); // transaction_id (query)
 
     if (!ref) {
       this.error = 'Referencia no recibida.'; return;
     }
     console.log(ref);
-    
+
     this.orderId = ref;      // tu "track"
     // 2) Normaliza: si vino como query, conviértelo a /confirm/:id
     if (!ref) {

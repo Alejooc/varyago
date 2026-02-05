@@ -11,7 +11,7 @@
         <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel" aria-labelledby="hot-all-link">
 
           <!-- 🚦 Solo renderiza el carrusel cuando hay datos -->
-          <ng-container *ngIf="elements?.length; else skeleton">
+          <ng-container *ngIf="elements.length; else skeleton">
 
             <!-- Swiper carousel -->
             <swiper-container class="products-carousel carousel-equal-height carousel-with-shadow" role="list"
@@ -25,7 +25,8 @@
 
               <!-- Producto -->
               <swiper-slide *ngFor="let product of elements; trackBy: trackById">
-                <article class="product" role="listitem" itemscope itemtype="https://schema.org/Product">
+                <article class="product modern-card h-100" role="listitem" itemscope
+                  itemtype="https://schema.org/Product">
 
                   <figure class="product-media">
                     <span class="product-label label-sale">Promoción</span>

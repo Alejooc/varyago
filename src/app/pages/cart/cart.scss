@@ -1,0 +1,222 @@
+// Cart Page Styles
+
+.cart {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+// Table Styling
+.table-cart {
+    margin-bottom: 2rem;
+
+    thead {
+        th {
+            padding: 1.5rem 0;
+            color: #999;
+            font-weight: 400;
+            font-size: 1.4rem;
+            letter-spacing: .05em;
+            border-bottom: 1px solid #ebebeb;
+        }
+    }
+
+    tr {
+        td {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ebebeb;
+            vertical-align: middle;
+        }
+    }
+
+    .product-col {
+        .product {
+            display: flex;
+            align-items: center;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+
+            &:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        .product-media {
+            display: inline-block;
+            margin: 0 2rem 0 0;
+            flex-shrink: 0;
+            width: 80px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .product-title {
+            display: block; // Fix for flex issue
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #333;
+            letter-spacing: -0.01em;
+
+            a {
+                color: inherit;
+
+                &:hover {
+                    color: #015959;
+                }
+            }
+
+            small {
+                font-size: 1.3rem;
+                color: #999;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .price-col,
+    .total-col {
+        font-weight: 500;
+        font-size: 1.6rem;
+        color: #333;
+    }
+
+    .total-col {
+        color: #015959; // Highlight total per item
+        font-weight: 600;
+    }
+
+    .quantity-col {
+        .cart-product-quantity {
+            margin: 0;
+
+            input.form-control {
+                text-align: center;
+                border-radius: 50px; // Pill shape input
+                border-color: #dadada;
+                color: #333;
+                font-weight: 500;
+                height: 40px;
+                padding: 0 1.5rem;
+
+                &:focus {
+                    border-color: #015959;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    .remove-col {
+        padding-right: 0;
+        text-align: right;
+
+        .btn-remove {
+            border: none;
+            background: transparent;
+            color: #ccc;
+            font-size: 2rem;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.35s;
+
+            &:hover {
+                color: #c96;
+            }
+        }
+    }
+}
+
+// Summary Box (using .modern-card globally, adding specifics here)
+.summary-cart {
+    border-radius: 12px; // Ensure rounding
+    border: none; // Handled by modern-card
+    background-color: #fff; // Force white
+
+    .summary-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #ebebeb;
+        padding-bottom: 1.5rem;
+    }
+
+    .table-summary {
+        tr {
+            td {
+                padding: 1rem 0;
+                border-bottom: 1px solid #ebebeb;
+                font-size: 1.4rem;
+                font-weight: 400;
+                color: #333;
+
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+
+        .summary-subtotal {
+            td {
+                color: #333;
+            }
+        }
+
+        .summary-total {
+            td {
+                border-bottom: none;
+                padding-top: 2rem;
+                padding-bottom: 1rem;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .table-cart {
+        thead {
+            display: none; // Hide headers on mobile
+        }
+
+        tr {
+            display: block;
+            border-bottom: 1px solid #ebebeb;
+            padding: 2rem 0;
+            position: relative;
+
+            td {
+                display: block;
+                padding: .5rem 0;
+                border: none;
+                text-align: center; // Center align mobile content
+
+                &.product-col {
+                    text-align: left;
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                }
+
+                &.remove-col {
+                    position: absolute;
+                    top: 1rem;
+                    right: 0;
+                    width: auto;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

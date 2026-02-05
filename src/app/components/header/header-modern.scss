@@ -1,0 +1,211 @@
+// Desktop Header Modernization
+
+/* --- Icons Area (Account & Cart) --- */
+.header-dropdown-link {
+    gap: 1.5rem !important; // More breathing room
+    display: flex;
+    align-items: center;
+
+    .icon-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        color: #333;
+        font-size: 2.4rem;
+        transition: all 0.2s ease;
+        position: relative;
+
+        &:hover {
+            color: #015959;
+            background-color: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        i {
+            margin: 0; // Remove default margins
+        }
+    }
+}
+
+.cart-count.badge-pill {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444; // Modern alert red
+    color: white;
+    font-family: 'Jost', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px; // Pill shape
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid white; // Cutout effect
+}
+
+/* --- Navigation Typography --- */
+.menu-vertical,
+.menu-horizontal,
+.main-nav {
+    a {
+        font-family: 'Jost', sans-serif !important;
+    }
+}
+
+// Category Dropdown Title
+.dropdown-toggle[title="Browse Categories"] {
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 1rem 1.5rem;
+}
+
+// Menu Items
+.menu-vertical {
+    li a {
+        font-weight: 500;
+        font-size: 1.4rem; // Readable size
+        padding: 1.2rem 1.5rem;
+        color: #374151;
+        transition: color 0.1s;
+
+        &:hover {
+            color: #015959;
+            background-color: #f9fafb;
+        }
+    }
+
+    // Headlines inside mega-menus
+    .menu-title {
+        font-family: 'Jost', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 1.3rem;
+        color: #111827;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* --- Search Bar Refinement (Round/Pill) --- */
+.header-search {
+    .header-search-wrapper {
+        border-radius: 50px !important; // Fully rounded pill
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+    }
+}
+
+.search-input-elevated {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.5rem;
+    border-radius: 50px !important; // Match wrapper
+    padding-left: 2rem !important; // More space for pill shape
+    border: none; // Handled by wrapper or clean look
+
+    &::placeholder {
+        font-weight: 400;
+        color: #9ca3af;
+    }
+}
+
+.header-search .btn-primary {
+    border-radius: 50px !important; // Round button
+    min-width: 50px; // Circle-ish if just icon, or pill if text
+    padding: 0 2rem; // Comfy padding
+}
+
+
+/* --- Menu & Submenu Polish --- */
+.megamenu {
+    left: 0 !important; // Force alignment
+    right: 0 !important;
+    width: 100% !important; // Full width of container
+    min-width: 900px !important; // Make it imposing
+    padding: 3rem 4rem !important; // Generous padding
+    background-color: white;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12) !important; // Deep "Grand" shadow
+    border-radius: 0 0 16px 16px !important;
+    border: none !important;
+    margin-top: 0 !important;
+}
+
+// Menu Columns
+.menu-col {
+    padding-right: 2rem;
+
+    .menu-title {
+        font-size: 1.6rem !important;
+        font-weight: 800 !important;
+        color: #111827;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #f3f4f6;
+        padding-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    ul li {
+        margin-bottom: 0.8rem;
+
+        a {
+            font-size: 1.4rem !important;
+            color: #4b5563;
+            transition: transform 0.2s;
+            display: inline-block;
+
+            &:hover {
+                color: #015959 !important;
+                transform: translateX(5px); // Slide effect
+                background: none !important;
+            }
+        }
+    }
+}
+
+// Banner inside menu
+.banner-menu img {
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+// General Dropdown rounded
+.menu-vertical ul,
+.menu-horizontal ul {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+    padding: 1.5rem !important;
+}
+
+.menu-vertical {
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 1rem 0;
+}
+
+// Mobile Menu Consistency
+.mobile-menu-container {
+    font-family: 'Jost', sans-serif !important;
+
+    .mobile-menu {
+        li a {
+            font-size: 1.4rem;
+            border-bottom-color: #f3f4f6; // Lighter borders
+        }
+    }
+}

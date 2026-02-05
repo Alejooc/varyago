@@ -23,7 +23,6 @@ export class Confirm implements OnInit {
     if (!ref) {
       this.error = 'Referencia no recibida.'; return;
     }
-    console.log(ref);
 
     this.orderId = ref;      // tu "track"
     // 2) Normaliza: si vino como query, conviértelo a /confirm/:id

@@ -1,0 +1,124 @@
+// Product Grid Styles (Mirrored from Category)
+.modern-card {
+    padding-bottom: 0; // Removed extra padding
+    margin-bottom: 30px !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+    }
+}
+
+.product-media {
+    margin-bottom: 0;
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem !important; // Reduced padding
+    padding-bottom: 1.5rem !important;
+}
+
+.product-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+
+    a {
+        color: #1F2937;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #015959;
+        }
+    }
+}
+
+.product-price {
+    justify-content: center;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-price {
+    font-weight: 800;
+    color: #015959;
+    font-size: 1.6rem !important;
+}
+
+.old-price {
+    color: #9CA3AF !important;
+    font-size: 1.1rem !important;
+    text-decoration: line-through;
+}
+
+// Low specificity override
+.product-action {
+    position: relative !important;
+    opacity: 1 !important;
+}
+
+// High specificity override
+.product .product-action {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-top: 1.5rem !important;
+    width: 100%;
+    display: block !important;
+}
+
+// Media Queries
+@media (max-width: 991.98px) {
+    #filtersAside {
+        display: block !important; // Force visibility despite 'collapse' class
+        position: fixed;
+        top: 0;
+        left: -100%; // Start off-screen
+        height: 100%;
+        width: 280px;
+        max-width: 85%;
+        background: #fff;
+        z-index: 1050;
+        overflow-y: auto;
+        padding: 2rem 1rem;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        transition: left 0.3s ease-in-out;
+
+        &.show {
+            left: 0 !important;
+        }
+    }
+
+    #filtersAside.collapse:not(.show) {
+        display: block !important;
+        left: -100%;
+    }
+
+    .filter-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+        cursor: pointer;
+    }
+}

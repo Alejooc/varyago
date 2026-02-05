@@ -1,0 +1,76 @@
+// Login/Register Styles - High Definition
+
+// Input Styling - Solid Gray
+.form-control {
+    border-radius: 6px;
+    border: 1px solid transparent; // No visible border initially
+    padding: 1.2rem 1.5rem;
+    font-size: 1.4rem;
+    height: auto;
+    background-color: #f3f4f6; // Solid gray bg
+    color: #1F2937;
+    transition: all 0.2s ease;
+    font-weight: 500;
+
+    &:focus {
+        background-color: #fff;
+        border-color: #015959;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+}
+
+// Tabs Styling
+.nav-pills {
+    .nav-link {
+        color: #6b7280;
+        background: #f9fafb;
+        border-bottom: 2px solid #e5e7eb;
+        border-radius: 0;
+
+        &.active {
+            color: #015959;
+            background: #fff;
+            border-bottom: 2px solid #015959;
+        }
+
+        &:hover:not(.active) {
+            color: #374151;
+            background: #f3f4f6;
+        }
+    }
+}
+
+// Button Overrides
+.btn-login {
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 0.01em;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+
+    &:hover {
+        background-color: #f9fafb;
+    }
+}
+
+// Checkbox refinement
+.custom-control-label {
+    font-size: 1.3rem;
+    color: #4b5563;
+    cursor: pointer;
+
+    &::before {
+        border-radius: 4px;
+        border: 1px solid #d1d5db;
+        background-color: #fff;
+    }
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: #015959;
+    border-color: #015959;
+}

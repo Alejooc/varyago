@@ -1,5 +1,5 @@
 <main class="main">
-    
+
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
@@ -43,38 +43,58 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
                                 aria-labelledby="tab-dashboard-link">
-                                <p>Hola <span class="font-weight-normal text-dark">{{user.name}}</span>
-                                    <br>
-                                    Desde el panel de tu cuenta puedes ver tus <a href="#tab-orders"
-                                        class="tab-trigger-link link-underline">compras recientes</a>, administrar tus <a
-                                        href="#tab-address" class="tab-trigger-link">direcciones de envío y facturación</a>,
-                                    y <a href="#tab-account" class="tab-trigger-link">editar tu contraseña y datos de cuenta</a>.
-                                </p>
+                                <div class="welcome-box mb-4">
+                                    <h3 class="mb-2">Hola, <span
+                                            class="text-primary font-weight-bold">{{user.name}}</span></h3>
+                                    <p class="text-muted">
+                                        Desde el panel de tu cuenta puedes ver tus últimas <a href="#tab-orders"
+                                            class="tab-trigger-link text-primary link-underline">compras</a>,
+                                        administrar tus <a href="#tab-address"
+                                            class="tab-trigger-link text-primary link-underline">direcciones</a>
+                                        y <a href="#tab-account"
+                                            class="tab-trigger-link text-primary link-underline">editar tus datos</a>.
+                                    </p>
+                                </div>
                             </div><!-- .End .tab-pane -->
 
                             <div class="tab-pane fade" id="tab-orders" role="tabpanel"
                                 aria-labelledby="tab-orders-link">
-                                <p *ngIf="!ordenes">No se ha realizado ninguna compra todavía.</p>
+                                <p *ngIf="!ordenes" class="text-center py-4 text-muted">No se ha realizado ninguna
+                                    compra todavía.</p>
                                 <div class="row">
                                     <div class="col-lg-6" *ngFor="let sale of ordenes">
-                                        <div class="card card-dashboard">
-                                            <div class="card-body">
-                                                <h3 class="card-title">#{{sale.id}}</h3><!-- End .card-title -->
+                                        <div class="card card-dashboard modern-card shadow-sm border-0 mb-3">
+                                            <div class="card-body p-4">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h3 class="card-title h5 mb-0 font-weight-bold text-dark">Ped.
+                                                        #{{sale.id}}</h3>
+                                                    <span class="badge badge-light text-muted">{{sale.created |
+                                                        date:'dd/MM/yyyy'}}</span>
+                                                </div>
 
-                                                <p>
-                                                    {{sale.created | date:'dd/MM/yyyy'}}<br>
-                                                    {{sale.statename}}<br>
-                                                    {{sale.total |
-                                                currency:'COP':'symbol':'1.0-0':'es-CO'}}<br>
-                                                    
-                                                    <a href="#">Ver resumen <i class="icon-eye"></i></a>
-                                                </p>
+                                                <div class="order-info mb-3">
+                                                    <p class="mb-1 text-muted small text-uppercase font-weight-bold">
+                                                        Estado</p>
+                                                    <p class="text-primary font-weight-bold">{{sale.statename}}</p>
+                                                </div>
+
+                                                <div class="order-total mb-3">
+                                                    <p class="mb-1 text-muted small text-uppercase font-weight-bold">
+                                                        Total</p>
+                                                    <p class="h4 text-dark font-weight-bold">{{sale.total |
+                                                        currency:'COP':'symbol':'1.0-0':'es-CO'}}</p>
+                                                </div>
+
+                                                <a href="#" class="btn btn-outline-primary-2 btn-pill btn-block">
+                                                    <span>Ver Detalles</span> <i class="icon-eye ml-2"></i>
+                                                </a>
                                             </div><!-- End .card-body -->
                                         </div><!-- End .card-dashboard -->
                                     </div><!-- End .col-lg-6 -->
                                 </div><!-- End .row -->
-                                <a [routerLink]="['/']" class="btn btn-outline-primary-2"><span>Comprar</span><i
-                                        class="icon-long-arrow-right"></i></a>
+                                <a [routerLink]="['/']" class="btn btn-primary btn-pill shadow mt-3">
+                                    <span>Ir a Comprar</span><i class="icon-long-arrow-right"></i>
+                                </a>
                             </div><!-- .End .tab-pane -->
 
                             <div class="tab-pane fade" id="tab-downloads" role="tabpanel"
@@ -86,20 +106,27 @@
 
                             <div class="tab-pane fade" id="tab-address" role="tabpanel"
                                 aria-labelledby="tab-address-link">
-                                <p>Las siguientes direcciones se usarán por defecto en la página de pago.</p>
+                                <p class="mb-4 text-muted">Las siguientes direcciones se usarán por defecto en la página
+                                    de pago.</p>
 
                                 <div class="row">
                                     <div class="col-lg-6" *ngFor="let address of direcciones">
-                                        <div class="card card-dashboard">
-                                            <div class="card-body">
-                                                <h3 class="card-title">{{address.name}}</h3><!-- End .card-title -->
+                                        <div class="card card-dashboard modern-card shadow-sm border-0 mb-3 h-100">
+                                            <div class="card-body p-4 d-flex flex-column">
+                                                <h3 class="card-title h5 font-weight-bold text-dark mb-3">
+                                                    {{address.name}}</h3>
 
-                                                <p>
+                                                <div class="address-details flex-grow-1 text-muted mb-4"
+                                                    style="line-height: 1.6; font-size: 1.4rem;">
                                                     {{address.address}}<br>
-                                                    {{address?.nbh}}<br>
-                                                    {{address.city}} - {{address.state}}<br>
-                                                    <a href="#">Editar <i class="icon-edit"></i></a>
-                                                </p>
+                                                    <span *ngIf="address?.nbh">{{address?.nbh}}<br></span>
+                                                    {{address.city}} - {{address.state}}
+                                                </div>
+
+                                                <a href="#"
+                                                    class="btn btn-outline-primary-2 btn-pill btn-sm align-self-start">
+                                                    Editar <i class="icon-edit ml-1"></i>
+                                                </a>
                                             </div><!-- End .card-body -->
                                         </div><!-- End .card-dashboard -->
                                     </div><!-- End .col-lg-6 -->
@@ -108,38 +135,58 @@
 
                             <div class="tab-pane fade" id="tab-account" role="tabpanel"
                                 aria-labelledby="tab-account-link">
-                                <form action="#">
+                                <form action="#" class="account-form">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label>First Name *</label>
-                                            <input type="text" class="form-control" required>
+                                            <div class="form-group mb-4">
+                                                <label class="font-weight-bold text-dark">Nombre *</label>
+                                                <input type="text" class="form-control" required
+                                                    style="background: #f3f4f6;">
+                                            </div>
                                         </div><!-- End .col-sm-6 -->
 
                                         <div class="col-sm-6">
-                                            <label>Last Name *</label>
-                                            <input type="text" class="form-control" required>
+                                            <div class="form-group mb-4">
+                                                <label class="font-weight-bold text-dark">Apellido *</label>
+                                                <input type="text" class="form-control" required
+                                                    style="background: #f3f4f6;">
+                                            </div>
                                         </div><!-- End .col-sm-6 -->
                                     </div><!-- End .row -->
 
-                                    <label>Display Name *</label>
-                                    <input type="text" class="form-control" required>
-                                    <small class="form-text">This will be how your name will be displayed in the account
-                                        section and in reviews</small>
+                                    <div class="form-group mb-4">
+                                        <label class="font-weight-bold text-dark">Nombre Visual *</label>
+                                        <input type="text" class="form-control" required style="background: #f3f4f6;">
+                                        <small class="form-text text-muted">Así se verá tu nombre en la sección de
+                                            cuenta y valoraciones.</small>
+                                    </div>
 
-                                    <label>Email address *</label>
-                                    <input type="email" class="form-control" required>
+                                    <div class="form-group mb-4">
+                                        <label class="font-weight-bold text-dark">Correo Electrónico *</label>
+                                        <input type="email" class="form-control" required style="background: #f3f4f6;">
+                                    </div>
 
-                                    <label>Current password (leave blank to leave unchanged)</label>
-                                    <input type="password" class="form-control">
+                                    <h5 class="mt-5 mb-3 font-weight-bold">Cambio de Contraseña</h5>
 
-                                    <label>New password (leave blank to leave unchanged)</label>
-                                    <input type="password" class="form-control">
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold">Contraseña Actual (dejar en blanco si no
+                                            cambia)</label>
+                                        <input type="password" class="form-control" style="background: #f3f4f6;">
+                                    </div>
 
-                                    <label>Confirm new password</label>
-                                    <input type="password" class="form-control mb-2">
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold">Nueva Contraseña (dejar en blanco si no
+                                            cambia)</label>
+                                        <input type="password" class="form-control" style="background: #f3f4f6;">
+                                    </div>
 
-                                    <button type="submit" class="btn btn-outline-primary-2">
-                                        <span>SAVE CHANGES</span>
+                                    <div class="form-group mb-5">
+                                        <label class="font-weight-bold">Confirmar Nueva Contraseña</label>
+                                        <input type="password" class="form-control mb-2" style="background: #f3f4f6;">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-pill shadow-sm px-5">
+                                        <span>GUARDAR CAMBIOS</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </button>
                                 </form>

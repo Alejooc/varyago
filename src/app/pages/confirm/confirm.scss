@@ -1,21 +1,137 @@
- .confirmation-card {
-      max-width: 900px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      background: #fff;
+// Confirm Page Styles
+
+.bg-light-gray {
+  background-color: #f9fafb;
+}
+
+// Success Icon Animation
+.success-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: #def7ec; // Light green/teal
+  color: #015959;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 3rem;
+  animation: popIn 0.5s ease-out forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Typography
+.success-title {
+  color: #015959;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-subtitle {
+  font-size: 1.6rem;
+}
+
+// Status Badges
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.3rem;
+
+  &.status-success {
+    background-color: #def7ec;
+    color: #03543f;
+  }
+
+  &.status-warning {
+    background-color: #fdf6b2;
+    color: #723b13;
+  }
+
+  &.status-danger {
+    background-color: #fde8e8;
+    color: #9b1c1c;
+  }
+}
+
+// Section Headers
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+// Address Box
+.address-box {
+  background-color: #f3f4f6 !important; // Force gray
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+// Table Summary
+.table-success-summary {
+  width: 100%;
+
+  th {
+    border-top: none;
+    border-bottom: 2px solid #e5e7eb;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 1.3rem;
+    padding: 1rem 0;
+  }
+
+  td {
+    padding: 1.2rem 0;
+    vertical-align: middle;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 1.4rem;
+    color: #374151;
+  }
+
+  tfoot {
+    td {
+      border-bottom: none;
+      padding: 0.8rem 0;
+      color: #4b5563;
     }
-    .confirmation-icon {
-      font-size: 4rem;
-      color: #015959;
+
+    .total-row {
+      td {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #015959;
+        padding-top: 1.5rem;
+        border-top: 2px solid #e5e7eb;
+      }
     }
-    .btn-varyago {
-      background-color: #015959;
-      color: #fff;
-      font-weight: bold;
-    }
-    .btn-varyago:hover {
-      background-color: #015959;
-      color: #fff;
-    }
+  }
+}
+
+// Buttons
+.btn-pill {
+  font-size: 1.4rem;
+  letter-spacing: 0.025em;
+  font-weight: 600;
+}

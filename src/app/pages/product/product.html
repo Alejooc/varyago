@@ -97,7 +97,7 @@
                                 </div>
 
                             </form>
-                            <div class="details-filter-row details-row-size">
+                            <div class="details-filter-row details-row-size d-none d-md-flex">
                                 <label for="qty">Cantidad:</label>
                                 <div class="product-details-quantity ml-3">
                                     <input type="number" id="qty" class="form-control" value="1" min="1"
@@ -143,7 +143,8 @@
                             </div>
                             <div class="product-details-action">
                                 <button (click)="addToCart()" [disabled]="!selectedVariation"
-                                    class="btn-product btn-cart d-block w-100"><span>Agregar al carrito</span></button>
+                                    class="btn-product btn-cart d-none d-md-block w-100"><span>Agregar al
+                                        carrito</span></button>
                             </div>
 
                             <!-- End .product-details-action -->
@@ -300,4 +301,56 @@
 
         </div><!-- End .container -->
     </div><!-- End .page-content -->
+
+    <!-- BASIC STICKY BAR: Shows only on mobile -->
+    <div class="sticky-bar-mobile d-md-none" *ngIf="product">
+        <div class="sticky-qty-selector">
+            <button class="btn-qty" (click)="decrementQty()">−</button>
+            <span class="qty-display">{{ product.qty }}</span>
+            <button class="btn-qty" (click)="incrementQty()">+</button>
+        </div>
+        <button (click)="onStickyAddToCart()" class="btn-cart-mobile">
+            {{ selectedVariation ? 'Agregar' : 'Seleccionar' }} <i class="icon-cart-plus ml-2"></i>
+        </button>
+    </div>
+
+    <!-- MOBILE BOTTOM SHEET FOR VARIATIONS -->
+    <div class="bottom-sheet-overlay" [class.show]="showBottomSheet" (click)="closeBottomSheet()"></div>
+    <div class="bottom-sheet-container" [class.show]="showBottomSheet">
+        <div class="bottom-sheet-header">
+            <h3>Selecciona opciones</h3>
+            <button class="close-sheet" (click)="closeBottomSheet()"><i class="icon-close"></i></button>
+        </div>
+
+        <div class="bottom-sheet-body" *ngIf="productForm" [formGroup]="productForm">
+            <!-- COLORS -->
+            <div *ngIf="hasColor" class="sheet-section mb-3">
+                <label>Color:</label>
+                <div class="product-nav product-nav-dots">
+                    <a *ngFor="let c of colors" href="#" [class.active]="productForm.value.color === c"
+                        (click)="selectColor(c); $event.preventDefault()" [ngStyle]="{ 'background-color': c }">
+                    </a>
+                </div>
+            </div>
+
+            <!-- MEASURES -->
+            <div class="sheet-section mb-4">
+                <label class="variant-label text-start">Medida:</label>
+                <div class="variant-pills justify-content-start" role="group">
+                    <ng-container *ngFor="let m of measures; let i = index">
+                        <input type="radio" class="variant-input" [id]="'sheet-variant-'+i" [value]="m"
+                            formControlName="measure" />
+                        <label class="variant-pill" [for]="'sheet-variant-'+i">{{ m }}</label>
+                    </ng-container>
+                </div>
+            </div>
+
+            <!-- ADD BTN -->
+            <button (click)="addToCart(); closeBottomSheet()" [disabled]="!selectedVariation"
+                class="btn btn-primary btn-pill w-100 py-3 font-weight-bold shadow-none" style="font-size: 1.4rem;">
+                {{ selectedVariation ? 'Agregar al Carrito' : 'Selecciona una opción' }}
+            </button>
+        </div>
+    </div>
+
 </main><!-- End .main -->

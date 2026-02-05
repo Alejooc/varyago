@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { Footer} from './components/footer/footer'; // ← ajusta ruta real
+import { Footer } from './components/footer/footer'; // ← ajusta ruta real
 import { Header } from './components/header/header'; // ← también importa el header si lo usas
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ZoomCleanerService } from './services/zoom-cleaner';
@@ -9,30 +9,45 @@ import { Gtm } from './services/gtm';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Footer, Header,ReactiveFormsModule],
+  imports: [RouterOutlet, Footer, Header, ReactiveFormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected title = 'varyago';
-  constructor(private router: Router, private zoomCleaner: ZoomCleanerService,private pixel: MetaPixel,
-     private gtm: Gtm) {
-    this.pixel.init();
-  this.router.events.subscribe(async (event) => {
-    if (event instanceof NavigationEnd) {
-      this.zoomCleaner.destroyAllZoom();
-      await this.pixel.pageView();
-      this.gtm.init({
-        autoInit: true,
-        debug: false
-      });
-      // Page views automáticos
-      this.gtm.bindRouter(this.router);
+  constructor(private router: Router, private zoomCleaner: ZoomCleanerService, private pixel: MetaPixel,
+    private gtm: Gtm) {
 
-      // Moneda por defecto
-      this.gtm.setCurrency('COP');
+    // Defer third-party scripts until after page load for better performance
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
+        this.pixel.init();
+        this.gtm.init({
+          autoInit: true,
+          debug: false
+        });
+        this.gtm.bindRouter(this.router);
+        this.gtm.setCurrency('COP');
+      });
     }
-     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  });
-}
+
+    this.router.events.subscribe(async (event) => {
+      if (event instanceof NavigationEnd) {
+        this.zoomCleaner.destroyAllZoom();
+        await this.pixel.pageView();
+        this.gtm.init({
+          autoInit: true,
+          debug: false
+        });
+        // Page views automáticos
+        this.gtm.bindRouter(this.router);
+
+        // Moneda por defecto
+        this.gtm.setCurrency('COP');
+      }
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
+    });
+  }
 }

@@ -22,8 +22,10 @@ import { SeoService } from '../../services/seo';
 
 
 const uuid = () => crypto.randomUUID();
-const isMobile = () =>
-  window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
+const isMobile = () => {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(pointer: coarse), (max-width: 991px)').matches;
+};
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -168,7 +170,7 @@ export class Product implements OnInit {
 
   // Simple zoom on hover for desktop
   onImageMouseMove(event: MouseEvent, img: HTMLImageElement) {
-    if (window.matchMedia('(pointer: coarse)').matches) return; // Skip on touch devices
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return; // Skip on touch devices
 
     const rect = img.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;

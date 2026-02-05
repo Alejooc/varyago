@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface CartItem {
   id: number;
@@ -19,16 +20,22 @@ export interface CartItem {
 })
 export class CartService {
   private readonly STORAGE_KEY = 'cart_items';
+  private platformId = inject(PLATFORM_ID);
 
-  constructor() {}
+  constructor() { }
 
   getCart(): CartItem[] {
-    const data = localStorage.getItem(this.STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
+    if (isPlatformBrowser(this.platformId)) {
+      const data = localStorage.getItem(this.STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
+    }
+    return [];
   }
 
   saveCart(cart: CartItem[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
+    }
   }
 
   addToCart(product: CartItem): void {
@@ -68,7 +75,9 @@ export class CartService {
   }
 
   clearCart(): void {
-    localStorage.removeItem(this.STORAGE_KEY);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
   }
 
   getTotalItems(): number {

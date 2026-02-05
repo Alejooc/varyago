@@ -115,6 +115,9 @@ export class Header implements AfterViewInit {
   }
 
   reiniciarMenuMolla(): void {
+    // Skip on server-side rendering
+    if (typeof document === 'undefined') return;
+
     const menu = document.querySelector('.mobile-menu');
     const body = document.body;
     const toggler = document.querySelector('.mobile-menu-toggler');
@@ -213,7 +216,7 @@ export class Header implements AfterViewInit {
   // Vanilla JS slide animations
   private slideDown(element: HTMLElement, duration: number, callback?: () => void) {
     element.style.removeProperty('display');
-    let display = window.getComputedStyle(element).display;
+    let display = typeof window !== 'undefined' ? window.getComputedStyle(element).display : 'block';
     if (display === 'none') display = 'block';
     element.style.display = display;
 

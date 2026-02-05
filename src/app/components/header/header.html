@@ -49,81 +49,67 @@
             </div><!-- End .header-left -->
 
             <!-- HEADER SEARCH -->
-<div class="header-center" [class.search-active]="isSearchOpen">
-  <div
-    class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
-    <a href="#" class="search-toggle" role="button" (click)="openSearch($event)">
-      <i class="icon-search"></i>
-    </a>
+            <div class="header-center" [class.search-active]="isSearchOpen">
+                <div
+                    class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
+                    <a href="#" class="search-toggle" role="button" (click)="openSearch($event)">
+                        <i class="icon-search"></i>
+                    </a>
 
-    <form (submit)="preventSubmit($event)">
-      <!-- Nota: este contenedor se vuelve "modal" cuando isSearchOpen = true -->
-      <div class="header-search-wrapper search-wrapper-wide position-relative search-shell"
-           (click)="$event.stopPropagation()">
-        <label for="q" class="sr-only">Buscar</label>
+                    <form (submit)="preventSubmit($event)">
+                        <!-- Nota: este contenedor se vuelve "modal" cuando isSearchOpen = true -->
+                        <div class="header-search-wrapper search-wrapper-wide position-relative search-shell"
+                            (click)="$event.stopPropagation()">
+                            <label for="q" class="sr-only">Buscar</label>
 
-        <input #busquedaInput
-               id="q"
-               type="search"
-               class="form-control search-input-elevated"
-               placeholder="¿Qué buscas hoy?"
-               (focus)="openSearch()"
-               (input)="onSearch(busquedaInput.value)"
-               autocomplete="off">
+                            <input #busquedaInput id="q" type="search" class="form-control search-input-elevated"
+                                placeholder="¿Qué buscas hoy?" (focus)="openSearch()"
+                                (input)="onSearch(busquedaInput.value)" autocomplete="off">
 
-        <button type="button" class="btn btn-primary"
-                (click)="searchMore(busquedaInput.value)">
-          <i class="icon-search"></i>
-        </button>
+                            <button type="button" class="btn btn-primary" (click)="searchMore(busquedaInput.value)">
+                                <i class="icon-search"></i>
+                            </button>
 
-        <!-- Resultados (panel amplio y alineado) -->
-        <div class="dropdown-menu show w-100 mt-0 py-4 search-results-panel"
-             *ngIf="results.length > 0">
-          <a *ngFor="let itemSerarch of results"
-             [routerLink]="['product',itemSerarch.slug]"
-             (click)="onSelectItem(itemSerarch.slug)"
-             class="dropdown-item text-left text-decoration-none search-item">
-            <div class="d-flex align-items-center text-dark mb-1 text-wrap selc text-break">
-                <img [src]="itemSerarch.img_src"
-                         alt=""
-                         class="mr-3"
-                         style="width:50px; height:50px; object-fit:cover;">
-                <div class="flex-grow-1">{{ itemSerarch.name }}</div>
+                            <!-- Resultados (panel amplio y alineado) -->
+                            <div class="dropdown-menu show w-100 mt-0 py-4 search-results-panel"
+                                *ngIf="results.length > 0">
+                                <a *ngFor="let itemSerarch of results" [routerLink]="['product',itemSerarch.slug]"
+                                    (click)="onSelectItem(itemSerarch.slug)"
+                                    class="dropdown-item text-left text-decoration-none search-item">
+                                    <div class="d-flex align-items-center text-dark mb-1 text-wrap selc text-break">
+                                        <img [src]="itemSerarch.img_src" alt="" class="mr-3"
+                                            style="width:50px; height:50px; object-fit:cover;">
+                                        <div class="flex-grow-1">{{ itemSerarch.name }}</div>
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item text-center text-primary font-weight-bold search-viewall"
+                                    (click)="searchMore(busquedaInput.value)">
+                                    Ver todos los resultados
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Overlay para efecto spotlight -->
+                <div class="search-overlay" *ngIf="isSearchOpen" (click)="closeSearch()" aria-hidden="true"></div>
             </div>
-          </a>
-
-          <a class="dropdown-item text-center text-primary font-weight-bold search-viewall"
-             (click)="searchMore(busquedaInput.value)">
-            Ver todos los resultados
-          </a>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- Overlay para efecto spotlight -->
-  <div class="search-overlay" *ngIf="isSearchOpen" (click)="closeSearch()" aria-hidden="true"></div>
-</div>
 
 
             <div class="header-right">
-                <div class="header-dropdown-link">
-                    <div class="account ml-0">
-                        <a (click)="account()" title="My account">
-                            <div class="icon">
-                                <i class="icon-user"></i>
-                            </div>
-                            <p>Mi Cuenta</p>
+                <div class="header-dropdown-link align-items-center">
+                    <div class="account">
+                        <a (click)="account()" title="Mi Cuenta" class="icon-btn">
+                            <i class="icon-user"></i>
                         </a>
                     </div>
+
                     <div class="dropdown cart-dropdown">
-                        <a role="button" class="dropdown-toggle" (click)="toggleCart()">
+                        <a role="button" class="dropdown-toggle icon-btn" (click)="toggleCart()" title="Carrito">
                             <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">{{cartCount}}</span>
-                            <span class="cart-txt">Carrito</span>
+                            <span class="cart-count badge-pill">{{cartCount}}</span>
                         </a>
-
-
                     </div><!-- End .cart-dropdown -->
                 </div>
             </div><!-- End .header-right -->
@@ -133,63 +119,46 @@
         <!-- BUSCADOR SOLO EN MÓVIL -->
         <!-- BUSCADOR SOLO EN MÓVIL -->
         <!-- BUSCADOR MÓVIL (usa el mismo CSS/TS del desktop) -->
-<div class="p-3 d-lg-none" [class.search-active]="isSearchOpen">
-  <form (submit)="preventSubmit($event)">
-    <div class="header-search-wrapper position-relative search-shell" (click)="$event.stopPropagation()">
-      <label for="q" class="sr-only">Buscar</label>
+        <div class="p-3 d-lg-none" [class.search-active]="isSearchOpen">
+            <form (submit)="preventSubmit($event)">
+                <div class="header-search-wrapper position-relative search-shell" (click)="$event.stopPropagation()">
+                    <label for="q" class="sr-only">Buscar</label>
 
-      <!-- Nota: usamos id="q" para que el TS de focus/autoselect funcione igual -->
-      <input
-        #busquedaInputMobile
-        id="q"
-        type="search"
-        class="form-control search-input-elevated"
-        placeholder="¿Qué buscas hoy?"
-        (focus)="openSearch()"
-        (input)="onSearch(busquedaInputMobile.value)"
-        autocomplete="off"
-      />
+                    <!-- Nota: usamos id="q" para que el TS de focus/autoselect funcione igual -->
+                    <input #busquedaInputMobile id="q" type="search" class="form-control search-input-elevated"
+                        placeholder="¿Qué buscas hoy?" (focus)="openSearch()"
+                        (input)="onSearch(busquedaInputMobile.value)" autocomplete="off" />
 
-      <!-- Botón de buscar dentro del input -->
-      <button
-        type="button"
-        class="btn btn-primary position-absolute py-1 px-2"
-        style="top: 8px; right: 8px; height: 36px; min-width: 36px; font-size: 16px;"
-        (click)="searchMore(busquedaInputMobile.value)"
-      >
-        <i class="icon-search"></i>
-      </button>
+                    <!-- Botón de buscar dentro del input -->
+                    <button type="button" class="btn btn-primary position-absolute py-1 px-2"
+                        style="top: 8px; right: 8px; height: 36px; min-width: 36px; font-size: 16px;"
+                        (click)="searchMore(busquedaInputMobile.value)">
+                        <i class="icon-search"></i>
+                    </button>
 
-      <!-- Resultados (panel amplio y alineado) -->
-      <div class="dropdown-menu show w-100 mt-0 py-4 search-results-panel" *ngIf="results.length > 0">
-        <a
-          *ngFor="let itemSerarch of results"
-          [routerLink]="['product', itemSerarch.slug]"
-          (click)="onSelectItem(itemSerarch.slug)"
-          class="dropdown-item text-left text-decoration-none search-item"
-        >
-          <div class="d-flex align-items-center text-dark mb-1 text-wrap selc text-break">
-                <img [src]="itemSerarch.img_src"
-                         alt=""
-                         class="mr-3"
-                         style="width:50px; height:50px; object-fit:cover;">
-                <div class="flex-grow-1">{{ itemSerarch.name }}</div>
-            </div>
-        </a>
+                    <!-- Resultados (panel amplio y alineado) -->
+                    <div class="dropdown-menu show w-100 mt-0 py-4 search-results-panel" *ngIf="results.length > 0">
+                        <a *ngFor="let itemSerarch of results" [routerLink]="['product', itemSerarch.slug]"
+                            (click)="onSelectItem(itemSerarch.slug)"
+                            class="dropdown-item text-left text-decoration-none search-item">
+                            <div class="d-flex align-items-center text-dark mb-1 text-wrap selc text-break">
+                                <img [src]="itemSerarch.img_src" alt="" class="mr-3"
+                                    style="width:50px; height:50px; object-fit:cover;">
+                                <div class="flex-grow-1">{{ itemSerarch.name }}</div>
+                            </div>
+                        </a>
 
-        <a
-          class="dropdown-item text-center text-primary font-weight-bold search-viewall"
-          (click)="searchMore(busquedaInputMobile.value)"
-        >
-          Ver todos los resultados
-        </a>
-      </div>
-    </div>
-  </form>
+                        <a class="dropdown-item text-center text-primary font-weight-bold search-viewall"
+                            (click)="searchMore(busquedaInputMobile.value)">
+                            Ver todos los resultados
+                        </a>
+                    </div>
+                </div>
+            </form>
 
-  <!-- Overlay para efecto spotlight en móvil -->
-  <div class="search-overlay" *ngIf="isSearchOpen" (click)="closeSearch()" aria-hidden="true"></div>
-</div>
+            <!-- Overlay para efecto spotlight en móvil -->
+            <div class="search-overlay" *ngIf="isSearchOpen" (click)="closeSearch()" aria-hidden="true"></div>
+        </div>
 
     </div><!-- End .header-middle -->
 
@@ -561,7 +530,7 @@
 
 </header><!-- End .header -->
 <!-- Mobile Menu -->
-<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+<div class="mobile-menu-overlay" (click)="closeMobileMenu()"></div><!-- End .mobil-menu-overlay -->
 
 <div class="mobile-menu-container mobile-menu-light">
     <div class="mobile-menu-wrapper">
@@ -633,40 +602,47 @@
     </div>
 
     <!-- Cuerpo -->
-    <div class="cart-body p-3 flex-grow-1 overflow-auto">
+    <div class="cart-body p-4 flex-grow-1 overflow-auto">
         <!-- Mensaje si está vacío -->
-        <p *ngIf="cartItems.length === 0" class="text-center py-4">Tu carrito está vacío.</p>
+        <div *ngIf="cartItems.length === 0" class="text-center py-5">
+            <i class="icon-shopping-cart" style="font-size: 4rem; color: #e5e7eb; margin-bottom: 1rem;"></i>
+            <p class="text-muted h5 mb-4">Tu carrito está vacío.</p>
+            <a [routerLink]="['/']" class="btn btn-primary btn-pill shadow-sm">
+                <span>Ir a comprar</span><i class="icon-long-arrow-right"></i>
+            </a>
+        </div>
+
         <!-- parent.component.html -->
-        <app-progress-goal *ngIf="cartItems.length > 0" class="pgb-theme-varyago my-2 mb-2"
+        <app-progress-goal *ngIf="cartItems.length > 0" class="pgb-theme-varyago my-2 mb-4"
             [title]="'Disfruta de envío gratis por compras desde $99.900. Aplica para ciudades principales.'"
             [current]="totalPrice" [goal]="99900" currencyCode="COP" [showNumbers]="false"
             [messageWhenIncomplete]="'Compra: {remaining} más y disfurta de Envío Gratis'"
             [messageWhenComplete]="'¡Ya tienes envío gratis!'" (reached)="onFreeShippingReached()"
-            style="display:block; max-width: 520px;"></app-progress-goal>
-
-        <a *ngIf="cartItems.length === 0" [routerLink]="['/']" class="btn btn-primary text-center d-block">
-            <span>Comprar</span><i class="icon-long-arrow-right"></i>
-        </a>
+            style="display:block; max-width: 100%;"></app-progress-goal>
 
         <!-- Productos -->
         <div class="cart-items">
-            <div class="d-flex align-items-center mb-0 product-cart-details" *ngFor="let item of cartItems">
-                <figure class="product-image-container mb-0 me-2" style="width: 80px; flex-shrink: 0;">
-                    <a [routerLink]="['/product', item.slug]" class="product-image">
-                        <img [src]="item.image" alt="product" style="width: 100%; height: auto; display: block;">
+            <div class="d-flex align-items-center mb-4 product-cart-details position-relative"
+                *ngFor="let item of cartItems">
+                <figure class="product-image-container mb-0 me-3 rounded overflow-hidden shadow-sm"
+                    style="width: 70px; height: 70px; flex-shrink: 0;">
+                    <a [routerLink]="['/product', item.slug]" class="product-image h-100">
+                        <img [src]="item.image" alt="product" class="w-100 h-100" style="object-fit: cover;">
                     </a>
                 </figure>
-                <div class="flex-grow-1 py-2 px-3">
-                    <h4 class="product-title mb-1" style="font-size: 15px;">
-                        <a [routerLink]="['/product', item.slug]">{{ item.name }}</a>
+                <div class="flex-grow-1 py-1 px-2">
+                    <h4 class="product-title mb-1">
+                        <a [routerLink]="['/product', item.slug]" class="text-dark font-weight-bold"
+                            style="font-size: 1.4rem;">{{ item.name }}</a>
                     </h4>
-                    <span class="cart-product-info d-block" style="font-size: 13px;">
-                        <span class="d-block">Medida: {{ item.measure }}</span>
-                        <b><span class="cart-product-qty">{{ item.quantity }}</span>
-                            x {{ item.price | currency: 'COP':'symbol':'1.0-0':'es-CO' }}</b>
+                    <span class="cart-product-info d-block text-muted small">
+                        <span class="d-block mb-1">Medida: {{ item.measure }}</span>
+                        <span class="text-primary font-weight-bold">{{ item.quantity }} x {{ item.price | currency:
+                            'COP':'symbol':'1.0-0':'es-CO' }}</span>
                     </span>
                 </div>
-                <a (click)="delItem(item.id, item.variationId)" class="btn-remove ms-2" title="Eliminar producto">
+                <a (click)="delItem(item.id, item.variationId)" class="btn-remove text-danger ms-2"
+                    title="Eliminar producto" style="font-size: 1.8rem; cursor: pointer;">
                     <i class="icon-close"></i>
                 </a>
             </div>
@@ -674,19 +650,20 @@
     </div>
 
     <!-- Footer -->
-    <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
-        <div class="d-flex justify-content-between">
-            <span class="text-dark font-weight-bold">Subtotal:</span>
-            <span class="text-dark" style="font-weight: 700;">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO'
+    <div class="cart-footer p-4 border-top" *ngIf="cartItems.length > 0">
+        <div class="d-flex justify-content-between mb-3">
+            <span class="text-dark font-weight-bold h5 mb-0">Subtotal:</span>
+            <span class="text-primary font-weight-bold h4 mb-0">{{ totalPrice | currency:'COP':'symbol':'1.0-0':'es-CO'
                 }}</span>
         </div>
-        <span class="w-100 d-block mb-1 text-muted" style="font-size: 12px;font-weight: 400;">Impuestos y envío
-            calculados al finalizar la compra</span>
-        <button class="btn btn-primary btn-block mb-1 w-100" (click)="goToCheckout()">
+        <span class="w-100 d-block mb-3 text-muted small" style="font-weight: 500;">
+            Impuestos y envío calculados al finalizar la compra
+        </span>
+        <button class="btn btn-primary btn-block mb-2 w-100 btn-pill shadow-sm" (click)="goToCheckout()">
             Finalizar Compra<i class="icon-long-arrow-right"></i>
         </button>
-        <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100">
-            Ver carrito
+        <a [routerLink]="['cart']" class="btn btn-outline-dark btn-block w-100 btn-pill">
+            Ver carrito completo
         </a>
     </div>
 </div>

@@ -186,13 +186,7 @@ export class Product implements OnInit {
 
 
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      const productId = params['id'];
 
-      this.cargarProducto(productId); // mueves toda tu lógica aquí dentro
-    });
-  }
 
   cargarProducto(productId: string): void {
     let variations: any[] = [];
@@ -362,7 +356,6 @@ export class Product implements OnInit {
     const input = event.target as HTMLInputElement;
     const qty = Number(input.value);
     this.product.qty = qty;
-    console.log('Cantidad cambiada:', qty);
   }
   addToCart() {
     if (!this.selectedVariation) {
@@ -424,10 +417,7 @@ export class Product implements OnInit {
       //email: this.session?.user?.email,
       //phone: this.session?.user?.phone,
       //external_id: String(this.session?.user?.id)
-    }).subscribe({
-      next: (res) => console.log('CAPI AddToCart enviado', res),
-      error: (err) => console.error('Error CAPI AddToCart', err),
-    });
+    }).subscribe();
     /*this.capi
       .sendEvent('AddToCart', {
         event_id: eventId, // genera un ID único
@@ -459,6 +449,53 @@ export class Product implements OnInit {
 
   toNumber(v: any): number {
     return typeof v === 'number' ? v : Number(String(v).replace(/[^\d.]/g, ''));
+  }
+  showBottomSheet = false;
+
+  openBottomSheet() {
+    this.showBottomSheet = true;
+    this.doc.body.style.overflow = 'hidden'; // Prevent background scroll
+  }
+
+  closeBottomSheet() {
+    this.showBottomSheet = false;
+    this.doc.body.style.overflow = '';
+  }
+
+  incrementQty() {
+    if (this.selectedVariation && this.product.qty < this.selectedVariation.cant) {
+      this.product.qty++;
+    } else if (!this.selectedVariation) {
+      this.product.qty++;
+    }
+  }
+
+  decrementQty() {
+    if (this.product.qty > 1) {
+      this.product.qty--;
+    }
+  }
+
+  onStickyAddToCart() {
+    if (this.selectedVariation) {
+      this.addToCart();
+    } else {
+      this.openBottomSheet();
+    }
+  }
+
+  // Update ngOnInit to add body class for floating button adjustment
+  ngOnInit(): void {
+    this.doc.body.classList.add('product-page-mobile');
+
+    this.route.params.subscribe((params) => {
+      const productId = params['id'];
+      this.cargarProducto(productId);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.doc.body.classList.remove('product-page-mobile');
   }
 }
 

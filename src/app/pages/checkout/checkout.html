@@ -1,272 +1,262 @@
 <app-loader></app-loader>
 
 <main class="main">
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Tienda</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-            </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Tienda</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+      </ol>
+    </div><!-- End .container -->
+  </nav><!-- End .breadcrumb-nav -->
 
-    <div class="page-content">
-        <div class="checkout">
-            <div class="container">
-                <!--<div class="checkout-discount">
+  <div class="page-content">
+    <div class="checkout">
+      <div class="container">
+        <!--<div class="checkout-discount">
                     <form action="#">
                         <input type="text" class="form-control" required id="checkout-discount-input">
                         <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                     </form>
                 </div>--><!-- End .checkout-discount -->
-                <div *ngIf="showError" class="alert alert-danger" role="alert">
-                    Por favor completa todos los campos requeridos antes de continuar.
+        <div *ngIf="showError" class="alert alert-danger" role="alert">
+          Por favor completa todos los campos requeridos antes de continuar.
+        </div>
+        <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+          <div class="row">
+            <div class="col-lg-9">
+              <h2 class="checkout-title">Informacion de entrega</h2><!-- End .checkout-title -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>Nombre *</label>
+                  <input type="text" class="form-control" placeholder="Nombre" formControlName="firstName"
+                    autocomplete="given-name" required>
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('firstName')?.touched && checkoutForm.get('firstName')?.invalid">
+                    Ingresa tu nombre.
+                  </small>
                 </div>
-                <form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <h2 class="checkout-title">Informacion de entrega</h2><!-- End .checkout-title -->
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Nombre *</label>
-                                    <input type="text" class="form-control" placeholder="Nombre"
-                                        formControlName="firstName" autocomplete="given-name" required>
-                                    <small class="text-danger"
-                                        *ngIf="checkoutForm.get('firstName')?.touched && checkoutForm.get('firstName')?.invalid">
-                                        Ingresa tu nombre.
-                                    </small>
-                                </div>
 
 
-                                <div class="col-sm-6">
-                                    <label>Apellidos *</label>
-                                    <input type="text" class="form-control" placeholder="Apellido"
-                                        formControlName="lastName" autocomplete="family-name" required>
-                                    <small class="text-danger"
-                                        *ngIf="checkoutForm.get('lastName')?.touched && checkoutForm.get('lastName')?.invalid">
-                                        Ingresa tus apellidos.
-                                    </small>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>Tipo de Documento *</label>
-                                    <select id="doctype" formControlName="doctype" class="form-control" required
-                                        autocomplete="off">
-                                        <option value="" disabled selected>Seleccione…</option>
-                                        <option value="cc">Cédula de ciudadanía</option>
-                                        <option value="nit">NIT</option>
-                                    </select>
-                                    <small class="text-danger"
-                                        *ngIf="checkoutForm.get('doctype')?.touched && checkoutForm.get('doctype')?.invalid">
-                                        Selecciona el tipo de documento.
-                                    </small>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>Documento de Identidad *</label>
-                                    <input type="text" class="form-control" placeholder="Cédula ej: 114413987"
-                                        formControlName="document" required inputmode="numeric" autocomplete="off"
-                                        pattern="[0-9]{6,12}">
-                                    <small class="text-danger"
-                                        *ngIf="checkoutForm.get('document')?.touched && checkoutForm.get('document')?.invalid">
-                                        Ingresa un número válido (solo dígitos).
-                                    </small>
-                                </div>
-                            </div><!-- End .row -->
-                            <div class="row">
-                               <div class="col-sm-6">
-    <label>Whatsapp *</label>
-    <input type="tel" class="form-control"
-           placeholder="Whatsapp Ej: 3151234567"
-           formControlName="phone" required
-           inputmode="tel" autocomplete="tel-national" pattern="[0-9]{10}">
-    <small class="text-danger" *ngIf="checkoutForm.get('phone')?.touched && checkoutForm.get('phone')?.invalid">
-      Ingresa un celular válido de 10 dígitos.
-    </small>
-  </div>
-                                 <div class="col-sm-6">
-    <label>Correo electrónico *</label>
-    <input type="email" class="form-control"
-           placeholder="Correo electrónico Ej: pepito@gmail.com"
-           formControlName="email" required autocomplete="email">
-    <small class="text-danger" *ngIf="checkoutForm.get('email')?.touched && checkoutForm.get('email')?.invalid">
-      Ingresa un correo válido.
-    </small>
-  </div>
-                            </div><!-- End .row -->
+                <div class="col-sm-6">
+                  <label>Apellidos *</label>
+                  <input type="text" class="form-control" placeholder="Apellido" formControlName="lastName"
+                    autocomplete="family-name" required>
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('lastName')?.touched && checkoutForm.get('lastName')?.invalid">
+                    Ingresa tus apellidos.
+                  </small>
+                </div>
+                <div class="col-sm-6">
+                  <label>Tipo de Documento *</label>
+                  <select id="doctype" formControlName="doctype" class="form-control" required autocomplete="off">
+                    <option value="" disabled selected>Seleccione…</option>
+                    <option value="cc">Cédula de ciudadanía</option>
+                    <option value="nit">NIT</option>
+                  </select>
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('doctype')?.touched && checkoutForm.get('doctype')?.invalid">
+                    Selecciona el tipo de documento.
+                  </small>
+                </div>
+                <div class="col-sm-6">
+                  <label>Documento de Identidad *</label>
+                  <input type="text" class="form-control" placeholder="Cédula ej: 114413987" formControlName="document"
+                    required inputmode="numeric" autocomplete="off" pattern="[0-9]{6,12}">
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('document')?.touched && checkoutForm.get('document')?.invalid">
+                    Ingresa un número válido (solo dígitos).
+                  </small>
+                </div>
+              </div><!-- End .row -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>Whatsapp *</label>
+                  <input type="tel" class="form-control" placeholder="Whatsapp Ej: 3151234567" formControlName="phone"
+                    required inputmode="tel" autocomplete="tel-national" pattern="[0-9]{10}">
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('phone')?.touched && checkoutForm.get('phone')?.invalid">
+                    Ingresa un celular válido de 10 dígitos.
+                  </small>
+                </div>
+                <div class="col-sm-6">
+                  <label>Correo electrónico *</label>
+                  <input type="email" class="form-control" placeholder="Correo electrónico Ej: pepito@gmail.com"
+                    formControlName="email" required autocomplete="email">
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('email')?.touched && checkoutForm.get('email')?.invalid">
+                    Ingresa un correo válido.
+                  </small>
+                </div>
+              </div><!-- End .row -->
 
-                            <label>Dirección *</label>
-<input type="text" class="form-control"
-       placeholder="Calle 1 #2-3, Barrio Pepito"
-       formControlName="address1" required autocomplete="address-line1">
-<small class="text-danger" *ngIf="checkoutForm.get('address1')?.touched && checkoutForm.get('address1')?.invalid">
-  Ingresa tu dirección.
-</small>
+              <label>Dirección *</label>
+              <input type="text" class="form-control" placeholder="Calle 1 #2-3, Barrio Pepito"
+                formControlName="address1" required autocomplete="address-line1">
+              <small class="text-danger"
+                *ngIf="checkoutForm.get('address1')?.touched && checkoutForm.get('address1')?.invalid">
+                Ingresa tu dirección.
+              </small>
 
-                            <input type="text" class="form-control"
-       placeholder="Complemento: Apto/Torre/Piso"
-       formControlName="address2" autocomplete="address-line2">
+              <input type="text" class="form-control" placeholder="Complemento: Apto/Torre/Piso"
+                formControlName="address2" autocomplete="address-line2">
 
-                            <div class="row">
-                                <div class="col-sm-6">
-    <label for="department">Departamento *</label>
-    <select id="department" class="form-control"
-            formControlName="department"
-            (change)="onDepartmentChange($event)"
-            autocomplete="address-level1" required>
-      <option value="" disabled selected>Seleccione…</option>
-      <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
-    </select>
-    <small class="text-danger" *ngIf="checkoutForm.get('department')?.touched && checkoutForm.get('department')?.invalid">
-      Selecciona tu departamento.
-    </small>
-  </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="department">Departamento *</label>
+                  <select id="department" class="form-control" formControlName="department"
+                    (change)="onDepartmentChange($event)" autocomplete="address-level1" required>
+                    <option value="" disabled selected>Seleccione…</option>
+                    <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+                  </select>
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('department')?.touched && checkoutForm.get('department')?.invalid">
+                    Selecciona tu departamento.
+                  </small>
+                </div>
 
-                                <div class="col-sm-6">
-    <label for="city">Ciudad *</label>
-    <select id="city" class="form-control"
-            formControlName="city"
-            (change)="onCityChange($event)"
-            autocomplete="address-level2" required>
-      <option value="" disabled selected>Seleccione…</option>
-      <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
-    </select>
-    <small class="text-danger" *ngIf="checkoutForm.get('city')?.touched && checkoutForm.get('city')?.invalid">
-      Selecciona tu ciudad.
-    </small>
-  </div>
-                            </div><!-- End .row -->
+                <div class="col-sm-6">
+                  <label for="city">Ciudad *</label>
+                  <select id="city" class="form-control" formControlName="city" (change)="onCityChange($event)"
+                    autocomplete="address-level2" required>
+                    <option value="" disabled selected>Seleccione…</option>
+                    <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+                  </select>
+                  <small class="text-danger"
+                    *ngIf="checkoutForm.get('city')?.touched && checkoutForm.get('city')?.invalid">
+                    Selecciona tu ciudad.
+                  </small>
+                </div>
+              </div><!-- End .row -->
 
-                            <label>Notas (opcional)</label>
-                            <textarea class="form-control" formControlName="notes" cols="30" rows="4"
-                                placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
-                        </div><!-- End .col-lg-9 -->
-                        <aside class="col-lg-3">
-                            <div class="summary" style="position: sticky; top: 1rem;">
-                                <h3 class="summary-title">Resumen de tu compra</h3><!-- End .summary-title -->
+              <label>Notas (opcional)</label>
+              <textarea class="form-control" formControlName="notes" cols="30" rows="4"
+                placeholder="Notas sobre tu orden, e.g. casa 1 piso 13"></textarea>
+            </div><!-- End .col-lg-9 -->
+            <aside class="col-lg-3">
+              <div class="summary modern-card p-4" style="position: sticky; top: 1rem;">
+                <h3 class="summary-title">Resumen de tu compra</h3><!-- End .summary-title -->
 
-                                <table class="table table-summary">
-                                    <thead>
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
+                <table class="table table-summary">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
 
-                                    <tbody>
-                                        <tr *ngFor="let item of cartItems">
-                                            <td>{{ item.name }} x {{ item.quantity }}</td>
+                  <tbody>
+                    <tr *ngFor="let item of cartItems">
+                      <td>{{ item.name }} x {{ item.quantity }}</td>
 
-                                            <td>{{ item.price * item.quantity |currency:'COP':'symbol':'1.0-0':'es-CO'
-                                                }}</td>
-                                        </tr>
+                      <td>{{ item.price * item.quantity |currency:'COP':'symbol':'1.0-0':'es-CO'
+                        }}</td>
+                    </tr>
 
-                                        <tr class="summary-subtotal2">
-                                            <td>Subtotal:</td>
-                                            <td>{{ subtotal |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
-                                        </tr><!-- End .summary-subtotal -->
-                                        <tr>
-                                            <td>Envio:</td>
-                                            <td>{{shippingCost |currency:'COP':'symbol':'1.0-0':'es-CO'}}</td>
-                                        </tr>
+                    <tr class="summary-subtotal2">
+                      <td>Subtotal:</td>
+                      <td>{{ subtotal |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
+                    </tr><!-- End .summary-subtotal -->
+                    <tr>
+                      <td>Envio:</td>
+                      <td>{{shippingCost |currency:'COP':'symbol':'1.0-0':'es-CO'}}</td>
+                    </tr>
 
-                                        <tr class="summary-total">
-                                            <td>Total:</td>
-                                            <td>{{ total |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
-                                            
-                                        </tr><!-- End .summary-total -->
-                                        
-                                    </tbody>
-                                    
-                                </table><!-- End .table table-summary -->
-<div class="trust-block">
-  <ul class="trust-list">
-    <li class="trust-item">
-      <span class="trust-icon">
-        <!-- Truck -->
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 6h11v7h2.5l2-3H21V9l-3-3h-4V4H3v2zm3 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm11 0a2 2 0 1 0 .001 4.001A2 2 0 0 0 17 17zM6 19h11m-3-4V9h4l3 3v3h-2"/>
-        </svg>
-      </span>
-      <div class="trust-text">
-        <strong>Envíos rápidos</strong>
-        <span>A todo Colombia · 2–5 días</span>
-      </div>
-    </li>
+                    <tr class="summary-total">
+                      <td class="text-primary font-weight-bold">Total:</td>
+                      <td class="text-primary font-weight-bold" style="font-size: 1.4rem;">{{ total
+                        |currency:'COP':'symbol':'1.0-0':'es-CO' }}</td>
 
-    <li class="trust-item">
-      <span class="trust-icon">
-        <!-- Lock -->
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 10V8a6 6 0 1 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 1 0-8 0v2z"/>
-        </svg>
-      </span>
-      <div class="trust-text">
-        <strong>Pago 100% seguro</strong>
-        <span>Wompi · Addi · Contra Entrega</span>
-      </div>
-    </li>
-  </ul>
-</div>
+                    </tr><!-- End .summary-total -->
 
-                               <div class="accordion-summary mt-2" id="accordion-payment">
-  <h3 class="summary-title">Método de pago</h3>
-  <p class="small text-muted mb-2">Selecciona un método para finalizar la compra.</p>
+                  </tbody>
 
-  <ng-container *ngIf="radiosVisible">
-    <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
-      <div class="card payment-method">
-        <div class="card-header" id="heading-{{pmg.id}}">
-          <h2 class="card-title mb-0">
-            <label class="d-flex align-items-center w-100 mb-0"
-                   [class.active]="checkoutForm.get('payment_method')?.value === pmg.id"
-                   [class.opacity-50]="isDisabled(pmg)">
-              <input type="radio"
-                     class="mr-2"
-                     formControlName="payment_method"
-                     [value]="+pmg.id"
-                     name="payment_method"
-                     [disabled]="isDisabled(pmg)"
-                     (change)="selectPaymentMethod(pmg)">
-              <span class="d-flex align-items-center justify-content-between w-100">
-                <span>
-                  {{ pmg.name }}
-                  
-                </span>
-                <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2">
-              </span>
-            </label>
-          </h2>
-        </div>
+                </table><!-- End .table table-summary -->
+                <div class="trust-block mt-3 mb-3">
+                  <ul class="trust-list">
+                    <li class="trust-item">
+                      <span class="trust-icon">
+                        <!-- Truck -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path
+                            d="M3 6h11v7h2.5l2-3H21V9l-3-3h-4V4H3v2zm3 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm11 0a2 2 0 1 0 .001 4.001A2 2 0 0 0 17 17zM6 19h11m-3-4V9h4l3 3v3h-2" />
+                        </svg>
+                      </span>
+                      <div class="trust-text">
+                        <strong>Envíos rápidos</strong>
+                        <span>A todo Colombia · 2–5 días</span>
+                      </div>
+                    </li>
 
-        <div [id]="'collapse-' + pmg.id" class="collapse"
-             [attr.aria-labelledby]="'heading-' + pmg.id"
-             data-parent="#accordion-payment"
-             [class.show]="checkoutForm.get('payment_method')?.value === pmg.id">
-          <div class="card-body">
-            {{ pmg.alt }}
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
-</div>
+                    <li class="trust-item">
+                      <span class="trust-icon">
+                        <!-- Lock -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path
+                            d="M6 10V8a6 6 0 1 1 12 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h8V8a4 4 0 1 0-8 0v2z" />
+                        </svg>
+                      </span>
+                      <div class="trust-text">
+                        <strong>Pago 100% seguro</strong>
+                        <span>Wompi · Addi · Contra Entrega</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="accordion-summary mt-2" id="accordion-payment">
+                  <h3 class="summary-title" style="font-size: 1.4rem;">Método de pago</h3>
+                  <p class="small text-muted mb-2">Selecciona un método para finalizar la compra.</p>
+
+                  <ng-container *ngIf="radiosVisible">
+                    <ng-container *ngFor="let pmg of paymentMethods; trackBy: trackById">
+                      <div class="card payment-method mb-2 shadow-sm border-0">
+                        <div class="card-header bg-white" id="heading-{{pmg.id}}">
+                          <h2 class="card-title mb-0">
+                            <label class="d-flex align-items-center w-100 mb-0 pointer"
+                              [class.active]="checkoutForm.get('payment_method')?.value === pmg.id"
+                              [class.opacity-50]="isDisabled(pmg)">
+                              <input type="radio" class="mr-3" formControlName="payment_method" [value]="+pmg.id"
+                                name="payment_method" [disabled]="isDisabled(pmg)" (change)="selectPaymentMethod(pmg)">
+                              <span class="d-flex align-items-center justify-content-between w-100">
+                                <span class="font-weight-medium">
+                                  {{ pmg.name }}
+
+                                </span>
+                                <img *ngIf="pmg.url" [src]="pmg.url" alt="{{ pmg.name }}" class="payment-logo ml-2">
+                              </span>
+                            </label>
+                          </h2>
+                        </div>
+
+                        <div [id]="'collapse-' + pmg.id" class="collapse" [attr.aria-labelledby]="'heading-' + pmg.id"
+                          data-parent="#accordion-payment"
+                          [class.show]="checkoutForm.get('payment_method')?.value === pmg.id">
+                          <div class="card-body pl-5 text-muted small">
+                            {{ pmg.alt }}
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
 
 
 
 
 
 
-                                <button type="submit"
-        class="btn btn-primary-2 btn-order btn-block"
-        [disabled]="checkoutForm.invalid || !checkoutForm.get('payment_method')?.value">
-  <span class="btn-text">Finalizar el pedido</span>
-  <span class="btn-hover-text">Finalizar el pedido</span>
-</button>
-                            </div><!-- End .summary -->
-                        </aside><!-- End .col-lg-3 -->
-                    </div><!-- End .row -->
-                </form>
-            </div><!-- End .container -->
-        </div><!-- End .checkout -->
-    </div><!-- End .page-content -->
+                <button type="submit" class="btn btn-primary btn-order btn-block btn-pill mt-4 shadow"
+                  [disabled]="checkoutForm.invalid || !checkoutForm.get('payment_method')?.value">
+                  <span class="btn-text">Finalizar el pedido</span>
+                  <span class="btn-hover-text">Confirmar Orden</span>
+                </button>
+              </div><!-- End .summary -->
+            </aside><!-- End .col-lg-3 -->
+          </div><!-- End .row -->
+        </form>
+      </div><!-- End .container -->
+    </div><!-- End .checkout -->
+  </div><!-- End .page-content -->
 </main><!-- End .main -->

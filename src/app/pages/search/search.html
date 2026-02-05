@@ -24,8 +24,7 @@
 
                         <div class="toolbox-left">
                             <div class="toolbox-info">
-                                <p class="d-lg-none text-black" data-bs-toggle="collapse"
-                                    data-bs-target="#filtersAside">
+                                <p class="d-lg-none text-black" (click)="toggleFilters()">
                                     <i class="icon-bars" style="font-size: 18px;"></i> Filtros
                                 </p>
                             </div><!-- End .toolbox-info -->
@@ -54,58 +53,40 @@
 
                     <div class="products mb-3">
                         <div class="row justify-content-center">
-                            <div class="col-6 col-md-4 col-lg-4 col-xl-3" *ngFor="let product of products">
-                                <div class="product product-7 text-center">
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3 mb-4" *ngFor="let product of products">
+                                <div class="product product-7 text-center modern-card h-100">
                                     <figure class="product-media">
                                         <span class="product-label label-sale">Promoción</span>
-                                        <!--<span class="product-label label-sale">Promoción</span>-->
                                         <a [routerLink]="['/product', product.slug]">
                                             <img [src]="product.url" alt="Product image" class="product-image">
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <!-- <a class="btn-product-icon btn-wishlist btn-expandable"><span>Lista
-                                                    de deseos</span></a>-->
-                                            <!--<a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Comparar</span></a>-->
-                                        </div><!-- End .product-action-vertical -->
-
-
-                                    </figure><!-- End .product-media -->
+                                        </div>
+                                    </figure>
 
                                     <div class="product-body">
-                                        <!--<div class="product-cat">
-                                            <a [routerLink]="['/product', product.slug]">{{product.provider_name}}</a>
-                                        </div>--><!-- End .product-cat -->
                                         <h3 class="product-title"><a
                                                 [routerLink]="['/product', product.slug]">{{truncateText(product.name,50)}}</a>
                                         </h3>
-                                        <!-- End .product-title -->
+
                                         <div class="product-price">
                                             <span class="new-price">Desde {{ product.pricemostrar |
                                                 currency:'COP':'symbol':'1.0-0':'es-CO' }}</span>
-                                            <span class="old-price">
+                                            <span class="old-price ml-2">
                                                 <s>{{ product.pricemostrartachado |
                                                     currency:'COP':'symbol':'1.0-0':'es-CO' }}</s>
                                             </span>
+                                        </div>
 
-
-                                        </div><!-- End .product-price -->
-                                        <div class="product-action d-none d-lg-block"
-                                            style="position:relative;left: 0;">
-                                            <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
-                                                style="color:white!important">
-                                                <p class="text-white">Comprar</p>
-                                            </a>
-                                        </div><!-- End .product-action -->
-                                        <div class="d-lg-none" style="position:relative;left: 0;">
-                                            <a [routerLink]="['/product', product.slug]" class="btn btn-primary"
-                                                style="color:white!important">
-                                                <p class="text-white">Comprar <i class="icon-shopping-bag"></i></p>
+                                        <div class="product-action mt-auto">
+                                            <a [routerLink]="['/product', product.slug]"
+                                                class="btn btn-primary w-100 btn-pill">
+                                                <span>Comprar</span>
                                             </a>
                                         </div>
-                                    </div><!-- End .product-body -->
-                                </div><!-- End .product -->
+                                    </div>
+                                </div>
                             </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
                         </div><!-- End .row -->
                     </div><!-- End .products -->
@@ -118,7 +99,8 @@
                 </div><!-- End .col-lg-9 -->
 
 
-                <aside id="filtersAside" class="col-lg-3 order-lg-first collapse d-lg-block">
+                <aside id="filtersAside" class="col-lg-3 order-lg-first collapse d-lg-block"
+                    [class.show]="showFiltersMobile">
                     <!-- Botón cerrar solo en móviles -->
                     <div class="d-lg-none text-right mb-2">
                         <a class="p-3" (click)="closeFilters()">

@@ -27,6 +27,7 @@ export class Search implements OnInit, AfterViewInit, OnDestroy {
   hasMore = true;
   showFiltersMobile = false;
 
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -93,16 +94,12 @@ export class Search implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // --- UI ---
-  toggleBackdrop(open: boolean) {
-    this.showFiltersMobile = open;
+  toggleFilters(): void {
+    this.showFiltersMobile = !this.showFiltersMobile;
   }
 
-  closeFilters() {
+  closeFilters(): void {
     this.showFiltersMobile = false;
-    const collapse = document.getElementById('filtersAside');
-    if (collapse?.classList.contains('show')) {
-      collapse.classList.remove('show');
-    }
   }
 
   // --- Data ---

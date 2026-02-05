@@ -1,200 +1,238 @@
-.pointer-events-none { pointer-events: none; }
-.pointer-events-none { pointer-events: none; }
-.table.table-summary .summary-total td {
-  font-weight: 600!important;
-}
-.table.table-summary .summary-subtotal2 td {
-  font-weight: 400!important;
-  color: #555!important;
-}
-.payment-method {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 13px 13px;
-    //margin-bottom: 1px;
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
-.btn-primary-2 {
-    background-color: #015959;
-    border-color: #015959;
-    color: #fff;
-    padding: 12px 24px;
+// Checkout Styles - "High Definition"
+
+.checkout {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f8f9fa; // Slight page tint
 }
 
-/* === Campos del formulario === */
-form .form-control {
-  border-radius: 8px;
-  border: 1px solid #dfe3e8;
-  transition: border-color .2s, box-shadow .2s;
+// Typography
+h1,
+h2,
+h3,
+h4,
+.checkout-title,
+.summary-title {
+  color: #111827;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-family: 'Jost', sans-serif;
 }
 
-form .form-control:focus {
-  border-color: #015959;
-  box-shadow: 0 0 0 2px rgba(1, 89, 89, 0.15);
+.checkout-title {
+  font-size: 2.2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: none;
+  position: relative;
+  padding-left: 1.5rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 4px;
+    background: #015959;
+    border-radius: 4px;
+  }
 }
 
-/* Textos de error */
-.text-danger {
-  font-size: 0.82rem;
-  margin-top: 4px;
-}
-
-/* === Método de pago === */
-.payment-method {
-  border: 1px solid #e4e4e4;
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  margin-bottom: 0.8rem;
-  background-color: #fff;
-}
-
-.payment-method label {
-  cursor: pointer;
-  padding: 1rem;
-}
-
-.payment-method:hover {
-  border-color: #015959;
-  box-shadow: 0 0 0 3px rgba(1, 89, 89, 0.1);
-}
-
-.payment-method input[type="radio"] {
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-  accent-color: #015959;
-}
-
-/* Estado activo */
-.payment-method label.active {
-  border: 2px solid #015959;
-  border-radius: 10px;
-  background-color: #f5fafa;
-  box-shadow: 0 0 8px rgba(1, 89, 89, 0.1);
-}
-
-.payment-method .payment-logo {
-  max-height: 22px;
-  object-fit: contain;
-}
-
-/* Deshabilitados */
-.payment-method.opacity-50 {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* === Botón de finalizar === */
-.btn-order {
-  background-color: #015959;
-  border: none;
+// Forms - "Solid" Style
+label {
   font-weight: 600;
-  letter-spacing: .5px;
-  transition: all .25s ease;
+  color: #374151;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem; // Smaller but bolder
 }
 
-.btn-order:hover:enabled {
-  background-color: #004d4d;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(1, 89, 89, 0.25);
+form .form-control {
+  border-radius: 6px;
+  border: 1px solid transparent; // No visible border initially
+  padding: 1.2rem 1.5rem;
+  font-size: 1.4rem;
+  height: auto;
+  background-color: #e9ecef; // Solid gray bg
+  color: #1F2937;
+  transition: all 0.2s ease;
+  font-weight: 500;
+
+  &:focus {
+    background-color: #fff;
+    border-color: #015959;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  &::placeholder {
+    color: #adb5bd;
+  }
 }
 
-.btn-order:disabled {
-  background-color: #ccc !important;
-  cursor: not-allowed;
+// Summary Card - "Framed"
+.summary.modern-card {
+  background: #fff;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid #015959; // Teal accent bar
+  border-radius: 8px;
 }
 
-
-
-/* ===== Trust Block – limpio, moderno, responsive ===== */
-:root {
-  --brand: #015959;            /* color de marca */
-  --ink: #222;                 /* texto principal */
-  --muted: #6b7280;            /* texto secundario */
-  --surface: #ffffff;
-  --surface-alt: #f5fafa;      /* sutil tono acorde a la marca */
-  --border: 1px solid #e6eaee;
-  --radius: 14px;
-  --soft-shadow: 0 6px 24px rgba(0,0,0,.06), 0 2px 6px rgba(0,0,0,.05);
+.summary-title {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f3f4f6;
 }
 
+.table-summary {
+  margin-bottom: 2rem;
+
+  td {
+    padding: 1.2rem 0;
+    font-size: 1.4rem;
+    color: #4b5563;
+  }
+
+  .summary-total {
+    td {
+      padding-top: 2rem;
+      border-top: 2px solid #000; // Stark black line
+      color: #000;
+      font-size: 1.8rem;
+    }
+  }
+}
+
+// Payment Methods - "Block" Style
+.card.payment-method {
+  border: 2px solid #f3f4f6;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 1rem;
+  // override bootstrap card styles
+  flex-direction: column;
+
+  &:hover {
+    border-color: #d1d5db;
+  }
+
+  .card-header {
+    background: #fff;
+    padding: 0;
+    border: none;
+  }
+
+  label {
+    margin: 0;
+    padding: 1.5rem;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+    border: none;
+    background: transparent;
+
+    &.active {
+      background-color: #fff;
+      border: 2px solid #015959; // Highlight border
+      box-shadow: 0 4px 12px rgba(1, 89, 89, 0.1);
+      border-radius: 8px;
+      color: #015959;
+    }
+
+    input[type="radio"] {
+      accent-color: #015959;
+      transform: scale(1.2);
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .payment-logo {
+    height: 24px;
+    object-fit: contain;
+  }
+}
+
+// Order Button
+.btn-order {
+  padding: 1.2rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  // Hover handled by btn-primary global style
+}
+
+// Trust Block (Refined with contrast)
 .trust-block {
-  background: linear-gradient(180deg, var(--surface), var(--surface-alt));
-  border: var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--soft-shadow);
- // padding: 1rem;
-}
-
-.trust-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: .8rem;
-}
-
-@media (min-width: 576px) {
-  .trust-list { grid-template-columns: 1fr; }
-}
-@media (min-width: 768px) {
-  .trust-list { grid-template-columns: repeat(3, 1fr); }
+  background: #F3F4F6; // Distinct gray background
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #E5E7EB;
 }
 
 .trust-item {
   display: flex;
-  align-items: center;
-  gap: .8rem;
-  padding: .8rem .9rem;
-  border: 1px solid rgba(1,89,89,.08);
-  border-radius: 12px;
-  background: #fff;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-}
+  align-items: flex-start;
+  margin-bottom: 1rem;
 
-.trust-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(1,89,89,.08);
-  border-color: rgba(1,89,89,.18);
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .trust-icon {
-  flex: 0 0 40px;
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: radial-gradient(85% 85% at 30% 30%, rgba(1,89,89,.18), rgba(1,89,89,.06));
-  display: grid;
-  place-items: center;
-  box-shadow: inset 0 0 0 1px rgba(1,89,89,.12);
-}
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  background: #fff; // Circle bg for icon
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-.trust-icon svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-  fill: var(--brand);
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: #015959;
+  }
 }
 
 .trust-text {
-  line-height: 1.25;
+  line-height: 1.3;
+
+  strong {
+    display: block;
+    color: #000;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  span {
+    font-size: 1.2rem;
+    color: #4B5563; // Darker gray
+    font-weight: 500;
+  }
 }
 
-.trust-text strong {
+/* Textos de error */
+.text-danger {
+  font-size: 1.2rem;
+  margin-top: 4px;
   display: block;
-  color: var(--ink);
-  font-weight: 700;
-  letter-spacing: .1px;
 }
 
-.trust-text span {
-  display: block;
-  color: var(--muted);
-  font-size: .86rem;
-  margin-top: 2px;
+/* Disabled items */
+.opacity-50 {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-/* Integración suave con el aside de resumen */
-.summary .trust-block { margin-top: .8rem; }
-
+.pointer {
+  cursor: pointer;
+}

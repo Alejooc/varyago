@@ -1,110 +1,132 @@
 <main class="main">
-            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-                <div class="container">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Login</li>
-                    </ol>
-                </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
+	<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+		<div class="container">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Login</li>
+			</ol>
+		</div><!-- End .container -->
+	</nav><!-- End .breadcrumb-nav -->
 
-            <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
-            	<div class="container">
-            		<div class="form-box">
-            			<div class="form-tab">
-	            			<ul class="nav nav-pills nav-fill" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link" [class.active]="activeTab === 'login'"
-									(click)="activeTab = 'login'" role="tab">Ingresar</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" [class.active]="activeTab === 'register'"
-									(click)="activeTab = 'register'" role="tab">Registrarme</a>
-								</li>
-							</ul>
-							<div class="tab-content">
-							    <div class="tab-pane fade show active" *ngIf="activeTab === 'login'">
-							    	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-							    		<div class="form-group">
-							    			<label for="singin-email-2">Correo Electronico *</label>
-							    			<input type="text" class="form-control" id="singin-email-2" formControlName="email">
-							    		</div><!-- End .form-group -->
+	<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+		style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+		<div class="container">
+			<div class="form-box modern-card p-0 border-0 shadow-lg overflow-hidden">
+				<div class="form-tab">
+					<ul class="nav nav-pills nav-fill" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link py-4" [class.active]="activeTab === 'login'"
+								(click)="activeTab = 'login'" role="tab"
+								style="font-size: 1.6rem; font-weight: 600;">Ingresar</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link py-4" [class.active]="activeTab === 'register'"
+								(click)="activeTab = 'register'" role="tab"
+								style="font-size: 1.6rem; font-weight: 600;">Registrarme</a>
+						</li>
+					</ul>
+					<div class="tab-content p-4 p-md-5">
+						<div class="tab-pane fade show active" *ngIf="activeTab === 'login'">
+							<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+								<div class="form-group mb-4">
+									<label for="singin-email-2" class="font-weight-bold text-dark mb-2">Correo
+										Electrónico *</label>
+									<input type="text" class="form-control" id="singin-email-2" formControlName="email">
+								</div><!-- End .form-group -->
 
-							    		<div class="form-group">
-							    			<label for="singin-password-2">Contraseña *</label>
-							    			<input type="password" class="form-control" id="singin-password-2" formControlName="password">
-							    		</div><!-- End .form-group -->
-										<div *ngIf="error" class="alert alert-danger" role="alert">
-											{{ error }}
-										</div>
-							    		<div class="form-footer">
-							    			<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>Iniciar sesion</span>
-			            						<i class="icon-long-arrow-right"></i>
-			                				</button>
+								<div class="form-group mb-4">
+									<label for="singin-password-2" class="font-weight-bold text-dark mb-2">Contraseña
+										*</label>
+									<input type="password" class="form-control" id="singin-password-2"
+										formControlName="password">
+								</div><!-- End .form-group -->
+								<div *ngIf="error" class="alert alert-danger" role="alert">
+									{{ error }}
+								</div>
+								<div class="form-footer mt-4">
+									<button type="submit"
+										class="btn btn-primary btn-pill btn-block shadow-sm py-3 mb-3">
+										<span class="mr-2">Iniciar sesión</span>
+										<i class="icon-long-arrow-right"></i>
+									</button>
 
-			                				<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="signin-remember-2">
-												<label class="custom-control-label" for="signin-remember-2">Recordarme</label>
-											</div><!-- End .custom-checkbox -->
+									<div class="d-flex justify-content-between align-items-center w-100 mb-3">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="signin-remember-2">
+											<label class="custom-control-label"
+												for="signin-remember-2">Recordarme</label>
+										</div><!-- End .custom-checkbox -->
 
-											<a href="#" class="forgot-link">Olvidaste la contraseña?</a>
-							    		</div><!-- End .form-footer -->
-							    	</form>
-									
-							    	
-							    </div><!-- .End .tab-pane -->
-							    <div class="tab-pane fade show active" *ngIf="activeTab === 'register'">
-							    	<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-										<div class="form-group">
-							    			<label for="register-name-2">Tu Nombre*</label>
-							    			<input type="text" class="form-control" id="register-name-2" name="register-name" formControlName="name" required>
-							    		</div><!-- End .form-group -->
-							    		<div class="form-group">
-							    			<label for="register-email-2">Tu Correo Electronico*</label>
-							    			<input type="email" class="form-control" id="register-email-2" name="register-email" formControlName="email" required>
-							    		</div><!-- End .form-group -->
+										<a href="#" class="forgot-link text-primary font-weight-medium">¿Olvidaste la
+											contraseña?</a>
+									</div>
 
-							    		<div class="form-group">
-							    			<label for="register-password-2">Contraseña *</label>
-							    			<input type="password" class="form-control" id="register-password-2" name="register-password" formControlName="password" required>
-							    		</div><!-- End .form-group -->
-<div *ngIf="error" class="alert alert-danger" role="alert">
-											{{ error }}
-										</div>
-							    		<div class="form-footer">
-							    			<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>Registrarme</span>
-			            						<i class="icon-long-arrow-right"></i>
-			                				</button>
+								</div><!-- End .form-footer -->
+							</form>
 
-			                				<div class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" id="register-policy-2" formControlName="pp" required>
-												<label class="custom-control-label" for="register-policy-2">Acepto la <a href="#">politica de privacidad</a> *</label>
-											</div><!-- End .custom-checkbox -->
-							    		</div><!-- End .form-footer -->
-							    	</form>
-							    	<div class="form-choice">
-								    	<p class="text-center">or sign in with</p>
-								    	<div class="row">
-								    		<div class="col-sm-6">
-								    			<a href="#" class="btn btn-login btn-g disabled">
-								    				<i class="icon-google"></i>
-								    				Login With Google
-								    			</a>
-								    		</div><!-- End .col-6 -->
-								    		<div class="col-sm-6">
-								    			<a href="#" class="btn btn-login  btn-f disabled">
-								    				<i class="icon-facebook-f"></i>
-								    				Login With Facebook
-								    			</a>
-								    		</div><!-- End .col-6 -->
-								    	</div><!-- End .row -->
-							    	</div><!-- End .form-choice -->
-							    </div><!-- .End .tab-pane -->
-							</div><!-- End .tab-content -->
-						</div><!-- End .form-tab -->
-            		</div><!-- End .form-box -->
-            	</div><!-- End .container -->
-            </div><!-- End .login-page section-bg -->
-        </main><!-- End .main -->
+
+						</div><!-- .End .tab-pane -->
+						<div class="tab-pane fade show active" *ngIf="activeTab === 'register'">
+							<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+								<div class="form-group mb-4">
+									<label for="register-name-2" class="font-weight-bold text-dark mb-2">Tu Nombre
+										*</label>
+									<input type="text" class="form-control" id="register-name-2" name="register-name"
+										formControlName="name" required>
+								</div><!-- End .form-group -->
+								<div class="form-group mb-4">
+									<label for="register-email-2" class="font-weight-bold text-dark mb-2">Tu Correo
+										Electrónico *</label>
+									<input type="email" class="form-control" id="register-email-2" name="register-email"
+										formControlName="email" required>
+								</div><!-- End .form-group -->
+
+								<div class="form-group mb-4">
+									<label for="register-password-2" class="font-weight-bold text-dark mb-2">Contraseña
+										*</label>
+									<input type="password" class="form-control" id="register-password-2"
+										name="register-password" formControlName="password" required>
+								</div><!-- End .form-group -->
+								<div *ngIf="error" class="alert alert-danger" role="alert">
+									{{ error }}
+								</div>
+								<div class="form-footer mt-4">
+									<button type="submit"
+										class="btn btn-primary btn-pill btn-block shadow-sm py-3 mb-3">
+										<span class="mr-2">Registrarme</span>
+										<i class="icon-long-arrow-right"></i>
+									</button>
+
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input" id="register-policy-2"
+											formControlName="pp" required>
+										<label class="custom-control-label" for="register-policy-2">Acepto la <a
+												href="#" class="text-primary font-weight-bold">política de
+												privacidad</a> *</label>
+									</div><!-- End .custom-checkbox -->
+								</div><!-- End .form-footer -->
+							</form>
+							<div class="form-choice border-top pt-4 text-center">
+								<p class="text-muted mb-3 font-weight-medium">o inicia sesión con</p>
+								<div class="row justify-content-center">
+									<div class="col-sm-6 mb-2 mb-sm-0">
+										<a href="#" class="btn btn-login btn-g btn-pill disabled w-100">
+											<i class="icon-google mr-2"></i>
+											Google
+										</a>
+									</div><!-- End .col-6 -->
+									<div class="col-sm-6">
+										<a href="#" class="btn btn-login btn-f btn-pill disabled w-100">
+											<i class="icon-facebook-f mr-2"></i>
+											Facebook
+										</a>
+									</div><!-- End .col-6 -->
+								</div><!-- End .row -->
+							</div><!-- End .form-choice -->
+						</div><!-- .End .tab-pane -->
+					</div><!-- End .tab-content -->
+				</div><!-- End .form-tab -->
+			</div><!-- End .form-box -->
+		</div><!-- End .container -->
+	</div><!-- End .login-page section-bg -->
+</main><!-- End .main -->

@@ -1,0 +1,36 @@
+// Account Page Styles
+
+.dashboard {
+    .nav-dashboard {
+        .nav-link {
+            font-size: 1.5rem;
+            color: #4b5563;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s;
+            font-weight: 500;
+
+            &:hover,
+            &.active {
+                color: #015959;
+                padding-left: 1rem; // Subtle slide
+            }
+
+            &.active {
+                font-weight: 700;
+                border-left: 3px solid #015959;
+                padding-left: 1.5rem;
+            }
+        }
+    }
+}
+
+// Order Cards
+.modern-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+    }
+}

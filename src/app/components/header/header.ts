@@ -153,8 +153,14 @@ export class Header implements AfterViewInit {
   private toggleMobileMenu = (e: Event) => {
     e.preventDefault();
     document.body.classList.toggle('mmenu-active');
-    const toggler = e.currentTarget as HTMLElement;
-    toggler.classList.toggle('active');
+    const toggler = document.querySelector('.mobile-menu-toggler');
+    toggler?.classList.toggle('active');
+  }
+
+  public closeMobileMenu() {
+    document.body.classList.remove('mmenu-active');
+    const toggler = document.querySelector('.mobile-menu-toggler');
+    toggler?.classList.remove('active');
   }
 
   private handleSubmenuClick = (e: Event) => {

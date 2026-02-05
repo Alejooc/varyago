@@ -1,55 +1,80 @@
-.product-price-antes{
-    font-size: 1.4rem;
-    color: #464646;
-    margin-top: 10px;
-    
-    .product-price-antesSpan {
-        text-decoration: line-through;
-    }
+// Product Title
+.product-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1F2937;
+}
 
+// Prices
+.product-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #015959;
+
+  &-antes {
+    font-size: 1.2rem;
+    color: #9CA3AF;
+    font-weight: 400;
+
+    .product-price-antesSpan {
+      text-decoration: line-through;
+    }
+  }
 }
+
 .label-discount {
-    background-color: #ef837b;
-    color: #fff;
-    padding: 5px 10px;
+  background-color: #EF4444; // Modern Red
+  color: #fff;
+  padding: 0.35em 0.65em;
+  border-radius: 50px;
+  font-weight: 600;
 }
-.product-details-action{
-    margin-bottom: 0px;
-    .btn-cart{
-        max-width:unset;
-        color: #fff;
-        background-color: #015959;
-        ::after{
-            border-color: #015959;
-        }
-        :hover{
-            color: #fff!important;
-            background-color: #015959!important;
-            border-color: #015959!important;
-        }
-        :focus
-        {
-            color: #fff!important;
-        }
+
+.product-details-action {
+  margin-bottom: 2rem;
+
+  .btn-cart {
+    min-width: 200px;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #015959;
+    border-color: #015959;
+    color: white;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken(#015959, 5%) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(1, 89, 89, 0.2);
     }
-} 
-.btn-wpp{
-    color: #015959;
-    border-color: #c2c2c2;
-    //margin-top: 10px;
-    :hover{
-        color: #015959!important;
-        border-color: #015959!important;
-        background: none!important;
-    }
+  }
 }
+
+.btn-wpp {
+  color: #015959;
+  border-color: #c2c2c2;
+
+  //margin-top: 10px;
+  :hover {
+    color: #015959 !important;
+    border-color: #015959 !important;
+    background: none !important;
+  }
+}
+
 /* ===== Trust Bar VaryaGo ===== */
-.vg-trustbar{
-  --vg-border: rgba(0,0,0,.06);
+.vg-trustbar {
+  --vg-border: rgba(0, 0, 0, .06);
   --vg-bg: #f9fbfb;
   --vg-text: #1f2937;
-  --vg-accent: #0f766e; /* ajusta a tu verde principal */
-  --vg-accent-2: #0ea5a4; /* tono auxiliar */
+  --vg-accent: #0f766e;
+  /* ajusta a tu verde principal */
+  --vg-accent-2: #0ea5a4;
+  /* tono auxiliar */
   border: 1px solid var(--vg-border);
   border-radius: 14px;
   padding: .85rem .95rem;
@@ -57,23 +82,34 @@
   color: var(--vg-text);
 }
 
-.vg-trustbar__head{
-  display:flex; gap:.5rem; align-items:center; justify-content:space-between;
-  margin-bottom:.35rem;
+.vg-trustbar__head {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .35rem;
 }
 
-.vg-trustbar__title{
-  font-weight:700; letter-spacing:.2px;
+.vg-trustbar__title {
+  font-weight: 700;
+  letter-spacing: .2px;
 }
 
-.vg-trustbar__hint{
-  font-size:.85rem; opacity:.8;
+.vg-trustbar__hint {
+  font-size: .85rem;
+  opacity: .8;
 }
 
 /* Ajuste fino para móvil angosto */
-@media (max-width: 420px){
-  .vg-trustbar__hint{ display:none; }
-  .vg-pill{ font-size:.85rem; padding:.45rem .6rem; }
+@media (max-width: 420px) {
+  .vg-trustbar__hint {
+    display: none;
+  }
+
+  .vg-pill {
+    font-size: .85rem;
+    padding: .45rem .6rem;
+  }
 }
 
 /* ====== Contenedor principal ====== */
@@ -135,7 +171,7 @@
 }
 
 /* Checked */
-.variant-input:checked + .variant-pill {
+.variant-input:checked+.variant-pill {
   background: #015959;
   color: #fff;
   border-color: #015959;
@@ -150,7 +186,7 @@
 }
 
 /* Disabled */
-.variant-input:disabled + .variant-pill {
+.variant-input:disabled+.variant-pill {
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;
@@ -165,3 +201,189 @@
   }
 }
 
+/* ====== Mobile Optimization (User Request) ====== */
+@media (max-width: 768px) {
+
+  // 1. Typography Scaling
+  .product-title {
+    font-size: 1.8rem; // Smaller title
+    margin-bottom: 0.5rem;
+  }
+
+  .product-price {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  // 2. Compact Layout
+  .product-details-top {
+    margin-bottom: 1rem;
+  }
+
+  .product-gallery {
+    margin-bottom: 1rem;
+  }
+
+  .product-details {
+    margin-top: 0;
+  }
+
+  // 3. Gallery Touches
+  .product-gallery-item img {
+    height: 60px; // Consistent thumb size
+    object-fit: cover;
+  }
+
+  // 4. Sticky Bottom Bar Adjustments
+  // Ensure the main button doesn't look weird if we duplicate it,
+  // but for now let's style the sticky bar container we will add.
+  // 4. Sticky Bottom Bar Adjustments
+  .sticky-bar-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    animation: slideUp .3s ease-out;
+
+    // Qty Selector Block
+    .sticky-qty-selector {
+      display: flex;
+      align-items: center;
+      background-color: #f3f4f6; // Light Gray
+      border-radius: 8px;
+      padding: 4px;
+      height: 48px;
+      flex: 0 0 120px; // Fixed width
+
+      .btn-qty {
+        width: 36px;
+        height: 100%;
+        border: none;
+        background: transparent;
+        font-size: 1.5rem;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        padding-bottom: 4px; // Optical alignment for minus
+
+        &:active {
+          opacity: 0.7;
+        }
+      }
+
+      .qty-display {
+        flex: 1;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #111827;
+      }
+    }
+
+    .btn-cart-mobile {
+      flex: 1;
+      background-color: #015959; // Restored to Primary Green
+      color: white;
+      border: none;
+      border-radius: 50px;
+      height: 48px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(1, 89, 89, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  // Padding for body to prevent hiding content behind sticky bar
+  // This might need global handling, but we can add padding to page-content
+  .page-content {
+    padding-bottom: 80px;
+  }
+}
+
+/* ====== Bottom Sheet (Mobile) ====== */
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  backdrop-filter: blur(2px);
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.bottom-sheet-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  z-index: 1050; // Above overlay
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.show {
+    transform: translateY(0);
+  }
+}
+
+.bottom-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .close-sheet {
+    background: #f3f4f6;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #374151;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* === Fix floating button intersection === */
+:host ::ng-deep {
+  .product-page-mobile .varyago-whatsapp-btn {
+    bottom: 90px !important; // Lift above sticky bar
+  }
+}

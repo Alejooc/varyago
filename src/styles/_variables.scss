@@ -2,9 +2,11 @@
 $primary-color: #015959;
 $secondary-color: #5dbaac;
 $accent-color: #F7B733;
-$text-color: #333;
-$border-color: #ebebeb;
-$bg-light: #fafafa;
+$text-color: #1F2937; // Soft Black
+$text-muted: #6B7280;
+$border-color: #E5E7EB;
+$bg-light: #F9FAFB;
+$bg-surface: #FFFFFF;
 
 // Breakpoints
 $breakpoint-sm: 576px;
@@ -20,9 +22,9 @@ $spacing-lg: 2rem;
 $spacing-xl: 3rem;
 
 // Typography
-$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-$font-size-base: 1rem;
-$line-height-base: 1.5;
+$font-family-base: 'Jost', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-size-base: 1rem; // 16px
+$line-height-base: 1.6;
 
 // Transitions
 $transition-base: all 0.3s ease;

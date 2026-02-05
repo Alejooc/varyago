@@ -3,6 +3,25 @@
 @import 'styles/mixins';
 @import 'styles/swiper';
 
+body {
+    font-family: $font-family-base;
+    color: $text-color;
+    background-color: $bg-light;
+    line-height: $line-height-base;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-family-base;
+    font-weight: 600;
+    color: $text-color;
+    letter-spacing: -0.025em;
+}
+
 ::-moz-selection {
     background-color: #015959
 }
@@ -16,7 +35,22 @@
 }
 
 .bg-secondary {
-    background-color: #5dbaac !important
+    background-color: $secondary-color !important
+}
+
+// Modern Card Utility
+.modern-card {
+    background: $bg-surface;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-color: transparent;
+    }
 }
 
 a {
@@ -88,11 +122,27 @@ a:focus {
     border-color: #015959
 }
 
+.btn {
+    border-radius: 50px; // Pill shape
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
 .btn-primary {
     color: #fff;
-    background-color: #015959;
-    border-color: #015959;
-    box-shadow: none
+    background-color: $primary-color;
+    border-color: $primary-color;
+    box-shadow: 0 4px 6px -1px rgba(1, 89, 89, 0.1), 0 2px 4px -1px rgba(1, 89, 89, 0.06);
+
+    &:hover,
+    &:focus {
+        background-color: darken($primary-color, 5%);
+        border-color: darken($primary-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(1, 89, 89, 0.1), 0 4px 6px -2px rgba(1, 89, 89, 0.05);
+    }
 }
 
 .btn-primary:hover,
@@ -1550,3 +1600,9 @@ a:focus {
 }
 
 /*# sourceMappingURL=skin-demo-13.css.map */
+
+/* === Mobile Product Page Global Tweaks === */
+body.product-page-mobile .varyago-whatsapp-btn {
+    bottom: 90px !important; // Lift above sticky bar
+    transition: bottom 0.3s ease;
+}

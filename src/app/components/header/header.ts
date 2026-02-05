@@ -213,7 +213,7 @@ export class Header implements AfterViewInit {
   // Vanilla JS slide animations
   private slideDown(element: HTMLElement, duration: number, callback?: () => void) {
     element.style.removeProperty('display');
-    let display = window.getComputedStyle(element).display;
+    let display = typeof window !== 'undefined' ? window.getComputedStyle(element).display : 'block';
     if (display === 'none') display = 'block';
     element.style.display = display;
 

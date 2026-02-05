@@ -115,6 +115,9 @@ export class Header implements AfterViewInit {
   }
 
   reiniciarMenuMolla(): void {
+    // Skip on server-side rendering
+    if (typeof document === 'undefined') return;
+
     const menu = document.querySelector('.mobile-menu');
     const body = document.body;
     const toggler = document.querySelector('.mobile-menu-toggler');

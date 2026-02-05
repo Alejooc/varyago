@@ -5,11 +5,16 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import compression from 'compression';
 import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
+
+// Enable Gzip/Brotli compression for all responses
+app.use(compression());
+
 const angularApp = new AngularNodeAppEngine();
 
 /**
@@ -32,6 +37,16 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, path) => {
+      // Cache images, fonts aggressively
+      if (path.match(/\.(jpg|jpeg|png|gif|webp|svg|woff|woff2|ttf|eot|ico)$/)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+      // Cache JS/CSS for 1 day
+      else if (path.match(/\.(js|css)$/)) {
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+      }
+    }
   }),
 );
 
@@ -52,7 +67,7 @@ app.use((req, res, next) => {
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
 if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 4200;
   app.listen(port, (error) => {
     if (error) {
       throw error;

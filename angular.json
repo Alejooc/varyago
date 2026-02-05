@@ -32,10 +32,6 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-              "public/assets/js/bootstrap.bundle.min.js",
-              "public/assets/js/bootstrap-input-spinner.js"
-            ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
@@ -56,7 +52,15 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                },
+                "fonts": true
+              }
             },
             "development": {
               "optimization": false,

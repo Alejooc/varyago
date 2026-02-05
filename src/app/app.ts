@@ -17,7 +17,20 @@ export class App {
   protected title = 'varyago';
   constructor(private router: Router, private zoomCleaner: ZoomCleanerService, private pixel: MetaPixel,
     private gtm: Gtm) {
-    this.pixel.init();
+
+    // Defer third-party scripts until after page load for better performance
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
+        this.pixel.init();
+        this.gtm.init({
+          autoInit: true,
+          debug: false
+        });
+        this.gtm.bindRouter(this.router);
+        this.gtm.setCurrency('COP');
+      });
+    }
+
     this.router.events.subscribe(async (event) => {
       if (event instanceof NavigationEnd) {
         this.zoomCleaner.destroyAllZoom();

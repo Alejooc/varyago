@@ -1,6 +1,6 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, PLATFORM_ID, Inject } from '@angular/core';
 import { HomeService, HomeData } from '../../services/home';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarrouselProds } from "../../components/carrousel-prods/carrousel-prods";
 import { register } from 'swiper/element/bundle';
@@ -21,10 +21,13 @@ export class Home implements OnInit {
 
   constructor(
     private homeService: HomeService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    // Register Swiper web components
-    register();
+    // Register Swiper web components only in browser
+    if (isPlatformBrowser(this.platformId)) {
+      register();
+    }
   }
 
   ngOnInit(): void {
@@ -43,7 +46,7 @@ export class Home implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('❌ Error al cargar home:', err);
+        console.error('Error loading home data:', err);
         this.loading = false;
       }
     });

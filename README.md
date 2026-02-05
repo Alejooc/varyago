@@ -402,7 +402,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Alejandro Ochoa** - [@Alejooc](https://github.com/Alejooc)
+- **Alejandro Osorio** - [@Alejooc](https://github.com/Alejooc)
 
 ---
 
